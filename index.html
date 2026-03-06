@@ -329,44 +329,6 @@
       border:1px solid var(--border-default);
     }
 
-    #pub-rich .preface{
-      display:grid;
-      gap: var(--s4);
-      align-items:start;
-    }
-
-    @media (min-width:900px){
-      #pub-rich .preface{
-        grid-template-columns: minmax(0,1fr) minmax(0, 360px);
-        column-gap: var(--s6);
-      }
-    }
-
-    #pub-rich .preface-title{
-      font-size: clamp(22px, 2.2vw, 30px);
-      line-height:1.15;
-      margin:0;
-      font-weight:950;
-      letter-spacing:-0.02em;
-      color:#0f172a;
-    }
-
-    #pub-rich .preface .bul{
-      margin:0;
-      padding-left:18px;
-      display:grid;
-      gap:8px;
-      color:#0f172a;
-      font-size:15px;
-      line-height:1.6;
-    }
-
-    #pub-rich .preface .cta-stack{
-      display:grid;
-      gap: 10px;
-      align-content:start;
-    }
-
     #pub-rich .tag{
       display:inline-flex;
       align-items:center;
@@ -391,7 +353,7 @@
       line-height:1.05;
       letter-spacing:-0.03em;
       margin:0;
-      max-width:26ch;
+      max-width:22ch;
       font-weight:950;
     }
 
@@ -543,14 +505,14 @@
       margin-top: clamp(18px, 2.4vw, 28px);
       display:grid;
       gap: clamp(18px, 2.4vw, 28px);
-      align-items: center;
+      align-items: stretch;
     }
 
     #pub-rich .hero-divider{ display:none; }
 
     @media (min-width:900px){
       #pub-rich .hero-body{
-        grid-template-columns: minmax(0, 1fr) 1px clamp(360px, 34vw, 440px);
+        grid-template-columns: minmax(0, 1.08fr) 1px minmax(320px, 380px);
         column-gap: clamp(20px, 2.2vw, 32px);
         row-gap: clamp(18px, 2.4vw, 28px);
       }
@@ -566,8 +528,8 @@
     #pub-rich .hero-copy{
       display:flex;
       flex-direction:column;
-      gap:var(--s4);
-      max-width:none;
+      gap:18px;
+      max-width: 690px;
     }
 
     #pub-rich .hero-kicker{
@@ -594,20 +556,52 @@
     #pub-rich .hero .lead{
       margin:0;
       color:rgba(226,232,240,.92);
-      font-size:var(--text-md);
-      line-height:1.65;
-      margin-top:var(--s2);
+      font-size:15.5px;
+      line-height:1.72;
     }
 
-    #pub-rich .hero-bullets{
+    #pub-rich .hero .mini-hero{
       margin:0;
-      margin-top:var(--s2);
-      padding-left:18px;
-      display:grid;
-      gap:8px;
-      color:rgba(226,232,240,.92);
-      font-size:15px;
+      color:rgba(226,232,240,.72);
+      font-size:13px;
       line-height:1.55;
+    }
+
+    #pub-rich .hero-highlights{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+      margin-top:4px;
+    }
+
+    @media (max-width:760px){
+      #pub-rich .hero-highlights{
+        grid-template-columns:1fr;
+      }
+    }
+
+    #pub-rich .hero-point{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      border-radius:18px;
+      padding:14px 14px 13px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    #pub-rich .hero-point strong{
+      display:block;
+      font-size:13px;
+      line-height:1.3;
+      color:#fff;
+      margin-bottom:4px;
+      letter-spacing:-.01em;
+    }
+
+    #pub-rich .hero-point span{
+      display:block;
+      font-size:13px;
+      line-height:1.55;
+      color:rgba(226,232,240,.78);
     }
 
     #pub-rich .cta{
@@ -619,6 +613,7 @@
       gap: clamp(12px, 1.6vw, 16px);
       align-content:start;
       box-shadow:0 14px 44px rgba(0,0,0,.18);
+      align-self:center;
     }
 
     #pub-rich .cta-title{
@@ -658,8 +653,12 @@
       gap:10px;
       text-align:left;
       align-items:flex-start;
-      margin:0 0 var(--s5);
+      margin:0 0 clamp(20px,2.2vw,30px);
       max-width:900px;
+    }
+
+    #pub-rich .head--wide{
+      max-width:none;
     }
 
     #pub-rich .split{
@@ -920,6 +919,221 @@
       color:var(--muted);
       font-size:var(--text-sm);
       line-height:1.65;
+    }
+
+    #pub-rich .about-shell{
+      position:relative;
+      overflow:hidden;
+      border-radius:var(--radius-card);
+      border:1px solid var(--border-default);
+      background:
+        radial-gradient(680px 220px at 0% 0%, rgba(37,99,235,.10), transparent 60%),
+        radial-gradient(680px 220px at 100% 0%, rgba(124,58,237,.08), transparent 60%),
+        linear-gradient(180deg, #ffffff, #f8fbff);
+      box-shadow:var(--shadow-card);
+    }
+
+    #pub-rich .about-shell::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0));
+    }
+
+    #pub-rich .about-grid{
+      position:relative;
+      z-index:1;
+      display:grid;
+      gap:var(--s5);
+      padding:clamp(20px,2.4vw,32px);
+    }
+
+    @media (min-width:920px){
+      #pub-rich .about-grid{
+        grid-template-columns:minmax(0,1.15fr) minmax(280px, .85fr);
+        align-items:stretch;
+      }
+    }
+
+    #pub-rich .about-copy{
+      display:grid;
+      gap:16px;
+      align-content:start;
+    }
+
+    #pub-rich .about-copy .muted{
+      max-width:none;
+    }
+
+    #pub-rich .about-intro{
+      font-size:17px;
+      line-height:1.7;
+      color:#334155;
+      margin:0;
+    }
+
+    #pub-rich .highlight-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+      margin-top:4px;
+    }
+
+    @media (max-width:760px){
+      #pub-rich .highlight-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    #pub-rich .highlight{
+      border:1px solid rgba(2,6,23,.08);
+      background:rgba(255,255,255,.72);
+      backdrop-filter: blur(6px);
+      border-radius:20px;
+      padding:16px;
+      box-shadow:0 10px 24px rgba(2,6,23,.04);
+    }
+
+    #pub-rich .highlight strong{
+      display:block;
+      font-size:14px;
+      line-height:1.3;
+      color:#0f172a;
+      margin-bottom:6px;
+      letter-spacing:-.01em;
+    }
+
+    #pub-rich .highlight span{
+      display:block;
+      font-size:14px;
+      line-height:1.6;
+      color:#475569;
+    }
+
+    #pub-rich .about-side{
+      display:grid;
+      gap:14px;
+      align-content:start;
+    }
+
+    #pub-rich .about-panel{
+      border-radius:22px;
+      border:1px solid rgba(2,6,23,.08);
+      background:rgba(255,255,255,.84);
+      padding:18px;
+      box-shadow:0 14px 32px rgba(2,6,23,.06);
+    }
+
+    #pub-rich .about-panel .eyebrow{
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:#1d4ed8;
+      margin-bottom:10px;
+    }
+
+    #pub-rich .about-panel h3{
+      margin:0 0 10px;
+      font-size:18px;
+      line-height:1.2;
+      letter-spacing:-.02em;
+    }
+
+    #pub-rich .about-panel p{
+      margin:0;
+      color:#475569;
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    #pub-rich .about-stack{
+      display:grid;
+      gap:10px;
+    }
+
+    #pub-rich .about-mini{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      border-radius:18px;
+      padding:14px 15px;
+      border:1px solid rgba(2,6,23,.08);
+      background:#fff;
+    }
+
+    #pub-rich .about-mini b{
+      font-size:13px;
+      line-height:1.3;
+      color:#0f172a;
+      display:block;
+      margin-bottom:4px;
+    }
+
+    #pub-rich .about-mini span{
+      font-size:13px;
+      line-height:1.55;
+      color:#64748b;
+      display:block;
+    }
+
+    #pub-rich .about-dot{
+      width:12px;
+      height:12px;
+      border-radius:4px;
+      background:linear-gradient(135deg, rgba(37,99,235,.92), rgba(124,58,237,.82));
+      margin-top:3px;
+      flex:0 0 auto;
+    }
+
+    #pub-rich .videos-intro{
+      display:grid;
+      gap:18px;
+      margin-bottom: var(--s5);
+    }
+
+    @media (min-width:900px){
+      #pub-rich .videos-intro{
+        grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);
+        align-items:start;
+      }
+    }
+
+    #pub-rich .videos-copy{
+      max-width:none;
+    }
+
+    #pub-rich .videos-copy p{
+      margin:0;
+    }
+
+    #pub-rich .videos-side{
+      display:grid;
+      gap:12px;
+    }
+
+    #pub-rich .videos-note-card{
+      border:1px solid var(--border-default);
+      border-radius:20px;
+      background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(246,248,252,.92));
+      padding:16px 18px;
+      box-shadow:0 10px 24px rgba(2,6,23,.04);
+    }
+
+    #pub-rich .videos-note-card strong{
+      display:block;
+      margin-bottom:6px;
+      font-size:14px;
+      line-height:1.3;
+      color:#0f172a;
+    }
+
+    #pub-rich .videos-note-card span{
+      display:block;
+      font-size:14px;
+      line-height:1.6;
+      color:#475569;
     }
 
     #pub-rich .footer{
@@ -1280,24 +1494,6 @@
       #lead-modal .lead-actions{ flex-direction: column; }
       #lead-modal .lead-actions .lead-btn{ width: 100%; }
     }
-
-    #pub-rich .bridge-figure{
-      margin: 14px 0 0;
-    }
-
-    #pub-rich .bridge-figure img{
-      width: 100%;
-      height: auto;
-      display:block;
-      border-radius: 18px;
-      border: 1px solid rgba(2,6,23,.10);
-      background: #fff;
-    }
-
-    #pub-rich .bridge-figure figcaption{
-      margin-top: 8px;
-      text-align:left;
-    }
   </style>
 </head>
 
@@ -1306,8 +1502,6 @@
     <a class="skip" href="#main">Pular para o conteúdo</a>
 
     <main id="main">
-
-   
       <section class="wrap" id="topo" aria-label="Topo">
         <div class="hero">
           <div class="hero-inner">
@@ -1337,24 +1531,35 @@
                 <h1 class="h1">Scripts grátis para Adobe InDesign (JSX) na produção editorial de livros</h1>
 
                 <p class="seo-kicker">
-                  <strong>Edite livros no InDesign com menos cliques, menos retrabalho e mais precisão.</strong>
+                  <strong>Edite livros no InDesign com menos retrabalho e mais consistência técnica.</strong>
                 </p>
 
                 <p class="lead">
-                  Os scripts JSX da PUB Editorial automatizam tarefas técnicas no Adobe InDesign para produção editorial e diagramação de livros: criam capa e miolo com medidas, sangria, guias e presets; reaplicam ajustes após repaginação; e executam mancha, alinhamento vertical e baseline em lote por páginas, mestras, intervalos, seleção e estilos, gerando PDF consistente para a gráfica.
+                  Os scripts JSX da PUB Editorial automatizam etapas críticas da produção editorial no Adobe InDesign: criação de capa e miolo, ajustes de mancha, alinhamento vertical, baseline grid e exportação de PDF para impressão.
                 </p>
 
-                <p class="mini" style="text-align:left; color:rgba(226,232,240,.78);">
-                  Inclui scripts para criar capa e miolo, ajustar mancha, alinhamento vertical e baseline grid,
-                  além de preparar exportação de PDF para impressão no Adobe InDesign.
+                <p class="mini-hero">
+                  Um pacote pensado para quem precisa manter padrão técnico, revisar com agilidade e reduzir ajustes manuais em fluxos recorrentes de livros.
                 </p>
 
-                <ul class="hero-bullets" aria-label="O que você resolve com o pacote">
-                  <li>Capa aberta com lombada, orelhas, dobras, guias e sangria.</li>
-                  <li>Miolo com preset editorial, dimensões precisas e mancha segura.</li>
-                  <li>Ajustes em lote de mancha, alinhamento vertical e baseline grid.</li>
-                  <li>Saída PDF estável com presets configurados para impressão.</li>
-                </ul>
+                <div class="hero-highlights" aria-label="Principais benefícios">
+                  <div class="hero-point">
+                    <strong>Capa e miolo com base técnica sólida</strong>
+                    <span>Formato, guias, sangria, margens e preset já preparados para o fluxo editorial.</span>
+                  </div>
+                  <div class="hero-point">
+                    <strong>Ajustes em lote após repaginação</strong>
+                    <span>Reaplique mancha, alinhamento vertical e baseline sem percorrer página por página.</span>
+                  </div>
+                  <div class="hero-point">
+                    <strong>Mais consistência de arquivo</strong>
+                    <span>Reduza variações manuais e mantenha o documento coerente da edição ao fechamento.</span>
+                  </div>
+                  <div class="hero-point">
+                    <strong>PDF mais previsível para impressão</strong>
+                    <span>Saída técnica mais estável para conferência e entrega à gráfica.</span>
+                  </div>
+                </div>
               </div>
 
               <div class="hero-divider" aria-hidden="true"></div>
@@ -1455,13 +1660,71 @@
 
       <section class="stripe stripe--plain" id="seo-copy" aria-label="Sobre os scripts para InDesign">
         <div class="wrap">
-          <div class="panel panel--flat">
-            <div class="head">
-              <span class="tag">Sobre</span>
-              <h2 class="h2">O que esses scripts para Adobe InDesign resolvem na produção editorial</h2>
-            </div>
-            <div class="muted" style="max-width:78ch;">
-              Os PUB Editorial Scripts foram desenvolvidos para profissionais de produção editorial, diagramação de livros, editoras e estúdios que trabalham com Adobe InDesign e precisam automatizar tarefas repetitivas com arquivos JSX. O pacote ajuda a criar capa aberta, configurar miolo, padronizar mancha gráfica, ajustar alinhamento vertical, aplicar baseline grid e exportar PDF para impressão com mais consistência.
+          <div class="about-shell">
+            <div class="about-grid">
+              <div class="about-copy">
+                <div class="head head--wide" style="margin-bottom:0;">
+                  <span class="tag">Sobre</span>
+                  <h2 class="h2">Automação editorial com linguagem visual e técnica no mesmo padrão</h2>
+                </div>
+
+                <p class="about-intro">
+                  Os PUB Editorial Scripts foram desenvolvidos para editoras, estúdios, diagramadores e profissionais de produção editorial que trabalham com Adobe InDesign e precisam de mais velocidade sem abrir mão de rigor técnico.
+                </p>
+
+                <div class="highlight-grid" aria-label="Diferenciais do pacote">
+                  <div class="highlight">
+                    <strong>Fluxo mais contínuo</strong>
+                    <span>Crie capa e miolo com base técnica consistente e mantenha o projeto mais previsível desde o início.</span>
+                  </div>
+                  <div class="highlight">
+                    <strong>Menos retrabalho manual</strong>
+                    <span>Reaplique ajustes estruturais em lote quando o arquivo muda ao longo da edição e da repaginação.</span>
+                  </div>
+                  <div class="highlight">
+                    <strong>Ritmo tipográfico controlado</strong>
+                    <span>Padronize mancha, alinhamento vertical e baseline grid com mais rapidez e coerência visual.</span>
+                  </div>
+                  <div class="highlight">
+                    <strong>Fechamento mais seguro</strong>
+                    <span>Prepare PDFs com maior consistência para conferência interna e entrega para impressão.</span>
+                  </div>
+                </div>
+              </div>
+
+              <aside class="about-side" aria-label="Resumo do valor do pacote">
+                <div class="about-panel">
+                  <div class="eyebrow">Pensado para produção real</div>
+                  <h3>Menos cliques operacionais. Mais atenção ao que realmente importa.</h3>
+                  <p>
+                    O pacote concentra tarefas repetitivas e técnicas em um fluxo mais direto, ajudando você a dedicar mais tempo à conferência editorial, ao refinamento gráfico e à consistência do livro como produto.
+                  </p>
+                </div>
+
+                <div class="about-stack">
+                  <div class="about-mini">
+                    <span class="about-dot" aria-hidden="true"></span>
+                    <div>
+                      <b>Para rotinas recorrentes</b>
+                      <span>Lançamentos, reimpressões, coleções e projetos com padrão repetível.</span>
+                    </div>
+                  </div>
+                  <div class="about-mini">
+                    <span class="about-dot" aria-hidden="true"></span>
+                    <div>
+                      <b>Para equipes enxutas</b>
+                      <span>Mais produtividade em fluxos em que uma mesma pessoa acumula decisões técnicas e operacionais.</span>
+                    </div>
+                  </div>
+                  <div class="about-mini">
+                    <span class="about-dot" aria-hidden="true"></span>
+                    <div>
+                      <b>Para quem fecha arquivo com frequência</b>
+                      <span>Mais previsibilidade ao preparar documentos para revisão final e impressão.</span>
+                    </div>
+                  </div>
+                </div>
+              </aside>
             </div>
           </div>
         </div>
@@ -1523,17 +1786,28 @@
       <section class="stripe stripe--soft" id="videos" aria-label="Vídeos">
         <div class="wrap">
           <div class="panel">
-            <div class="head">
-              <span class="tag">Vídeos</span>
-              <h2 class="h2">Veja os scripts em ação</h2>
-              <div class="muted">Tutoriais demonstrativos no YouTube. Novos vídeos serão adicionados aqui.</div>
-            </div>
+            <div class="videos-intro">
+              <div class="videos-copy">
+                <div class="head head--wide" style="margin-bottom:0;">
+                  <span class="tag">Vídeos</span>
+                  <h2 class="h2">Veja os scripts em ação</h2>
+                  <div class="muted">
+                    Tutoriais demonstrativos no YouTube mostrando instalação, configuração e aplicação prática dos scripts no Adobe InDesign.
+                  </div>
+                </div>
+              </div>
 
-            <p class="muted" style="max-width:72ch;">
-              Assista aos tutoriais de instalação e uso dos scripts JSX para Adobe InDesign.
-              Os vídeos mostram como instalar o pacote no painel Scripts, criar capa aberta,
-              padronizar miolo editorial e aplicar alinhamento vertical em lote na diagramação de livros.
-            </p>
+              <div class="videos-side">
+                <div class="videos-note-card">
+                  <strong>O que você encontra aqui</strong>
+                  <span>Vídeos curtos e objetivos sobre instalação, uso do CAPA MASTER e aplicação de alinhamento vertical em lote.</span>
+                </div>
+                <div class="videos-note-card">
+                  <strong>Biblioteca em expansão</strong>
+                  <span>Novos tutoriais poderão ser adicionados ao carrossel para cobrir as demais automações do pacote.</span>
+                </div>
+              </div>
+            </div>
 
             <div class="video-carousel" data-carousel="videos">
               <button class="vbtn vbtn--prev" type="button" aria-label="Vídeo anterior" data-prev><span aria-hidden="true">‹</span></button>
@@ -2177,4 +2451,3 @@
   </script>
 </body>
 </html>
-
