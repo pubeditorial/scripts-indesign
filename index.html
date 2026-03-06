@@ -75,6 +75,9 @@
         "about": {
           "@id": "https://pubeditorial.github.io/scripts-indesign/#software"
         },
+        "breadcrumb": {
+          "@id": "https://pubeditorial.github.io/scripts-indesign/#breadcrumb"
+        },
         "primaryImageOfPage": {
           "@type": "ImageObject",
           "url": "https://pubeditorial.github.io/scripts-indesign/assets/scripts-para-adobe-indesign-producao-editorial-pub-editorial.jpg"
@@ -88,7 +91,8 @@
         "name": "PUB Editorial Scripts",
         "applicationCategory": "BusinessApplication",
         "applicationSubCategory": "Editorial Production Automation",
-        "operatingSystem": "Adobe InDesign CC 20 ou superior",
+        "operatingSystem": "Windows, macOS",
+        "softwareRequirements": "Adobe InDesign CC 20 ou superior",
         "softwareVersion": "1.0",
         "fileFormat": ".jsx",
         "downloadUrl": "https://drive.google.com/uc?export=download&id=18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE",
@@ -131,7 +135,6 @@
         "thumbnailUrl": "https://i.ytimg.com/vi/V4WoT7v7f1s/maxresdefault.jpg",
         "embedUrl": "https://www.youtube-nocookie.com/embed/V4WoT7v7f1s",
         "contentUrl": "https://www.youtube.com/watch?v=V4WoT7v7f1s",
-        "uploadDate": "2026-01-01T10:00:00-03:00",
         "publisher": {
           "@id": "https://pubeditorial.github.io/#organization"
         }
@@ -144,7 +147,6 @@
         "thumbnailUrl": "https://i.ytimg.com/vi/K0kM5cEKGWc/maxresdefault.jpg",
         "embedUrl": "https://www.youtube-nocookie.com/embed/K0kM5cEKGWc",
         "contentUrl": "https://www.youtube.com/watch?v=K0kM5cEKGWc",
-        "uploadDate": "2026-01-01T10:00:00-03:00",
         "publisher": {
           "@id": "https://pubeditorial.github.io/#organization"
         }
@@ -157,7 +159,6 @@
         "thumbnailUrl": "https://i.ytimg.com/vi/t6QHOl6996U/maxresdefault.jpg",
         "embedUrl": "https://www.youtube-nocookie.com/embed/t6QHOl6996U",
         "contentUrl": "https://www.youtube.com/watch?v=t6QHOl6996U",
-        "uploadDate": "2026-01-01T10:00:00-03:00",
         "publisher": {
           "@id": "https://pubeditorial.github.io/#organization"
         }
@@ -165,43 +166,29 @@
     ]
   }
   </script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TZS7FSCH0R"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-TZS7FSCH0R');
-</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZS7FSCH0R"></script>
   <script>
-    window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwbSZTlrSduMWgHa3JA5C0oCkvpwuq65axA78tK239Z7j6jX-DFmMs_9Zv4PbajU5Cu/exec";
-  </script>
-
-  <script>
-    const GA_MEASUREMENT_ID = "G-16TXGMGM5J";
+    const GA_MEASUREMENT_ID = "G-TZS7FSCH0R";
 
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
     window.gtag = gtag;
 
-    if (GA_MEASUREMENT_ID) {
-      const s = document.createElement("script");
-      s.async = true;
-      s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_MEASUREMENT_ID;
-      document.head.appendChild(s);
+    gtag("js", new Date());
+    gtag("config", GA_MEASUREMENT_ID, {
+      send_page_view: true,
+      debug_mode: false,
+      page_title: document.title,
+      page_location: location.href,
+      page_path: location.pathname + location.search + location.hash,
+      language: document.documentElement.lang || "pt-BR"
+    });
+  </script>
 
-      gtag("js", new Date());
-
-      gtag("config", GA_MEASUREMENT_ID, {
-        send_page_view: true,
-        debug_mode: false,
-        page_title: document.title,
-        page_location: location.href,
-        page_path: location.pathname + location.search + location.hash,
-        language: document.documentElement.lang || "pt-BR"
-      });
-    }
+  <script>
+    window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwbSZTlrSduMWgHa3JA5C0oCkvpwuq65axA78tK239Z7j6jX-DFmMs_9Zv4PbajU5Cu/exec";
   </script>
 
   <style>
@@ -2574,6 +2561,3 @@
   </script>
 </body>
 </html>
-
-
-
