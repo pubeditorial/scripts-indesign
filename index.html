@@ -103,7 +103,8 @@
   </script>
 
   <script>
-    window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwbSZTlrSduMWgHa3JA5C0oCkvpwuq65axA78tK239Z7j6jX-DFmMs_9Zv4PbajU5Cu/exec";
+    // URL da Web App publicada do Google Apps Script
+    window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycby7h4R93oUiY48fUaySx6ggsJZMQ7Ay7FPesjhaBJXYxc_jKpMiQboBagrMDOGlOwh8/exec";
   </script>
 
   <style>
@@ -2041,7 +2042,7 @@
         <button type="button" id="lead-close" class="lead-btn lead-btn--secondary lead-close">Fechar</button>
       </div>
 
-      <form id="lead-form" class="lead-body">
+      <form id="lead-form" class="lead-body" novalidate>
         <div class="lead-field">
           <label class="lead-label" for="lead-name">Nome</label>
           <input id="lead-name" class="lead-input" name="name" required autocomplete="name">
@@ -2049,7 +2050,7 @@
 
         <div class="lead-field">
           <label class="lead-label" for="lead-email">E-mail</label>
-          <input id="lead-email" class="lead-input" name="email" type="email" required autocomplete="email">
+          <input id="lead-email" class="lead-input" name="email" type="email" required autocomplete="email" inputmode="email">
         </div>
 
         <div class="lead-grid-2">
@@ -2279,7 +2280,7 @@
         this.modal.setAttribute("aria-hidden", "false");
         if (this.hint) this.hint.textContent = "";
         this.updateSubmitState();
-        try { this.nameInput?.focus(); } catch(_) {}
+        try { this.nameInput?.focus(); } catch (_) {}
       }
 
       closeModal() {
@@ -2322,6 +2323,7 @@
           f.method = "POST";
           f.action = this.endpoint;
           f.target = "_blank";
+          f.acceptCharset = "UTF-8";
 
           const i = document.createElement("input");
           i.type = "hidden";
@@ -2386,7 +2388,7 @@
         }
 
         const io = new IntersectionObserver((entries) => {
-          const vis = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+          const vis = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
           if (vis && vis.target && vis.target.id) setCurrent(vis.target.id);
         }, {
           root: null,
