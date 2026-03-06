@@ -2169,6 +2169,63 @@
           ...params
         });
       }
+
+      trackUserData(params = {}) {
+        try {
+          if (typeof window.gtag !== "function") return;
+
+          const normalizeEmail = (v) => String(v || "").trim().toLowerCase();
+          const normalizePhone = (v) => String(v || "").replace(/[^\d+]/g, "");
+          const splitName = (fullName) => {
+            const cleaned = String(fullName || "").trim().replace(/\s+/g, " ");
+            if (!cleaned) return { first_name: "", last_name: "" };
+            const parts = cleaned.split(" ");
+            return {
+              first_name: parts[0] || "",
+              last_name: parts.slice(1).join(" ") || ""
+            };
+          };
+
+          const {
+            email = "",
+            phone = "",
+            full_name = "",
+            city = "",
+            region = "",
+            postal_code = "",
+            country = "BR"
+          } = params;
+
+          const nameParts = splitName(full_name);
+          const user_data = {};
+
+          if (email) user_data.email = normalizeEmail(email);
+          if (phone) user_data.phone_number = normalizePhone(phone);
+
+          const hasAddressData =
+            nameParts.first_name ||
+            nameParts.last_name ||
+            city ||
+            region ||
+            postal_code ||
+            country;
+
+          if (hasAddressData) {
+            user_data.address = {
+              first_name: nameParts.first_name,
+              last_name: nameParts.last_name,
+              city: String(city || "").trim(),
+              region: String(region || "").trim().toUpperCase(),
+              postal_code: String(postal_code || "").trim(),
+              country: String(country || "BR").trim().toUpperCase()
+            };
+          }
+
+          if (!Object.keys(user_data).length) return;
+
+          window.gtag("set", "user_data", user_data);
+        } catch (_) {}
+      }
     }
 
     class LeadCapture {
@@ -2461,6 +2518,14 @@
           user_agent: navigator.userAgent,
           status: "client_submit"
         };
+
+        this.analytics.trackUserData({
+          email,
+          full_name: name,
+          city,
+          region: state,
+          country: "BR"
+        });
 
         this.analytics.trackLead({
           placement: payload.placement,
