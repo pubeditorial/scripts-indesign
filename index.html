@@ -210,10 +210,10 @@
       --s8:64px;
       --radius-control:14px;
       --radius-card:24px;
-      --radius-hero:28px;
+      --radius-hero:32px;
       --shadow-card:0 10px 30px rgba(2,6,23,.06);
       --shadow-pop:0 18px 60px rgba(2,6,23,.10);
-      --shadow-hero:0 18px 50px rgba(2,6,23,.14);
+      --shadow-hero:0 24px 70px rgba(2,6,23,.16);
       --text-xl: clamp(22px,2.4vw,34px);
       --text-lg: 18px;
       --text-md: 16px;
@@ -269,7 +269,7 @@
     }
 
     #pub-rich .grid{ display:grid; gap:var(--s4) }
-    #pub-rich .muted{ color:var(--muted); font-size:var(--text-md); line-height:1.7 }
+    #pub-rich .muted{ color:var(--muted); font-size:var(--text-md); line-height:1.72 }
     #pub-rich .mini{ font-size:var(--text-xs); color:var(--muted2); line-height:1.55; text-align:center }
     #pub-rich .sep{ height:1px; background:var(--line); width:100% }
 
@@ -318,7 +318,7 @@
     #pub-rich .panel{
       border-radius:var(--radius-card);
       border:1px solid var(--border-default);
-      padding:clamp(18px,2.2vw,28px);
+      padding:clamp(20px,2.2vw,30px);
       background:var(--surface-1);
       box-shadow:var(--shadow-card);
     }
@@ -349,18 +349,18 @@
     }
 
     #pub-rich .h1{
-      font-size:clamp(34px,3.4vw,56px);
-      line-height:1.05;
-      letter-spacing:-0.03em;
+      font-size:clamp(36px,3.6vw,60px);
+      line-height:1.02;
+      letter-spacing:-0.035em;
       margin:0;
-      max-width:22ch;
-      font-weight:950;
+      max-width:18ch;
+      font-weight:980;
     }
 
     #pub-rich .h2{
       font-size:var(--text-xl);
-      line-height:1.15;
-      letter-spacing:-0.02em;
+      line-height:1.12;
+      letter-spacing:-0.025em;
       margin:0;
       font-weight:950;
     }
@@ -386,7 +386,7 @@
     #pub-rich .btn:active{ transform: translateY(1px) }
 
     #pub-rich .btn--primary{
-      background:linear-gradient(135deg, rgba(37,99,235,1), rgba(37,99,235,.92));
+      background:linear-gradient(135deg, rgba(37,99,235,1), rgba(59,130,246,.94));
       color:#fff;
       box-shadow:0 12px 28px rgba(37,99,235,.22);
     }
@@ -414,10 +414,12 @@
       position:relative;
       border-radius:var(--radius-hero);
       border:1px solid rgba(255,255,255,.08);
-      background: linear-gradient(180deg, #0b1220, #020617);
+      background:
+        linear-gradient(180deg, #0b1220, #020617);
       color:#fff;
       box-shadow: var(--shadow-hero);
       overflow:hidden;
+      margin-top: 10px;
     }
 
     #pub-rich .hero::before,
@@ -443,7 +445,7 @@
     }
 
     #pub-rich .hero-inner{
-      padding: clamp(16px, 2.2vw, 28px);
+      padding: clamp(18px, 2.4vw, 30px);
       position:relative;
       z-index:1;
     }
@@ -493,6 +495,7 @@
       font-size:13px;
       font-weight:800;
       letter-spacing:.01em;
+      backdrop-filter: blur(6px);
     }
 
     #pub-rich .navlink:hover{ background:rgba(255,255,255,.10) }
@@ -502,7 +505,7 @@
     }
 
     #pub-rich .hero-body{
-      margin-top: clamp(18px, 2.4vw, 28px);
+      margin-top: clamp(20px, 2.5vw, 30px);
       display:grid;
       gap: clamp(18px, 2.4vw, 28px);
       align-items: stretch;
@@ -512,15 +515,15 @@
 
     @media (min-width:900px){
       #pub-rich .hero-body{
-        grid-template-columns: minmax(0, 1.08fr) 1px minmax(320px, 380px);
+        grid-template-columns: minmax(0, 1.1fr) 1px minmax(320px, 390px);
         column-gap: clamp(20px, 2.2vw, 32px);
         row-gap: clamp(18px, 2.4vw, 28px);
       }
       #pub-rich .hero-divider{
         display:block;
-        background:rgba(255,255,255,.10);
-        opacity:.75;
-        border-radius:1px;
+        background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.14), rgba(255,255,255,.02));
+        opacity:.9;
+        border-radius:999px;
         align-self:stretch;
       }
     }
@@ -529,7 +532,8 @@
       display:flex;
       flex-direction:column;
       gap:18px;
-      max-width: 690px;
+      max-width: 700px;
+      padding-right: min(1vw, 10px);
     }
 
     #pub-rich .hero-kicker{
@@ -546,32 +550,35 @@
 
     #pub-rich .hero .seo-kicker{
       margin: 0;
-      color: rgba(226,232,240,.86);
-      font-size: 14.5px;
+      color: rgba(226,232,240,.88);
+      font-size: 15px;
       line-height: 1.55;
+      max-width: 56ch;
     }
 
-    #pub-rich .hero .seo-kicker strong{ color: rgba(226,232,240,.96); }
+    #pub-rich .hero .seo-kicker strong{ color: rgba(255,255,255,.98); }
 
     #pub-rich .hero .lead{
       margin:0;
       color:rgba(226,232,240,.92);
       font-size:15.5px;
-      line-height:1.72;
+      line-height:1.74;
+      max-width: 60ch;
     }
 
     #pub-rich .hero .mini-hero{
       margin:0;
       color:rgba(226,232,240,.72);
       font-size:13px;
-      line-height:1.55;
+      line-height:1.6;
+      max-width: 62ch;
     }
 
     #pub-rich .hero-highlights{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
       gap:12px;
-      margin-top:4px;
+      margin-top:6px;
     }
 
     @media (max-width:760px){
@@ -582,10 +589,11 @@
 
     #pub-rich .hero-point{
       border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.05);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       border-radius:18px;
-      padding:14px 14px 13px;
+      padding:15px 15px 14px;
       box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+      min-height: 100%;
     }
 
     #pub-rich .hero-point strong{
@@ -593,7 +601,7 @@
       font-size:13px;
       line-height:1.3;
       color:#fff;
-      margin-bottom:4px;
+      margin-bottom:5px;
       letter-spacing:-.01em;
     }
 
@@ -605,15 +613,17 @@
     }
 
     #pub-rich .cta{
-      border-radius:var(--radius-card);
+      border-radius:28px;
       border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.05);
-      padding: clamp(16px, 2vw, 24px);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      padding: clamp(18px, 2vw, 24px);
       display:grid;
       gap: clamp(12px, 1.6vw, 16px);
       align-content:start;
       box-shadow:0 14px 44px rgba(0,0,0,.18);
       align-self:center;
+      backdrop-filter: blur(8px);
     }
 
     #pub-rich .cta-title{
@@ -621,12 +631,12 @@
       letter-spacing:-.01em;
       margin:0;
       font-size:var(--text-sm);
-      color:rgba(226,232,240,.92);
+      color:rgba(226,232,240,.94);
       line-height:1.25;
     }
 
     #pub-rich .cta-actions{ display:grid; gap:16px; grid-template-columns:1fr; }
-    #pub-rich .cta-secondary{ display:grid; gap:14px; grid-template-columns:1fr; }
+    #pub-rich .cta-secondary{ display:grid; gap:12px; grid-template-columns:1fr; }
 
     #pub-rich .trust{
       margin:0;
@@ -636,15 +646,15 @@
       color:rgba(226,232,240,.88);
       font-size:13.5px;
       line-height:1.5;
-      margin-top: 10px;
-      padding-top: 10px;
+      margin-top: 8px;
+      padding-top: 12px;
       border-top:1px solid rgba(255,255,255,.10);
     }
 
     #pub-rich .cta-meta{
-      color:rgba(226,232,240,.78);
+      color:rgba(226,232,240,.74);
       font-size:12.5px;
-      line-height:1.45;
+      line-height:1.5;
     }
 
     #pub-rich .head{
@@ -659,6 +669,25 @@
 
     #pub-rich .head--wide{
       max-width:none;
+    }
+
+    #pub-rich .eyebrow-mini{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:#1d4ed8;
+    }
+
+    #pub-rich .eyebrow-mini::before{
+      content:"";
+      width:8px;
+      height:8px;
+      border-radius:3px;
+      background:linear-gradient(135deg, rgba(37,99,235,.85), rgba(124,58,237,.75));
     }
 
     #pub-rich .split{
@@ -720,8 +749,6 @@
       color:#1d4ed8;
       flex:0 0 auto;
     }
-
-    #pub-rich .card-ic svg{ width:22px; height:22px }
 
     #pub-rich .card-title{
       font-weight:950;
@@ -796,6 +823,7 @@
       gap:var(--s3);
       align-items:flex-start;
       box-shadow:0 10px 24px rgba(2,6,23,.05);
+      min-height:100%;
     }
 
     #pub-rich .iconbox{
@@ -811,8 +839,6 @@
       flex:0 0 auto;
       margin-top:2px;
     }
-
-    #pub-rich .iconbox svg{ width:20px; height:20px }
 
     #pub-rich .toolitem .name{
       font-weight:950;
@@ -900,7 +926,7 @@
 
     #pub-rich .result{
       border:1px solid var(--border-default);
-      background:var(--surface-1);
+      background:linear-gradient(180deg, rgba(255,255,255,1), rgba(248,250,252,1));
       border-radius:var(--radius-card);
       padding:var(--s4);
       box-shadow:0 10px 24px rgba(2,6,23,.05);
@@ -924,7 +950,7 @@
     #pub-rich .about-shell{
       position:relative;
       overflow:hidden;
-      border-radius:var(--radius-card);
+      border-radius:30px;
       border:1px solid var(--border-default);
       background:
         radial-gradient(680px 220px at 0% 0%, rgba(37,99,235,.10), transparent 60%),
@@ -946,12 +972,12 @@
       z-index:1;
       display:grid;
       gap:var(--s5);
-      padding:clamp(20px,2.4vw,32px);
+      padding:clamp(22px,2.6vw,36px);
     }
 
     @media (min-width:920px){
       #pub-rich .about-grid{
-        grid-template-columns:minmax(0,1.15fr) minmax(280px, .85fr);
+        grid-template-columns:minmax(0,1.15fr) minmax(290px, .85fr);
         align-items:stretch;
       }
     }
@@ -962,22 +988,19 @@
       align-content:start;
     }
 
-    #pub-rich .about-copy .muted{
-      max-width:none;
-    }
-
     #pub-rich .about-intro{
       font-size:17px;
-      line-height:1.7;
+      line-height:1.74;
       color:#334155;
       margin:0;
+      max-width: 62ch;
     }
 
     #pub-rich .highlight-grid{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
       gap:12px;
-      margin-top:4px;
+      margin-top:6px;
     }
 
     @media (max-width:760px){
@@ -988,11 +1011,12 @@
 
     #pub-rich .highlight{
       border:1px solid rgba(2,6,23,.08);
-      background:rgba(255,255,255,.72);
+      background:rgba(255,255,255,.74);
       backdrop-filter: blur(6px);
-      border-radius:20px;
+      border-radius:22px;
       padding:16px;
       box-shadow:0 10px 24px rgba(2,6,23,.04);
+      min-height:100%;
     }
 
     #pub-rich .highlight strong{
@@ -1018,10 +1042,10 @@
     }
 
     #pub-rich .about-panel{
-      border-radius:22px;
+      border-radius:24px;
       border:1px solid rgba(2,6,23,.08);
       background:rgba(255,255,255,.84);
-      padding:18px;
+      padding:20px;
       box-shadow:0 14px 32px rgba(2,6,23,.06);
     }
 
@@ -1045,7 +1069,7 @@
       margin:0;
       color:#475569;
       font-size:14px;
-      line-height:1.65;
+      line-height:1.68;
     }
 
     #pub-rich .about-stack{
@@ -1095,17 +1119,9 @@
 
     @media (min-width:900px){
       #pub-rich .videos-intro{
-        grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);
+        grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);
         align-items:start;
       }
-    }
-
-    #pub-rich .videos-copy{
-      max-width:none;
-    }
-
-    #pub-rich .videos-copy p{
-      margin:0;
     }
 
     #pub-rich .videos-side{
@@ -1116,7 +1132,7 @@
     #pub-rich .videos-note-card{
       border:1px solid var(--border-default);
       border-radius:20px;
-      background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(246,248,252,.92));
+      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(246,248,252,.92));
       padding:16px 18px;
       box-shadow:0 10px 24px rgba(2,6,23,.04);
     }
@@ -1221,7 +1237,7 @@
     #pub-rich .video-track{
       display:grid;
       grid-auto-flow: column;
-      grid-auto-columns: clamp(280px, 38vw, 520px);
+      grid-auto-columns: clamp(300px, 38vw, 520px);
       gap: var(--s4);
       overflow-x:auto;
       overflow-y:visible;
@@ -1338,7 +1354,7 @@
 
     @media (max-width:760px){
       #pub-rich .vbtn{ display:none; }
-      #pub-rich .video-track{ grid-auto-columns: minmax(78vw, 1fr); }
+      #pub-rich .video-track{ grid-auto-columns: minmax(82vw, 1fr); }
     }
 
     #pub-rich .vdots{
@@ -1531,29 +1547,29 @@
                 <h1 class="h1">Scripts grátis para Adobe InDesign (JSX) na produção editorial de livros</h1>
 
                 <p class="seo-kicker">
-                  <strong>Edite livros no InDesign com menos retrabalho e mais consistência técnica.</strong>
+                  <strong>Edite livros no InDesign com menos retrabalho, mais consistência técnica e fechamento mais previsível.</strong>
                 </p>
 
                 <p class="lead">
-                  Os scripts JSX da PUB Editorial automatizam etapas críticas da produção editorial no Adobe InDesign: criação de capa e miolo, ajustes de mancha, alinhamento vertical, baseline grid e exportação de PDF para impressão.
+                  Os scripts JSX da PUB Editorial automatizam etapas críticas do fluxo editorial no Adobe InDesign: criação de capa e miolo, ajustes de mancha, alinhamento vertical, baseline grid e exportação de PDF para impressão.
                 </p>
 
                 <p class="mini-hero">
-                  Um pacote pensado para quem precisa manter padrão técnico, revisar com agilidade e reduzir ajustes manuais em fluxos recorrentes de livros.
+                  Um pacote pensado para editoras, estúdios e diagramadores que precisam padronizar processos, acelerar revisões e reduzir ajustes manuais em projetos recorrentes.
                 </p>
 
                 <div class="hero-highlights" aria-label="Principais benefícios">
                   <div class="hero-point">
                     <strong>Capa e miolo com base técnica sólida</strong>
-                    <span>Formato, guias, sangria, margens e preset já preparados para o fluxo editorial.</span>
+                    <span>Formato, guias, margens, sangria e preset já preparados para o fluxo editorial.</span>
                   </div>
                   <div class="hero-point">
                     <strong>Ajustes em lote após repaginação</strong>
-                    <span>Reaplique mancha, alinhamento vertical e baseline sem percorrer página por página.</span>
+                    <span>Reaplique mancha, alinhamento vertical e baseline sem corrigir quadro por quadro.</span>
                   </div>
                   <div class="hero-point">
                     <strong>Mais consistência de arquivo</strong>
-                    <span>Reduza variações manuais e mantenha o documento coerente da edição ao fechamento.</span>
+                    <span>Reduza variações manuais e preserve o padrão visual do documento ao longo da edição.</span>
                   </div>
                   <div class="hero-point">
                     <strong>PDF mais previsível para impressão</strong>
@@ -1621,21 +1637,21 @@
             <div class="head">
               <span class="tag">Resultados</span>
               <h2 class="h2">Controle técnico contínuo da edição à impressão</h2>
-              <div class="muted">Processos padronizados, revisões ágeis e exportação consistente, reduzindo retrabalho e ajustes de última hora.</div>
+              <div class="muted">Processos padronizados, revisões mais ágeis e exportação consistente, reduzindo retrabalho e ajustes de última hora.</div>
             </div>
 
             <div class="results" aria-label="Lista de resultados">
               <article class="result">
                 <h3>Setup técnico em minutos</h3>
-                <p>O documento já é criado com formato, margens, sangria, guias e presets corretos, sem repetir a configuração manual a cada novo projeto.</p>
+                <p>O documento já é criado com formato, margens, sangria, guias e presets corretos, sem repetir configuração manual a cada novo projeto.</p>
               </article>
               <article class="result">
                 <h3>Revisões sem página a página</h3>
-                <p>Aplique ajustes estruturais de mancha, alinhamento vertical e baseline considerando páginas e estilos definidos, sem percorrer quadro a quadro em todo o documento.</p>
+                <p>Aplique ajustes estruturais de mancha, alinhamento vertical e baseline considerando páginas e estilos definidos, sem percorrer quadro a quadro.</p>
               </article>
               <article class="result">
                 <h3>Exportação padronizada</h3>
-                <p>PDF final com presets e critérios claros, reduzindo significativamente retrabalho, erros no fechamento e ajustes recorrentes com a gráfica.</p>
+                <p>PDF final com presets e critérios claros, reduzindo erros no fechamento e ajustes recorrentes com a gráfica.</p>
               </article>
             </div>
 
@@ -1735,7 +1751,7 @@
           <div class="panel">
             <div class="head">
               <span class="tag">O pacote inclui</span>
-              <h2 class="h2">Cinco scripts para Adobe InDesign: CAPA MASTER, MIOLO MASTER, MANCHA MASTER, VERTICAL MASTER e BASELINE MASTER.</h2>
+              <h2 class="h2">Cinco scripts para Adobe InDesign: CAPA MASTER, MIOLO MASTER, MANCHA MASTER, VERTICAL MASTER e BASELINE MASTER</h2>
               <div class="muted">Arquivos JSX e guia de uso cobrindo instalação, compatibilidade e boas práticas de conferência.</div>
             </div>
 
@@ -1787,7 +1803,7 @@
         <div class="wrap">
           <div class="panel">
             <div class="videos-intro">
-              <div class="videos-copy">
+              <div>
                 <div class="head head--wide" style="margin-bottom:0;">
                   <span class="tag">Vídeos</span>
                   <h2 class="h2">Veja os scripts em ação</h2>
@@ -1869,8 +1885,7 @@
             <div class="sep" style="margin-top:var(--s5);"></div>
 
             <div class="muted" style="margin-top:var(--s4);">
-              Esta página reúne scripts JSX para Adobe InDesign usados em produção editorial, diagramação de livros,
-              criação de capa e miolo, ajustes de mancha, alinhamento vertical, baseline grid e exportação de PDF para impressão.
+              Esta página reúne scripts JSX para Adobe InDesign usados em produção editorial, diagramação de livros, criação de capa e miolo, ajustes de mancha, alinhamento vertical, baseline grid e exportação de PDF para impressão.
             </div>
           </div>
         </div>
