@@ -81,18 +81,18 @@
     }
   ]
 }
-</script>
+  </script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZS7FSCH0R"></script>
   <script>
-    const GA_MEASUREMENT_ID = "G-TZS7FSCH0R";
+    window.GA_MEASUREMENT_ID = "G-TZS7FSCH0R";
 
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
     window.gtag = gtag;
 
     gtag("js", new Date());
-    gtag("config", GA_MEASUREMENT_ID, {
+    gtag("config", window.GA_MEASUREMENT_ID, {
       send_page_view: true,
       debug_mode: false,
       page_title: document.title,
@@ -114,17 +114,11 @@
       --muted2:#64748b;
 
       --blue:#2563eb;
-      --blue-2:#60a5fa;
       --violet:#7c3aed;
-      --violet-2:#a78bfa;
 
-      --dark:#081120;
       --surface-1:rgba(255,255,255,.88);
-      --surface-2:#f3f7fd;
-      --surface-3:#eef4ff;
 
       --border-default: rgba(15,23,42,.08);
-      --border-strong: rgba(15,23,42,.14);
       --line:#e2e8f0;
       --focus: rgba(96,165,250,.50);
 
@@ -269,12 +263,6 @@
       border-radius:var(--radius-card);
       padding:clamp(22px,2.4vw,32px);
       background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
-    }
-
-    #pub-rich .panel--flat{
-      box-shadow:none;
-      background: var(--surface-1);
-      border:1px solid var(--border-default);
     }
 
     #pub-rich .tag{
@@ -1477,7 +1465,7 @@
 
               <div class="hero-divider" aria-hidden="true"></div>
 
-              <aside class="cta" id="download" aria-label="Download principal">
+              <aside class="cta" aria-label="Download principal">
                 <p class="cta-title">Experimente agora</p>
 
                 <div class="cta-actions" aria-label="Ações">
@@ -1569,7 +1557,7 @@
               </article>
             </div>
 
-            <div class="grid cta-inline" style="margin-top: var(--s5);">
+            <div class="grid" style="margin-top: var(--s5);">
               <a class="btn btn--primary"
                  data-track="download_results"
                  data-item="PACOTE GRATUITO"
@@ -1783,7 +1771,7 @@
               </ul>
             </details>
 
-            <div class="grid cta-inline" style="margin-top: var(--s5);">
+            <div class="grid" style="margin-top: var(--s5);">
               <a class="btn btn--primary" data-track="download_primary_pacote" data-item="PACOTE GRATUITO" href="https://drive.google.com/uc?export=download&id=18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE" target="_blank" rel="noopener noreferrer">
                 <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
                   <path d="M12 3v10"/>
@@ -1937,8 +1925,6 @@
       </section>
 
       <section class="stripe stripe--soft2" id="publico" aria-label="Para quem">
-        <div id="instalacao-top" aria-hidden="true"></div>
-
         <div class="wrap">
           <div class="panel">
             <div class="head">
@@ -2120,14 +2106,17 @@
         } catch (_) {}
         return "";
       }
+
       safeId() {
         const r = Math.random().toString(16).slice(2);
         return `${Date.now().toString(16)}-${r}`;
       }
+
       decodeHash(hash) {
         try { return decodeURIComponent((hash || "").replace(/^#/, "")); }
         catch (_) { return (hash || "").replace(/^#/, ""); }
       }
+
       getSearchParamsFromUrl(url) {
         try { return new URL(String(url || "")).searchParams; }
         catch (_) { return new URLSearchParams(""); }
@@ -2137,9 +2126,9 @@
     class Analytics {
       track(name, params = {}) {
         try {
-          if (typeof window.gtag === "function" && typeof GA_MEASUREMENT_ID !== "undefined") {
+          if (typeof window.gtag === "function" && window.GA_MEASUREMENT_ID) {
             window.gtag("event", name, {
-              send_to: GA_MEASUREMENT_ID,
+              send_to: window.GA_MEASUREMENT_ID,
               page_title: document.title,
               page_location: location.href,
               ...params
@@ -2325,7 +2314,7 @@
         }
       }
 
-      postToEndpointAndDownload(payload) {
+      postToEndpoint(payload) {
         if (!this.endpoint) return false;
 
         try {
@@ -2468,7 +2457,7 @@
         this.openModal();
       }
 
-      async onSubmit(e) {
+      onSubmit(e) {
         e.preventDefault();
         if (!this.pending?.url) return this.closeModalOnly();
 
@@ -2537,11 +2526,10 @@
 
         this.closeModalOnly();
 
-        const ok = this.postToEndpointAndDownload(payload);
+        const ok = this.postToEndpoint(payload);
 
         this.analytics.trackDownload({
           file_name: payload.item,
-          file_extension: "jsx",
           link_url: payload.download_url,
           placement: payload.placement
         });
@@ -2612,9 +2600,9 @@
           track.scrollTo({ left: targetIndex * step, behavior: smooth ? "smooth" : "auto" });
 
           try {
-            if (typeof window.gtag === "function" && typeof GA_MEASUREMENT_ID !== "undefined") {
+            if (typeof window.gtag === "function" && window.GA_MEASUREMENT_ID) {
               window.gtag("event", "video_carousel_nav", {
-                send_to: GA_MEASUREMENT_ID,
+                send_to: window.GA_MEASUREMENT_ID,
                 index: targetIndex + 1,
                 carousel: c.getAttribute("data-carousel") || "videos"
               });
@@ -2646,6 +2634,7 @@
     const dom = new Dom();
     const urlTools = new UrlTools();
     const analytics = new Analytics();
+
     new LeadCapture(dom, urlTools, analytics).init();
     initVideoCarousel();
   </script>
