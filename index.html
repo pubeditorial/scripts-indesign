@@ -1,0 +1,2106 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+  <meta name="description" content="Pacote gratuito de scripts JSX para Adobe InDesign: CAPA MASTER, MIOLO MASTER, MANCHA MASTER, VERTICAL MASTER e BASELINE MASTER para produção editorial, diagramação de livros e exportação de PDF para impressão." />
+  <link rel="canonical" href="https://SEU-USUARIO.github.io/pub-editorial-scripts/" />
+
+  <title>PUB Editorial Scripts | Scripts para InDesign (JSX) gratuitos</title>
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="PUB Editorial" />
+  <meta property="og:title" content="PUB Editorial Scripts | Scripts para InDesign (JSX) gratuitos" />
+  <meta property="og:description" content="Pacote gratuito de scripts JSX para Adobe InDesign com gabaritos de capa e miolo, ajustes de mancha, alinhamento vertical, baseline e exportação de PDF para impressão." />
+  <meta property="og:url" content="https://SEU-USUARIO.github.io/pub-editorial-scripts/" />
+  <meta property="og:image" content="https://SEU-USUARIO.github.io/pub-editorial-scripts/assets/social-cover.jpg" />
+  <meta property="og:image:alt" content="Pacote PUB Editorial Scripts com cinco scripts para Adobe InDesign" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="675" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PUB Editorial Scripts | Scripts para InDesign (JSX) gratuitos" />
+  <meta name="twitter:description" content="Pacote gratuito de scripts JSX para Adobe InDesign com gabaritos de capa e miolo, ajustes de mancha, alinhamento vertical, baseline e exportação de PDF para impressão." />
+  <meta name="twitter:image" content="https://SEU-USUARIO.github.io/pub-editorial-scripts/assets/social-cover.jpg" />
+  <meta name="twitter:image:alt" content="Pacote PUB Editorial Scripts com cinco scripts para Adobe InDesign" />
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"SoftwareApplication",
+    "name":"PUB Editorial Scripts",
+    "applicationCategory":"BusinessApplication",
+    "operatingSystem":"Adobe InDesign CC 20 ou superior",
+    "description":"Pacote gratuito de scripts JSX para Adobe InDesign voltado à produção editorial, criação de capa e miolo, ajustes de mancha, alinhamento vertical, baseline grid e exportação de PDF para impressão.",
+    "offers":{
+      "@type":"Offer",
+      "price":"0",
+      "priceCurrency":"BRL"
+    },
+    "publisher":{
+      "@type":"Organization",
+      "name":"PUB Editorial",
+      "url":"https://SEU-USUARIO.github.io/pub-editorial-scripts/"
+    }
+  }
+  </script>
+
+  <script>
+    window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwbSZTlrSduMWgHa3JA5C0oCkvpwuq65axA78tK239Z7j6jX-DFmMs_9Zv4PbajU5Cu/exec";
+  </script>
+
+  <script>
+    const GA_MEASUREMENT_ID = "G-TZS7FSCH0R";
+
+    if (GA_MEASUREMENT_ID) {
+      const s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_MEASUREMENT_ID;
+      document.head.appendChild(s);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+
+      gtag("js", new Date());
+      gtag("config", GA_MEASUREMENT_ID, {
+        send_page_view: true,
+        debug_mode: false
+      });
+    }
+  </script>
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --fg:#0f172a;
+      --muted:#475569;
+      --muted2:#64748b;
+      --blue:#2563eb;
+      --violet:#7c3aed;
+      --dark:#0b1220;
+      --surface-1:#ffffff;
+      --surface-2:#f6f8fc;
+      --surface-3:#f1f5ff;
+      --border-default: rgba(2,6,23,.10);
+      --line:#e5e7eb;
+      --focus: rgba(96,165,250,.55);
+      --container:1120px;
+      --gutter:clamp(16px,3vw,28px);
+      --s1:8px;
+      --s2:12px;
+      --s3:16px;
+      --s4:20px;
+      --s5:28px;
+      --s6:36px;
+      --s7:48px;
+      --s8:64px;
+      --radius-control:14px;
+      --radius-card:24px;
+      --radius-hero:28px;
+      --shadow-card:0 10px 30px rgba(2,6,23,.06);
+      --shadow-pop:0 18px 60px rgba(2,6,23,.10);
+      --shadow-hero:0 18px 50px rgba(2,6,23,.14);
+      --text-xl: clamp(22px,2.4vw,34px);
+      --text-lg: 18px;
+      --text-md: 16px;
+      --text-sm: 14.5px;
+      --text-xs: 12px;
+    }
+
+    html, body{
+      margin:0;
+      padding:0;
+      min-height:100%;
+    }
+
+    body{
+      background:var(--bg);
+      color:var(--fg);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+    }
+
+    #pub-rich{
+      width:100%;
+      min-height:100%;
+      line-height:1.6;
+      scroll-behavior:smooth;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    #pub-rich *{ box-sizing:border-box }
+    #pub-rich a{ color:inherit; text-decoration:none }
+
+    #pub-rich :focus-visible{
+      outline:3px solid var(--focus);
+      outline-offset:3px;
+      border-radius:12px;
+    }
+
+    #pub-rich .wrap{
+      max-width:var(--container);
+      margin:0 auto;
+      padding-left:var(--gutter);
+      padding-right:var(--gutter);
+    }
+
+    #pub-rich section{ scroll-margin-top:28px; }
+    #pub-rich [id]{ scroll-margin-top:28px; }
+
+    @media (max-width:760px){
+      #pub-rich section{ scroll-margin-top:64px; }
+      #pub-rich [id]{ scroll-margin-top:64px; }
+    }
+
+    #pub-rich .grid{ display:grid; gap:var(--s4) }
+    #pub-rich .muted{ color:var(--muted); font-size:var(--text-md); line-height:1.7 }
+    #pub-rich .mini{ font-size:var(--text-xs); color:var(--muted2); line-height:1.55; text-align:center }
+    #pub-rich .sep{ height:1px; background:var(--line); width:100% }
+
+    #pub-rich .skip{
+      position:absolute;
+      left:-9999px;
+      top:auto;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+      background:#fff;
+      color:#000;
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius:12px;
+    }
+
+    #pub-rich .skip:focus{
+      left:18px;
+      top:18px;
+      width:auto;
+      height:auto;
+      z-index:9999;
+    }
+
+    #pub-rich .stripe{ padding:var(--s8) 0 }
+    @media (max-width:760px){
+      #pub-rich .stripe{ padding:var(--s7) 0 }
+    }
+
+    #pub-rich .stripe--plain{ background: var(--bg); }
+    #pub-rich .stripe--soft{
+      background:
+        radial-gradient(700px 240px at 10% 0%, rgba(37,99,235,.08), transparent 60%),
+        radial-gradient(700px 240px at 90% 0%, rgba(124,58,237,.08), transparent 60%),
+        var(--surface-2);
+    }
+
+    #pub-rich .stripe--soft2{
+      background:
+        radial-gradient(800px 260px at 20% 0%, rgba(37,99,235,.09), transparent 60%),
+        radial-gradient(800px 260px at 80% 0%, rgba(124,58,237,.08), transparent 60%),
+        var(--surface-3);
+    }
+
+    #pub-rich .panel{
+      border-radius:var(--radius-card);
+      border:1px solid var(--border-default);
+      padding:clamp(18px,2.2vw,28px);
+      background:var(--surface-1);
+      box-shadow:var(--shadow-card);
+    }
+
+    #pub-rich .panel--flat{
+      box-shadow:none;
+      background: var(--surface-1);
+      border:1px solid var(--border-default);
+    }
+
+    #pub-rich .preface{
+      display:grid;
+      gap: var(--s4);
+      align-items:start;
+    }
+
+    @media (min-width:900px){
+      #pub-rich .preface{
+        grid-template-columns: minmax(0,1fr) minmax(0, 360px);
+        column-gap: var(--s6);
+      }
+    }
+
+    #pub-rich .preface-title{
+      font-size: clamp(22px, 2.2vw, 30px);
+      line-height:1.15;
+      margin:0;
+      font-weight:950;
+      letter-spacing:-0.02em;
+      color:#0f172a;
+    }
+
+    #pub-rich .preface .bul{
+      margin:0;
+      padding-left:18px;
+      display:grid;
+      gap:8px;
+      color:#0f172a;
+      font-size:15px;
+      line-height:1.6;
+    }
+
+    #pub-rich .preface .cta-stack{
+      display:grid;
+      gap: 10px;
+      align-content:start;
+    }
+
+    #pub-rich .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:11px;
+      font-weight:850;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      color:#1d4ed8;
+    }
+
+    #pub-rich .tag:before{
+      content:"";
+      width:10px;
+      height:10px;
+      border-radius:4px;
+      background:linear-gradient(135deg, rgba(37,99,235,.90), rgba(124,58,237,.85));
+    }
+
+    #pub-rich .h1{
+      font-size:clamp(34px,3.4vw,56px);
+      line-height:1.05;
+      letter-spacing:-0.03em;
+      margin:0;
+      max-width:26ch;
+      font-weight:950;
+    }
+
+    #pub-rich .h2{
+      font-size:var(--text-xl);
+      line-height:1.15;
+      letter-spacing:-0.02em;
+      margin:0;
+      font-weight:950;
+    }
+
+    #pub-rich .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:14px 16px;
+      border-radius:var(--radius-control);
+      font-weight:850;
+      border:1px solid transparent;
+      user-select:none;
+      cursor:pointer;
+      min-height:52px;
+      transition: transform .15s ease, filter .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease, opacity .15s ease;
+      white-space:nowrap;
+      will-change: transform;
+    }
+
+    #pub-rich .btn svg{ width:18px; height:18px }
+    #pub-rich .btn:active{ transform: translateY(1px) }
+
+    #pub-rich .btn--primary{
+      background:linear-gradient(135deg, rgba(37,99,235,1), rgba(37,99,235,.92));
+      color:#fff;
+      box-shadow:0 12px 28px rgba(37,99,235,.22);
+    }
+
+    #pub-rich .btn--primary:hover{ filter:brightness(1.03) }
+
+    #pub-rich .btn--secondary{
+      background:rgba(2,6,23,.06);
+      border-color:rgba(2,6,23,.12);
+      color:var(--fg);
+    }
+
+    #pub-rich .btn--secondary:hover{ background:rgba(2,6,23,.10) }
+
+    #pub-rich .btn--quiet{
+      background:transparent;
+      border-color:rgba(255,255,255,.16);
+      color:rgba(226,232,240,.92);
+    }
+
+    #pub-rich .btn--quiet:hover{ background:rgba(255,255,255,.08) }
+    #pub-rich .w-full{ width:100% }
+
+    #pub-rich .hero{
+      position:relative;
+      border-radius:var(--radius-hero);
+      border:1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, #0b1220, #020617);
+      color:#fff;
+      box-shadow: var(--shadow-hero);
+      overflow:hidden;
+    }
+
+    #pub-rich .hero::before,
+    #pub-rich .hero::after{
+      content:"";
+      position:absolute;
+      inset:-120px;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    #pub-rich .hero::before{
+      background:
+        radial-gradient(520px 260px at 14% 18%, rgba(96,165,250,.18), transparent 60%),
+        radial-gradient(520px 260px at 86% 22%, rgba(167,139,250,.16), transparent 62%);
+    }
+
+    #pub-rich .hero::after{
+      background:
+        radial-gradient(520px 360px at 78% 72%, rgba(37,99,235,.14), transparent 62%);
+      mix-blend-mode:screen;
+      opacity:.9;
+    }
+
+    #pub-rich .hero-inner{
+      padding: clamp(16px, 2.2vw, 28px);
+      position:relative;
+      z-index:1;
+    }
+
+    #pub-rich .grad{
+      background:linear-gradient(90deg,#60a5fa,#a78bfa);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    #pub-rich .header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:var(--s3);
+      padding:0;
+      flex-wrap:wrap;
+    }
+
+    #pub-rich .brand{ display:flex; flex-direction:column; gap:4px }
+    #pub-rich .logo{ font-weight:950; font-size:24px; letter-spacing:-.02em; line-height:1.1 }
+    #pub-rich .sub{
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:rgba(226,232,240,.72)
+    }
+
+    #pub-rich .actions{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    #pub-rich .navlink{
+      display:inline-flex;
+      align-items:center;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:rgba(226,232,240,.92);
+      font-size:13px;
+      font-weight:800;
+      letter-spacing:.01em;
+    }
+
+    #pub-rich .navlink:hover{ background:rgba(255,255,255,.10) }
+    #pub-rich .navlink[aria-current="page"]{
+      border-color:rgba(96,165,250,.45);
+      background:rgba(96,165,250,.14);
+    }
+
+    #pub-rich .hero-body{
+      margin-top: clamp(18px, 2.4vw, 28px);
+      display:grid;
+      gap: clamp(18px, 2.4vw, 28px);
+      align-items: center;
+    }
+
+    #pub-rich .hero-divider{ display:none; }
+
+    @media (min-width:900px){
+      #pub-rich .hero-body{
+        grid-template-columns: minmax(0, 1fr) 1px clamp(360px, 34vw, 440px);
+        column-gap: clamp(20px, 2.2vw, 32px);
+        row-gap: clamp(18px, 2.4vw, 28px);
+      }
+      #pub-rich .hero-divider{
+        display:block;
+        background:rgba(255,255,255,.10);
+        opacity:.75;
+        border-radius:1px;
+        align-self:stretch;
+      }
+    }
+
+    #pub-rich .hero-copy{
+      display:flex;
+      flex-direction:column;
+      gap:var(--s4);
+      max-width:none;
+    }
+
+    #pub-rich .hero-kicker{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    #pub-rich .hero-kicker .tag{ color:rgba(191,219,254,.92); }
+    #pub-rich .hero-kicker .tag:before{
+      background:linear-gradient(135deg, rgba(96,165,250,.95), rgba(167,139,250,.85));
+    }
+
+    #pub-rich .hero .seo-kicker{
+      margin: 0;
+      color: rgba(226,232,240,.86);
+      font-size: 14.5px;
+      line-height: 1.55;
+    }
+
+    #pub-rich .hero .seo-kicker strong{ color: rgba(226,232,240,.96); }
+
+    #pub-rich .hero .lead{
+      margin:0;
+      color:rgba(226,232,240,.92);
+      font-size:var(--text-md);
+      line-height:1.65;
+      margin-top:var(--s2);
+    }
+
+    #pub-rich .hero-bullets{
+      margin:0;
+      margin-top:var(--s2);
+      padding-left:18px;
+      display:grid;
+      gap:8px;
+      color:rgba(226,232,240,.92);
+      font-size:15px;
+      line-height:1.55;
+    }
+
+    #pub-rich .cta{
+      border-radius:var(--radius-card);
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      padding: clamp(16px, 2vw, 24px);
+      display:grid;
+      gap: clamp(12px, 1.6vw, 16px);
+      align-content:start;
+      box-shadow:0 14px 44px rgba(0,0,0,.18);
+    }
+
+    #pub-rich .cta-title{
+      font-weight:950;
+      letter-spacing:-.01em;
+      margin:0;
+      font-size:var(--text-sm);
+      color:rgba(226,232,240,.92);
+      line-height:1.25;
+    }
+
+    #pub-rich .cta-actions{ display:grid; gap:16px; grid-template-columns:1fr; }
+    #pub-rich .cta-secondary{ display:grid; gap:14px; grid-template-columns:1fr; }
+
+    #pub-rich .trust{
+      margin:0;
+      padding-left:18px;
+      display:grid;
+      gap:8px;
+      color:rgba(226,232,240,.88);
+      font-size:13.5px;
+      line-height:1.5;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+
+    #pub-rich .cta-meta{
+      color:rgba(226,232,240,.78);
+      font-size:12.5px;
+      line-height:1.45;
+    }
+
+    #pub-rich .head{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      text-align:left;
+      align-items:flex-start;
+      margin:0 0 var(--s5);
+      max-width:900px;
+    }
+
+    #pub-rich .split{
+      display:grid;
+      gap:var(--s5);
+      align-items:stretch;
+      align-content:start;
+    }
+
+    @media (min-width:900px){
+      #pub-rich .split{ grid-template-columns:1fr 1fr; }
+    }
+
+    #pub-rich .card{
+      position:relative;
+      border:1px solid var(--border-default);
+      border-radius:var(--radius-card);
+      background:var(--surface-1);
+      padding:clamp(18px,2.2vw,24px);
+      display:flex;
+      flex-direction:column;
+      box-shadow:var(--shadow-card);
+      min-width:0;
+    }
+
+    #pub-rich .card:before{
+      content:"";
+      position:absolute;
+      left:18px;
+      right:18px;
+      top:14px;
+      height:6px;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(37,99,235,.40), rgba(124,58,237,.30));
+      opacity:.25;
+    }
+
+    @media (max-width:760px){
+      #pub-rich .card:before{ display:none; }
+    }
+
+    #pub-rich .card-head{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      padding-top:12px;
+      margin-bottom:var(--s3);
+    }
+
+    #pub-rich .card-ic{
+      width:46px;
+      height:46px;
+      border-radius:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid var(--border-default);
+      background:linear-gradient(180deg, rgba(37,99,235,.10), rgba(124,58,237,.06));
+      color:#1d4ed8;
+      flex:0 0 auto;
+    }
+
+    #pub-rich .card-ic svg{ width:22px; height:22px }
+
+    #pub-rich .card-title{
+      font-weight:950;
+      letter-spacing:-.02em;
+      margin:0;
+      font-size:var(--text-lg);
+      line-height:1.2;
+    }
+
+    #pub-rich .card-desc{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:var(--text-sm);
+      line-height:1.65;
+      max-width:70ch;
+    }
+
+    #pub-rich .card-sub{
+      margin:var(--s4) 0 var(--s2);
+      font-size:11.5px;
+      font-weight:950;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:#1d4ed8;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+
+    #pub-rich .card-sub:before{
+      content:"";
+      width:8px;
+      height:8px;
+      border-radius:3px;
+      background:linear-gradient(135deg, rgba(37,99,235,.85), rgba(124,58,237,.75));
+      opacity:.9;
+    }
+
+    #pub-rich .bullets,
+    #pub-rich .steps{
+      margin:0;
+      padding-left:18px;
+      display:grid;
+      gap:12px;
+      color:#0f172a;
+      font-size:15px;
+    }
+
+    #pub-rich .bullets li,
+    #pub-rich .steps li{ line-height:1.6 }
+
+    #pub-rich .card-foot{
+      margin-top:auto;
+      padding-top:var(--s4);
+      border-top:1px solid rgba(2,6,23,.08);
+      display:grid;
+      gap:var(--s3);
+    }
+
+    #pub-rich .toollist{
+      display:grid;
+      gap:var(--s4);
+      grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    #pub-rich .toolitem{
+      border:1px solid var(--border-default);
+      border-radius:var(--radius-card);
+      background:var(--surface-1);
+      padding:var(--s4);
+      display:flex;
+      gap:var(--s3);
+      align-items:flex-start;
+      box-shadow:0 10px 24px rgba(2,6,23,.05);
+    }
+
+    #pub-rich .iconbox{
+      width:40px;
+      height:40px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid var(--border-default);
+      background:linear-gradient(180deg, rgba(37,99,235,.10), rgba(124,58,237,.06));
+      color:#1d4ed8;
+      flex:0 0 auto;
+      margin-top:2px;
+    }
+
+    #pub-rich .iconbox svg{ width:20px; height:20px }
+
+    #pub-rich .toolitem .name{
+      font-weight:950;
+      margin:0 0 6px;
+      font-size:var(--text-lg);
+      line-height:1.2;
+    }
+
+    #pub-rich .toolitem .desc{ margin:0; color:#334155; font-size:15px; line-height:1.65 }
+    #pub-rich .toolitem .when{ margin-top:10px; color:var(--muted); font-size:12.5px; line-height:1.5 }
+
+    #pub-rich .details{
+      margin-top:var(--s5);
+      border:1px solid var(--border-default);
+      border-radius:var(--radius-card);
+      background:var(--surface-2);
+      padding:var(--s4);
+    }
+
+    #pub-rich summary{
+      cursor:pointer;
+      font-weight:900;
+      letter-spacing:-.01em;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    #pub-rich summary::-webkit-details-marker{ display:none; }
+
+    #pub-rich .chev{
+      width:18px;
+      height:18px;
+      flex:0 0 auto;
+      transition: transform .15s ease;
+    }
+
+    #pub-rich details[open] .chev{ transform: rotate(180deg); }
+
+    #pub-rich .pillgrid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+      margin-top:var(--s4);
+      padding:0;
+      list-style:none;
+    }
+
+    @media (max-width:760px){
+      #pub-rich .pillgrid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+
+    @media (max-width:420px){
+      #pub-rich .pillgrid{ grid-template-columns:1fr; }
+    }
+
+    #pub-rich .pill{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:10px 12px;
+      min-height:44px;
+      border-radius:var(--radius-control);
+      border:1px solid rgba(2,6,23,.12);
+      background:#fff;
+      color:#0f172a;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.04em;
+      line-height:1.2;
+      transition: background .15s ease, transform .15s ease;
+    }
+
+    #pub-rich .pill:hover{ background:#f8fafc; }
+
+    #pub-rich .results{
+      display:grid;
+      gap:var(--s4);
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      margin-top:var(--s5);
+    }
+
+    #pub-rich .result{
+      border:1px solid var(--border-default);
+      background:var(--surface-1);
+      border-radius:var(--radius-card);
+      padding:var(--s4);
+      box-shadow:0 10px 24px rgba(2,6,23,.05);
+    }
+
+    #pub-rich .result h3{
+      margin:0;
+      font-size:var(--text-lg);
+      font-weight:950;
+      letter-spacing:-.01em;
+      line-height:1.2;
+    }
+
+    #pub-rich .result p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:var(--text-sm);
+      line-height:1.65;
+    }
+
+    #pub-rich .footer{
+      border-radius:var(--radius-card);
+      background:rgba(2,6,23,.96);
+      color:#fff;
+      padding:14px 18px;
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    #pub-rich .footgrid{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      row-gap:10px;
+      min-width:0;
+    }
+
+    #pub-rich .footbrand{
+      display:flex;
+      align-items:baseline;
+      gap:10px;
+      flex:0 1 auto;
+      min-width:0;
+      white-space:nowrap;
+    }
+
+    #pub-rich .foottitle{
+      font-weight:950;
+      letter-spacing:-.01em;
+      margin:0;
+      font-size:14px;
+      line-height:1.2;
+      white-space:nowrap;
+    }
+
+    #pub-rich .fineprint{
+      font-size:12px;
+      color:rgba(148,163,184,.78);
+      margin:0;
+      white-space:nowrap;
+    }
+
+    #pub-rich .footlinks{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:flex;
+      align-items:center;
+      gap:10px 14px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      row-gap:8px;
+      white-space:nowrap;
+      min-width:0;
+    }
+
+    #pub-rich .footer a{
+      color:rgba(226,232,240,.92);
+      font-size:13px;
+      line-height:1.2;
+      padding:2px 0;
+      white-space:nowrap;
+    }
+
+    #pub-rich .footer a:hover{
+      text-decoration:underline;
+      text-decoration-color:rgba(255,255,255,.35);
+    }
+
+    #pub-rich .footsep{
+      width:1px;
+      height:14px;
+      background:rgba(255,255,255,.10);
+      flex:0 0 auto;
+    }
+
+    #pub-rich .video-carousel{
+      position:relative;
+      margin-top: var(--s5);
+    }
+
+    #pub-rich .video-track{
+      display:grid;
+      grid-auto-flow: column;
+      grid-auto-columns: clamp(280px, 38vw, 520px);
+      gap: var(--s4);
+      overflow-x:auto;
+      overflow-y:visible;
+      scroll-snap-type: x mandatory;
+      scroll-padding-left: 2px;
+      -webkit-overflow-scrolling: touch;
+      padding: 2px 2px 10px;
+      border-radius: var(--radius-card);
+      scrollbar-color: rgba(2,6,23,.22) rgba(2,6,23,.06);
+      scrollbar-width: thin;
+    }
+
+    #pub-rich .video-track::-webkit-scrollbar{ height:10px; }
+    #pub-rich .video-track::-webkit-scrollbar-track{
+      background: rgba(2,6,23,.06);
+      border-radius: 999px;
+    }
+    #pub-rich .video-track::-webkit-scrollbar-thumb{
+      background: rgba(2,6,23,.18);
+      border-radius: 999px;
+    }
+
+    #pub-rich .video-card{
+      position:relative;
+      scroll-snap-align:start;
+      border:1px solid var(--border-default);
+      border-radius: var(--radius-card);
+      background: var(--surface-1);
+      box-shadow: var(--shadow-card);
+      overflow:hidden;
+      min-width:0;
+    }
+
+    #pub-rich .video-card::before{
+      content:"";
+      position:absolute;
+      left:18px;
+      right:18px;
+      top:14px;
+      height:6px;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(37,99,235,.40), rgba(124,58,237,.30));
+      opacity:.25;
+      z-index: 2;
+    }
+
+    @media (max-width:760px){
+      #pub-rich .video-card::before{ display:none; }
+    }
+
+    #pub-rich .video-frame{
+      position:relative;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(180deg, #0b1220, #020617);
+    }
+
+    #pub-rich .video-frame iframe{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:0;
+    }
+
+    #pub-rich .video-caption{
+      margin:0;
+      padding: 12px 16px 6px;
+      color: var(--muted);
+      font-size: var(--text-sm);
+      line-height: 1.55;
+      font-weight: 800;
+    }
+
+    #pub-rich .video-note{
+      margin:0;
+      padding: 0 16px 14px;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.55;
+      text-align:left;
+    }
+
+    #pub-rich .vbtn{
+      position:absolute;
+      top: calc(50% - 24px);
+      width:48px;
+      height:48px;
+      border-radius: 999px;
+      border:1px solid rgba(2,6,23,.16);
+      background:#fff;
+      box-shadow: var(--shadow-pop);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      z-index:3;
+    }
+
+    #pub-rich .vbtn span{
+      font-size: 28px;
+      line-height: 1;
+      transform: translateY(-1px);
+      color: #0f172a;
+    }
+
+    #pub-rich .vbtn[disabled]{
+      opacity:.35;
+      cursor:not-allowed;
+      box-shadow:none;
+    }
+
+    #pub-rich .vbtn--prev{ left: -12px; }
+    #pub-rich .vbtn--next{ right: -12px; }
+
+    @media (max-width:760px){
+      #pub-rich .vbtn{ display:none; }
+      #pub-rich .video-track{ grid-auto-columns: minmax(78vw, 1fr); }
+    }
+
+    #pub-rich .vdots{
+      display:flex;
+      gap:8px;
+      justify-content:center;
+      margin-top: 12px;
+    }
+
+    #pub-rich .vdot{
+      width:10px;
+      height:10px;
+      border-radius: 999px;
+      border:1px solid rgba(2,6,23,.18);
+      background: rgba(2,6,23,.06);
+      cursor:pointer;
+    }
+
+    #pub-rich .vdot[aria-current="true"]{
+      background: linear-gradient(135deg, rgba(37,99,235,.90), rgba(124,58,237,.85));
+      border-color: rgba(37,99,235,.30);
+    }
+
+    #lead-modal{
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(14px, 3vw, 22px);
+      background: rgba(2,6,23,.55);
+      z-index: 99999;
+    }
+
+    #lead-modal .lead-dialog{
+      width: min(560px, 100%);
+      max-height: min(86vh, 720px);
+      background: var(--surface-1);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-default);
+      box-shadow: var(--shadow-pop);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #lead-modal .lead-header{
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    #lead-modal .lead-title{
+      font-weight: 950;
+      letter-spacing: -.01em;
+      color: var(--fg);
+    }
+
+    #lead-modal .lead-body{
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      overflow: auto;
+    }
+
+    #lead-modal .lead-field{
+      display: grid;
+      gap: 6px;
+    }
+
+    #lead-modal .lead-label{
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--fg);
+    }
+
+    #lead-modal .lead-input{
+      height: 46px;
+      border-radius: var(--radius-control);
+      border: 1px solid rgba(2,6,23,.16);
+      padding: 0 12px;
+      font-size: 15px;
+      background: #fff;
+      color: var(--fg);
+    }
+
+    #lead-modal .lead-grid-2{
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    #lead-modal .lead-optin{
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13.5px;
+      color: #334155;
+      line-height: 1.35;
+    }
+
+    #lead-modal .lead-actions{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #lead-modal .lead-hint{
+      font-size: 12.5px;
+      color: var(--muted2);
+    }
+
+    #lead-modal .lead-btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border-radius: var(--radius-control);
+      font-weight: 850;
+      border: 1px solid transparent;
+      cursor: pointer;
+      min-height: 46px;
+      white-space: nowrap;
+    }
+
+    #lead-modal .lead-btn--primary{
+      background: linear-gradient(135deg, rgba(37,99,235,1), rgba(37,99,235,.92));
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(37,99,235,.22);
+    }
+
+    #lead-modal .lead-btn--secondary{
+      background: rgba(2,6,23,.06);
+      border-color: rgba(2,6,23,.12);
+      color: var(--fg);
+    }
+
+    #lead-modal .lead-close{
+      min-height: 38px;
+      padding: 10px 12px;
+    }
+
+    @media (max-width: 560px){
+      #lead-modal .lead-body{ padding: 14px; }
+      #lead-modal .lead-grid-2{ grid-template-columns: 1fr; }
+      #lead-modal .lead-actions{ flex-direction: column; }
+      #lead-modal .lead-actions .lead-btn{ width: 100%; }
+    }
+
+    #pub-rich .bridge-figure{
+      margin: 14px 0 0;
+    }
+
+    #pub-rich .bridge-figure img{
+      width: 100%;
+      height: auto;
+      display:block;
+      border-radius: 18px;
+      border: 1px solid rgba(2,6,23,.10);
+      background: #fff;
+    }
+
+    #pub-rich .bridge-figure figcaption{
+      margin-top: 8px;
+      text-align:left;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="pub-rich">
+    <a class="skip" href="#main">Pular para o conteúdo</a>
+
+    <main id="main">
+
+      <section class="stripe stripe--plain" id="prefacio" aria-label="Resumo do pacote">
+        <div class="wrap">
+          <div class="panel panel--flat">
+            <div class="preface" aria-label="Resumo e atalho">
+              <div>
+                <span class="tag">PUB Editorial Scripts</span>
+                <p class="preface-title" style="margin-top:10px;">Pacote gratuito para produção editorial no Adobe InDesign</p>
+                <div class="muted" style="margin-top:10px;">
+                  Pacote gratuito para produção editorial no InDesign: gabaritos de capa e miolo, ajustes em lote de mancha, alinhamento vertical e baseline grid, além de exportação de PDF com preset consistente para impressão.
+                </div>
+
+                <ul class="bul" aria-label="Recursos principais" style="margin-top:14px;">
+                  <li>Capa aberta com lombada, orelhas, dobras, guias e sangria.</li>
+                  <li>Miolo com preset editorial e mancha segura.</li>
+                  <li>Ajustes em lote: mancha, alinhamento vertical e baseline grid.</li>
+                  <li>Exportação de PDF padronizada para gráfica.</li>
+                </ul>
+              </div>
+
+              <div class="cta-stack" aria-label="Atalhos" style="align-self:start;">
+                <a class="btn btn--primary w-full" href="#download" data-track="preface_to_download">
+                  Ver scripts e baixar o pacote
+                </a>
+                <a class="btn btn--secondary w-full" href="#faq" data-track="preface_to_faq">
+                  FAQ rápido
+                </a>
+                <div class="mini" style="text-align:left;">
+                  Veja abaixo uma prévia do pacote e, em seguida, detalhes, vídeos e download.
+                </div>
+              </div>
+            </div>
+
+            <a
+              href="https://drive.google.com/uc?export=download&id=18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE"
+              target="_blank" rel="noopener noreferrer"
+              data-track="download_bridge_image"
+              data-item="PACOTE GRATUITO"
+              aria-label="Baixar pacote gratuito PUB Editorial Scripts"
+              style="display:block; color:inherit;"
+            >
+              <figure class="bridge-figure" aria-label="Prévia do pacote PUB Editorial Scripts">
+                <img
+                  src="assets/social-cover.jpg"
+                  loading="eager"
+                  width="1200" height="675"
+                  alt="Pacote PUB Editorial Scripts com cinco automações para InDesign: CAPA MASTER, MIOLO MASTER, MANCHA MASTER, VERTICAL MASTER e BASELINE MASTER"
+                />
+                <figcaption class="mini" style="text-align:left;">
+                  Cinco scripts para padronizar capa e miolo, aplicar ajustes em lote e manter consistência de PDF para impressão.
+                  <span style="text-decoration:underline; text-decoration-color: rgba(2,6,23,.22); font-weight:900;">
+                    Clique para baixar o pacote
+                  </span>
+                </figcaption>
+              </figure>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="wrap" id="topo" aria-label="Topo">
+        <div class="hero">
+          <div class="hero-inner">
+            <div class="header">
+              <div class="brand" aria-label="Marca">
+                <div class="logo"><span>PUB Editorial</span> <span class="grad">Scripts</span></div>
+                <div class="sub">Agilidade, controle e padrão editorial no InDesign</div>
+              </div>
+
+              <nav class="actions" aria-label="Navegação principal">
+                <a class="navlink" href="#resultados">Resultados</a>
+                <a class="navlink" href="#pacote">Scripts</a>
+                <a class="navlink" href="#videos">Vídeos</a>
+                <a class="navlink" href="#faq">FAQ</a>
+                <a class="navlink" href="#instalacao-top">Instalação</a>
+                <a class="navlink" href="#publico">Para quem</a>
+              </nav>
+            </div>
+
+            <div class="hero-body" aria-label="Hero">
+              <div class="hero-copy">
+                <div class="hero-kicker">
+                  <span class="tag">Eleve o nível do seu fluxo de trabalho</span>
+                </div>
+
+                <h1 class="h1">Scripts para Adobe InDesign (JSX) para produção editorial</h1>
+
+                <p class="seo-kicker">
+                  <strong>Edite livros no InDesign com menos cliques, menos retrabalho e mais precisão.</strong>
+                </p>
+
+                <p class="lead">
+                  Os scripts PUB Editorial automatizam tarefas técnicas no InDesign para reduzir retrabalho:
+                  criam capa e miolo com medidas, sangria, guias e presets; reaplicam ajustes após repaginação;
+                  e executam mancha, alinhamento vertical e baseline em lote por páginas, mestras, intervalos, seleção e estilos,
+                  gerando PDF consistente para a gráfica.
+                </p>
+
+                <p class="mini" style="text-align:left; color:rgba(226,232,240,.78);">
+                  Inclui scripts para criar capa e miolo, ajustar mancha, alinhamento vertical e baseline grid,
+                  além de preparar exportação de PDF para impressão no Adobe InDesign.
+                </p>
+
+                <ul class="hero-bullets" aria-label="O que você resolve com o pacote">
+                  <li>Capa aberta com lombada, orelhas, dobras, guias e sangria.</li>
+                  <li>Miolo com preset editorial, dimensões precisas e mancha segura.</li>
+                  <li>Ajustes em lote de mancha, alinhamento vertical e baseline grid.</li>
+                  <li>Saída PDF estável com presets configurados para impressão.</li>
+                </ul>
+              </div>
+
+              <div class="hero-divider" aria-hidden="true"></div>
+
+              <aside class="cta" id="download" aria-label="Download principal">
+                <p class="cta-title">Experimente agora</p>
+
+                <div class="cta-actions" aria-label="Ações">
+                  <a class="btn btn--primary w-full"
+                     data-track="download_primary"
+                     data-item="PACOTE GRATUITO"
+                     href="https://drive.google.com/uc?export=download&id=18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE"
+                     target="_blank" rel="noopener noreferrer">
+                    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v10m0 0l4-4m-4 4l-4-4M4 17v3h16v-3"/>
+                    </svg>
+                    Baixar pacote gratuito
+                  </a>
+
+                  <div class="cta-secondary" aria-label="Ações secundárias">
+                    <a class="btn btn--secondary w-full"
+                       href="#pacote"
+                       data-track="anchor_pacote"
+                       style="background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.26); color: rgba(255,255,255,.94);">
+                      Ver o que vem no pacote
+                    </a>
+
+                    <a class="btn btn--quiet w-full"
+                       data-track="whatsapp"
+                       href="https://wa.me/5551996581275"
+                       target="_blank" rel="noopener noreferrer">Suporte via WhatsApp</a>
+
+                    <a class="btn btn--quiet w-full"
+                       data-track="instagram"
+                       href="https://instagram.com/pubeditorial"
+                       target="_blank" rel="noopener noreferrer">
+                      PUB Editorial no Instagram
+                    </a>
+                  </div>
+                </div>
+
+                <ul class="trust" aria-label="Confiança e escopo">
+                  <li>5 scripts + guia de uso</li>
+                  <li>Arquivos JSX para o painel Scripts do InDesign</li>
+                </ul>
+
+                <div class="cta-meta">
+                  Se o download não iniciar automaticamente após o preenchimento do formulário, habilite as permissões de pop-ups no navegador, recarregue a página e tente novamente.
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stripe stripe--soft" id="resultados" aria-label="Resultados práticos">
+        <div class="wrap">
+          <div class="panel">
+            <div class="head">
+              <span class="tag">Resultados</span>
+              <h2 class="h2">Controle técnico contínuo da edição à impressão</h2>
+              <div class="muted">Processos padronizados, revisões ágeis e exportação consistente, reduzindo retrabalho e ajustes de última hora.</div>
+            </div>
+
+            <div class="results" aria-label="Lista de resultados">
+              <div class="result">
+                <h3>Setup técnico em minutos</h3>
+                <p>O documento já é criado com formato, margens, sangria, guias e presets corretos, sem repetir a configuração manual a cada novo projeto.</p>
+              </div>
+              <div class="result">
+                <h3>Revisões sem página a página</h3>
+                <p>Aplique ajustes estruturais de mancha, alinhamento vertical e baseline considerando páginas e estilos definidos, sem percorrer quadro a quadro em todo o documento.</p>
+              </div>
+              <div class="result">
+                <h3>Exportação padronizada</h3>
+                <p>PDF final com presets e critérios claros, reduzindo significativamente retrabalho, erros no fechamento e ajustes recorrentes com a gráfica.</p>
+              </div>
+            </div>
+
+            <div class="grid cta-inline" style="margin-top: var(--s5);">
+              <a class="btn btn--primary"
+                 data-track="download_results"
+                 data-item="PACOTE GRATUITO"
+                 href="https://drive.google.com/uc?export=download&id=18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE"
+                 target="_blank" rel="noopener noreferrer">
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v10m0 0l4-4m-4 4l-4-4M4 17v3h16v-3"/>
+                </svg>
+                Baixar pacote gratuito
+              </a>
+              <div class="mini">
+                <p>Compatível com Adobe InDesign CC 20 ou superior.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stripe stripe--soft2" id="pacote" aria-label="Pacote de scripts">
+        <div class="wrap">
+          <div class="panel">
+            <div class="head">
+              <span class="tag">O pacote inclui</span>
+              <h2 class="h2">Cinco scripts para Adobe InDesign: CAPA MASTER, MIOLO MASTER, MANCHA MASTER, VERTICAL MASTER e BASELINE MASTER.</h2>
+              <div class="muted">Arquivos JSX e guia de uso cobrindo instalação, compatibilidade e boas práticas de conferência.</div>
+            </div>
+
+            <div class="toollist" aria-label="Lista do pacote">
+              <article class="toolitem"><div class="iconbox" aria-hidden="true">📘</div><div><h3 class="name">CAPA MASTER</h3><p class="desc">Cria gabarito de capa aberta completo, calcula lombada e orelhas, gera dobras, guias de segurança e sangria, e prepara preset PDF CMYK no padrão gráfico.</p><div class="when">Use ao iniciar a capa para garantir medidas corretas, dobras precisas e guias de segurança desde o começo.</div></div></article>
+              <article class="toolitem"><div class="iconbox" aria-hidden="true">📄</div><div><h3 class="name">MIOLO MASTER</h3><p class="desc">Cria novo documento de miolo com preset editorial completo: define formato, margens, sangria e páginas espelhadas, além de preparar preset PDF CMYK conforme padrão gráfico.</p><div class="when">Ideal para padronizar o miolo desde a primeira página e manter conformidade no fechamento.</div></div></article>
+              <article class="toolitem"><div class="iconbox" aria-hidden="true">▭</div><div><h3 class="name">MANCHA MASTER</h3><p class="desc">Ajusta quadros de texto à mancha de uma só vez, com escopo por páginas, mestras e intervalos, e filtros por seleção, encadeamento e estilos de parágrafo.</p><div class="when">Permite reenquadrar quadros na área útil definida pelas margens, evitando ajustes manuais página por página.</div></div></article>
+              <article class="toolitem"><div class="iconbox" aria-hidden="true">↕</div><div><h3 class="name">VERTICAL MASTER</h3><p class="desc">Aplica alinhamento vertical em quadros de texto de uma só vez, topo, centro, base ou justificado, garantindo consistência de página em página ao longo do documento.</p><div class="when">Reorganiza o alinhamento vertical em todas as páginas com rapidez e precisão.</div></div></article>
+              <article class="toolitem"><div class="iconbox" aria-hidden="true">≡</div><div><h3 class="name">BASELINE MASTER</h3><p class="desc">Define e ativa a grade baseline do documento, ajusta início e incremento, e aplica alinhar ou não alinhar em estilos de parágrafo e seleção de uma só vez no miolo.</p><div class="when">Ideal para implantar ou ajustar a baseline grid e padronizar a aderência dos estilos.</div></div></article>
+              <article class="toolitem"><div class="iconbox" aria-hidden="true">🧭</div><div><h3 class="name">GUIA DE USO</h3><p class="desc">Instalação no painel Scripts do InDesign, requisitos e compatibilidade, passo a passo de uso e boas práticas de conferência.</p><div class="when">Recomendado antes de instalar e executar, para entender escopo, filtros e compatibilidade.</div></div></article>
+            </div>
+
+            <details class="details" aria-label="Downloads individuais">
+              <summary>
+                Downloads individuais
+                <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"/>
+                </svg>
+              </summary>
+
+              <div class="mini" style="margin-top: 10px;">
+                Use se você preferir baixar apenas um item. Para o fluxo completo, o recomendado é o pacote.
+              </div>
+
+              <ul class="pillgrid" role="list" aria-label="Lista de downloads individuais">
+                <li><a class="pill" data-track="download_pill" data-item="CAPA MASTER" href="https://drive.google.com/uc?export=download&id=1AHKC3hYZCo_qoZ5LnLmNrt1GmAThnomm" target="_blank" rel="noopener noreferrer">CAPA MASTER</a></li>
+                <li><a class="pill" data-track="download_pill" data-item="MIOLO MASTER" href="https://drive.google.com/uc?export=download&id=1CiKz2brCrVzXqwEvRVXZS9MKr9tuyFsL" target="_blank" rel="noopener noreferrer">MIOLO MASTER</a></li>
+                <li><a class="pill" data-track="download_pill" data-item="MANCHA MASTER" href="https://drive.google.com/uc?export=download&id=1ny87txfaUhN1mV0lB4WRC3KYWd9giVXJ" target="_blank" rel="noopener noreferrer">MANCHA MASTER</a></li>
+                <li><a class="pill" data-track="download_pill" data-item="VERTICAL MASTER" href="https://drive.google.com/uc?export=download&id=1qmLtu_szJ_rgak3x0gHYYtlktQS3BXpi" target="_blank" rel="noopener noreferrer">VERTICAL MASTER</a></li>
+                <li><a class="pill" data-track="download_pill" data-item="BASELINE MASTER" href="https://drive.google.com/uc?export=download&id=16ttuf7bM8xC5YWkldqXLDdxWYdJ2u9qs" target="_blank" rel="noopener noreferrer">BASELINE MASTER</a></li>
+                <li><a class="pill" data-track="download_pill" data-item="GUIA DE USO" href="https://drive.google.com/uc?export=download&id=11iAOd6cnB34jLMJt5FBZOd9ZhWRKzZSc" target="_blank" rel="noopener noreferrer">GUIA DE USO</a></li>
+              </ul>
+            </details>
+
+            <div class="grid cta-inline" style="margin-top: var(--s5);">
+              <a class="btn btn--primary" data-track="download_primary_pacote" data-item="PACOTE GRATUITO" href="https://drive.google.com/uc?export=download&id=18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE" target="_blank" rel="noopener noreferrer">
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v10m0 0l4-4m-4 4l-4-4M4 17v3h16v-3"/>
+                </svg>
+                Baixar pacote gratuito
+              </a>
+              <div class="mini">Scripts JSX para painel Scripts do InDesign.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stripe stripe--soft" id="videos" aria-label="Vídeos">
+        <div class="wrap">
+          <div class="panel">
+            <div class="head">
+              <span class="tag">Vídeos</span>
+              <h2 class="h2">Veja os scripts em ação</h2>
+              <div class="muted">Tutoriais demonstrativos no YouTube. Novos vídeos serão adicionados aqui.</div>
+            </div>
+
+            <div class="video-carousel" data-carousel="videos">
+              <button class="vbtn vbtn--prev" type="button" aria-label="Vídeo anterior" data-prev><span aria-hidden="true">‹</span></button>
+
+              <div class="video-track" tabindex="0" aria-label="Carrossel de vídeos" data-track>
+                <article class="video-card" data-slide>
+                  <div class="video-frame">
+                    <iframe src="https://www.youtube-nocookie.com/embed/V4WoT7v7f1s?rel=0&modestbranding=1" title="Baixar e instalar os scripts PUB Editorial" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                  </div>
+                  <p class="video-caption">Baixar e instalar os scripts PUB Editorial</p>
+                  <p class="video-note">Tutorial rápido para instalar os arquivos JSX no painel Scripts do Adobe InDesign.</p>
+                </article>
+
+                <article class="video-card" data-slide>
+                  <div class="video-frame">
+                    <iframe src="https://www.youtube-nocookie.com/embed/K0kM5cEKGWc?rel=0&modestbranding=1" title="Como usar o CAPA MASTER | PUB Editorial Scripts (InDesign)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                  </div>
+                  <p class="video-caption">Como usar o CAPA MASTER | PUB Editorial Scripts (InDesign)</p>
+                  <p class="video-note">Demonstração prática da criação de capa aberta com lombada, dobras, guias e sangria.</p>
+                </article>
+
+                <article class="video-card" data-slide>
+                  <div class="video-frame">
+                    <iframe src="https://www.youtube-nocookie.com/embed/t6QHOl6996U?rel=0&modestbranding=1" title="Como usar o VERTICAL MASTER | PUB Editorial Scripts (InDesign)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                  </div>
+                  <p class="video-caption">Como usar o VERTICAL MASTER | PUB Editorial Scripts (InDesign)</p>
+                  <p class="video-note">Exemplo de aplicação de alinhamento vertical em lote para manter consistência de páginas.</p>
+                </article>
+              </div>
+
+              <button class="vbtn vbtn--next" type="button" aria-label="Próximo vídeo" data-next><span aria-hidden="true">›</span></button>
+              <div class="vdots" aria-label="Navegação do carrossel" data-dots></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stripe stripe--soft2" id="faq" aria-label="Perguntas frequentes">
+        <div class="wrap">
+          <div class="panel">
+            <div class="head">
+              <span class="tag">FAQ</span>
+              <h2 class="h2">Scripts para InDesign (JSX): dúvidas rápidas</h2>
+              <div class="muted">Respostas objetivas sobre instalação, compatibilidade e uso do pacote PUB Editorial Scripts no Adobe InDesign.</div>
+            </div>
+
+            <div class="grid" style="gap:12px;">
+              <details class="details" style="margin-top:0;"><summary>O que são scripts para InDesign (JSX) e para que servem?<svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"/></svg></summary><div class="muted" style="margin-top:10px; color:#334155;">São automações em JavaScript, arquivos <strong>.jsx</strong>, executadas no painel <strong>Scripts</strong> do InDesign. Elas reduzem tarefas repetitivas na produção editorial, padronizando gabaritos e aplicando ajustes em lote com precisão.</div></details>
+              <details class="details" style="margin-top:0;"><summary>O pacote funciona em qual versão do Adobe InDesign?<svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"/></svg></summary><div class="muted" style="margin-top:10px; color:#334155;">O pacote foi preparado para <strong>Adobe InDesign CC 20 ou superior</strong>.</div></details>
+              <details class="details" style="margin-top:0;"><summary>Como instalar scripts no InDesign pelo painel Scripts?<svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"/></svg></summary><div class="muted" style="margin-top:10px; color:#334155;">No InDesign, vá em <strong>Janela &gt; Utilitários &gt; Scripts</strong>, clique com o botão direito em <strong>User/Usuário</strong> → <strong>Reveal in Finder/Explorer</strong> → abra <strong>Scripts Panel</strong> e copie os arquivos <strong>.jsx</strong>. Se não aparecerem no painel, reinicie o InDesign.</div></details>
+              <details class="details" style="margin-top:0;"><summary>O que o CAPA MASTER faz e por que isso evita erro de gráfica?<svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"/></svg></summary><div class="muted" style="margin-top:10px; color:#334155;">Ele cria o gabarito de capa aberta com cálculos de lombada e orelhas, dobras, guias e sangria, além de preparar preset de PDF.</div></details>
+              <details class="details" style="margin-top:0;"><summary>O que significa mancha, alinhamento vertical e baseline na diagramação?<svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"/></svg></summary><div class="muted" style="margin-top:10px; color:#334155;"><strong>Mancha</strong> é a área útil de texto, definida pelas margens. <strong>Alinhamento vertical</strong> controla a distribuição do conteúdo no quadro. <strong>Baseline</strong> padroniza a linha de base para manter ritmo tipográfico.</div></details>
+              <details class="details" style="margin-top:0;"><summary>Esses scripts substituem revisão e fechamento editorial?<svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"/></svg></summary><div class="muted" style="margin-top:10px; color:#334155;">Não. Eles aceleram e padronizam tarefas técnicas, mas a conferência visual e editorial continua essencial.</div></details>
+              <details class="details" style="margin-top:0;"><summary>Como escolher entre baixar o pacote completo ou itens individuais?<svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"/></svg></summary><div class="muted" style="margin-top:10px; color:#334155;">Para fluxo editorial completo, use o <strong>pacote</strong>. Para testes pontuais, use os <strong>downloads individuais</strong>.</div></details>
+            </div>
+
+            <div class="sep" style="margin-top:var(--s5);"></div>
+
+            <div class="muted" style="margin-top:var(--s4);">
+              Esta página reúne scripts JSX para Adobe InDesign usados em produção editorial, diagramação de livros,
+              criação de capa e miolo, ajustes de mancha, alinhamento vertical, baseline grid e exportação de PDF para impressão.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stripe stripe--soft2" id="publico" aria-label="Para quem">
+        <div id="instalacao-top" aria-hidden="true"></div>
+
+        <div class="wrap">
+          <div class="panel">
+            <div class="head">
+              <span class="tag">Instalação e público</span>
+              <h2 class="h2">Para quem</h2>
+              <div class="muted">Para quem trabalha com diagramação e produção editorial e precisa padronizar gabaritos, revisar layout e fechar arquivos para impressão.</div>
+            </div>
+
+            <div class="split" aria-label="Para quem são e como instalar">
+              <article class="card" aria-label="Para quem">
+                <div class="card-head">
+                  <div class="card-ic" aria-hidden="true">⏱</div>
+                  <div>
+                    <h3 class="card-title">Ideais para</h3>
+                    <p class="card-desc">Fluxos recorrentes e necessidade real de padrão técnico.</p>
+                  </div>
+                </div>
+
+                <ul class="bullets">
+                  <li><strong>Editoras e estúdios com produção frequente.</strong> Rotinas de lançamentos, reimpressões e coleções em que formato, margens, sangria e preset de PDF precisam se repetir com precisão.</li>
+                  <li><strong>Diagramadores e produção editorial com revisões e repaginação constantes.</strong> Projetos com muitas idas e vindas em que repaginar capítulos inteiros exige reenquadrar quadros, alinhar mancha e ajustar baseline de uma só vez.</li>
+                </ul>
+
+                <div class="card-foot">
+                  <a class="btn btn--primary w-full" data-track="download_publico" data-item="PACOTE GRATUITO" href="https://drive.google.com/uc?export=download&id=18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE" target="_blank" rel="noopener noreferrer">
+                    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v10m0 0l4-4m-4 4l-4-4M4 17v3h16v-3" />
+                    </svg>
+                    Baixar pacote gratuito
+                  </a>
+                </div>
+              </article>
+
+              <article class="card" id="instalacao" aria-label="Como instalar">
+                <div class="card-head">
+                  <div class="card-ic" aria-hidden="true">⬇</div>
+                  <div>
+                    <h3 class="card-title">Como instalar</h3>
+                    <p class="card-desc">Fluxo padrão do InDesign usando o painel Scripts</p>
+                  </div>
+                </div>
+
+                <div class="card-sub">Passo a passo</div>
+                <ol class="steps">
+                  <li>Abra o InDesign.</li>
+                  <li>Vá em: <strong>Janela &gt; Utilitários &gt; Scripts</strong>.</li>
+                  <li>No painel Scripts, clique com o botão direito em <strong>Usuário ou User</strong> e escolha <strong>Reveal in Finder ou Explorer</strong>.</li>
+                  <li>Abra a pasta <strong>Scripts Panel</strong>.</li>
+                  <li>Copie os arquivos <strong>.jsx</strong> do pacote para dentro dessa pasta.</li>
+                  <li>Se não aparecer no painel, reinicie o InDesign.</li>
+                </ol>
+
+                <div class="card-foot">
+                  <a class="btn btn--secondary w-full" data-track="whatsapp" href="https://wa.me/5551996581275" target="_blank" rel="noopener noreferrer">Suporte via WhatsApp</a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stripe stripe--soft2" style="padding-top:0" aria-label="Rodapé">
+        <div class="wrap">
+          <footer class="footer" aria-label="Rodapé">
+            <div class="footgrid" aria-label="Conteúdo do rodapé">
+              <div class="footbrand">
+                <span class="foottitle">PUB Editorial <span class="grad">Scripts</span></span>
+                <span class="footsep" aria-hidden="true"></span>
+                <span class="fineprint">© 2026 PUB Editorial.</span>
+              </div>
+
+              <ul class="footlinks" aria-label="Navegação e links">
+                <li><a href="#topo">Início</a></li>
+                <li><a href="#resultados">Resultados</a></li>
+                <li><a href="#pacote">Scripts</a></li>
+                <li><a href="#videos">Vídeos</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#publico">Para quem</a></li>
+                <li><span class="footsep" aria-hidden="true"></span></li>
+                <li><a data-track="download_footer" data-item="PACOTE GRATUITO" href="https://drive.google.com/uc?export=download&id=18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE" target="_blank" rel="noopener noreferrer">Download</a></li>
+                <li><a data-track="instagram" href="https://instagram.com/pubeditorial" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                <li><a data-track="whatsapp" href="https://wa.me/5551996581275" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+              </ul>
+            </div>
+          </footer>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="lead-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Formulário de pré-download">
+    <div class="lead-dialog" role="document">
+      <div class="lead-header">
+        <div class="lead-title">Preencha para liberar o download</div>
+        <button type="button" id="lead-close" class="lead-btn lead-btn--secondary lead-close">Fechar</button>
+      </div>
+
+      <form id="lead-form" class="lead-body">
+        <div class="lead-field">
+          <label class="lead-label" for="lead-name">Nome</label>
+          <input id="lead-name" class="lead-input" name="name" required autocomplete="name">
+        </div>
+
+        <div class="lead-field">
+          <label class="lead-label" for="lead-email">E-mail</label>
+          <input id="lead-email" class="lead-input" name="email" type="email" required autocomplete="email">
+        </div>
+
+        <div class="lead-grid-2">
+          <div class="lead-field">
+            <label class="lead-label" for="lead-role">Ocupação editorial</label>
+            <input id="lead-role" class="lead-input" name="role" placeholder="ex.: diagramador, editor, produção..." autocomplete="organization-title">
+          </div>
+
+          <div class="lead-field">
+            <label class="lead-label" for="lead-company">Empresa (opcional)</label>
+            <input id="lead-company" class="lead-input" name="company" autocomplete="organization">
+          </div>
+        </div>
+
+        <div class="lead-grid-2">
+          <div class="lead-field">
+            <label class="lead-label" for="lead-city">Cidade</label>
+            <input id="lead-city" class="lead-input" name="city" autocomplete="address-level2">
+          </div>
+          <div class="lead-field">
+            <label class="lead-label" for="lead-state">Estado (UF)</label>
+            <input id="lead-state" class="lead-input" name="state" maxlength="2" placeholder="UF" autocomplete="address-level1" style="text-transform:uppercase;">
+          </div>
+        </div>
+
+        <label class="lead-optin">
+          <input type="checkbox" name="optin" checked style="margin-top:3px;">
+          Aceito receber atualizações sobre scripts e melhorias.
+        </label>
+
+        <div class="lead-actions">
+          <button type="submit" id="lead-submit" class="lead-btn lead-btn--primary" disabled style="opacity:.55;">Continuar e baixar</button>
+        </div>
+
+        <div id="lead-hint" class="lead-hint"></div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+    class Dom {
+      byId(id) { return document.getElementById(id); }
+      on(el, event, handler, options) { if (el) el.addEventListener(event, handler, options); }
+    }
+
+    class UrlTools {
+      getDriveFileId(url) {
+        try {
+          const u = new URL(url);
+          const id = u.searchParams.get("id");
+          if (id) return id;
+          const m = u.pathname.match(/\/d\/([^/]+)/);
+          if (m && m[1]) return m[1];
+        } catch (_) {}
+        return "";
+      }
+      safeId() {
+        const r = Math.random().toString(16).slice(2);
+        return `${Date.now().toString(16)}-${r}`;
+      }
+      decodeHash(hash) {
+        try { return decodeURIComponent((hash || "").replace(/^#/, "")); }
+        catch (_) { return (hash || "").replace(/^#/, ""); }
+      }
+      getSearchParamsFromUrl(url) {
+        try { return new URL(String(url || "")).searchParams; }
+        catch (_) { return new URLSearchParams(""); }
+      }
+    }
+
+    class Analytics {
+      track(name, params = {}) {
+        try {
+          if (typeof window.gtag === "function" && typeof GA_MEASUREMENT_ID !== "undefined") {
+            window.gtag("event", name, { send_to: GA_MEASUREMENT_ID, ...params });
+          }
+        } catch (_) {}
+      }
+    }
+
+    class LeadCapture {
+      constructor(dom, urlTools, analytics) {
+        this.dom = dom;
+        this.urlTools = urlTools;
+        this.analytics = analytics;
+
+        this.endpoint = window.PUB_LEADS_ENDPOINT || "";
+        this.modal = this.dom.byId("lead-modal");
+        this.form = this.dom.byId("lead-form");
+        this.btnClose = this.dom.byId("lead-close");
+        this.hint = this.dom.byId("lead-hint");
+        this.submitBtn = this.dom.byId("lead-submit");
+        this.nameInput = this.form?.querySelector("input[name='name']") || null;
+        this.emailInput = this.form?.querySelector("input[name='email']") || null;
+        this.root = this.dom.byId("pub-rich");
+
+        this.pending = null;
+        this._hashScrolling = false;
+      }
+
+      init() {
+        if (!this.root || !this.modal || !this.form) return;
+
+        this.dom.on(this.root, "click", (e) => this.onRootClick(e), { capture: true });
+        this.dom.on(this.modal, "click", (e) => { if (e.target === this.modal) this.closeModalOnly(); });
+        this.dom.on(this.btnClose, "click", () => this.closeModalOnly());
+        this.dom.on(this.form, "submit", (e) => this.onSubmit(e));
+
+        const update = () => this.updateSubmitState();
+        this.dom.on(this.nameInput, "input", update);
+        this.dom.on(this.emailInput, "input", update);
+
+        this.dom.on(window, "keydown", (e) => {
+          if ((e.key || "").toLowerCase() === "escape" && this.isOpen()) this.closeModalOnly();
+        });
+
+        this.scrollFromHash({ behavior: "auto" });
+        this.dom.on(window, "hashchange", () => this.scrollFromHash({ behavior: "smooth" }));
+        this.initActiveNav();
+      }
+
+      isOpen() {
+        return this.modal && this.modal.style.display === "flex";
+      }
+
+      isDownloadLink(a) {
+        const href = a.getAttribute("href") || "";
+        const track = a.getAttribute("data-track") || "";
+        const isDriveDownload = href.includes("drive.google.com/uc?export=download");
+        const isDownloadTrack = track.includes("download");
+        return isDriveDownload || isDownloadTrack;
+      }
+
+      normalizeItem(a) {
+        return (a.getAttribute("data-item") || a.textContent || "").trim().slice(0, 200);
+      }
+
+      openModal() {
+        this.modal.style.display = "flex";
+        this.modal.setAttribute("aria-hidden", "false");
+        if (this.hint) this.hint.textContent = "";
+        this.updateSubmitState();
+        try { this.nameInput?.focus(); } catch(_) {}
+      }
+
+      closeModal() {
+        this.modal.style.display = "none";
+        this.modal.setAttribute("aria-hidden", "true");
+      }
+
+      closeModalOnly() {
+        this.closeModal();
+        this.pending = null;
+        if (this.hint) this.hint.textContent = "";
+        try { this.form?.reset(); } catch (_) {}
+        this.updateSubmitState();
+      }
+
+      updateSubmitState() {
+        if (!this.submitBtn || !this.nameInput || !this.emailInput) return;
+
+        const nameOk = String(this.nameInput.value || "").trim().length > 0;
+        const emailOk = this.emailInput.value ? this.emailInput.checkValidity() : false;
+        const can = nameOk && emailOk;
+
+        this.submitBtn.disabled = !can;
+        this.submitBtn.style.opacity = can ? "1" : ".55";
+        this.submitBtn.style.cursor = can ? "pointer" : "not-allowed";
+
+        if (this.hint) {
+          if (!nameOk && !emailOk) this.hint.textContent = "Preencha nome e e-mail para liberar o download.";
+          else if (!nameOk) this.hint.textContent = "Preencha seu nome para liberar o download.";
+          else if (!emailOk) this.hint.textContent = "Digite um e-mail válido para liberar o download.";
+          else this.hint.textContent = "";
+        }
+      }
+
+      postToEndpointAndDownload(payload) {
+        if (!this.endpoint) return false;
+
+        try {
+          const f = document.createElement("form");
+          f.method = "POST";
+          f.action = this.endpoint;
+          f.target = "_blank";
+
+          const i = document.createElement("input");
+          i.type = "hidden";
+          i.name = "payload";
+          i.value = JSON.stringify(payload);
+
+          f.appendChild(i);
+          document.body.appendChild(f);
+          f.submit();
+          f.remove();
+          return true;
+        } catch (_) {
+          return false;
+        }
+      }
+
+      scrollToId(id, { behavior = "smooth", updateHash = true } = {}) {
+        if (!id) return false;
+        const target = document.getElementById(id);
+        if (!target) return false;
+
+        try { target.scrollIntoView({ behavior, block: "start" }); }
+        catch (_) { try { target.scrollIntoView(true); } catch (_) {} }
+
+        if (updateHash) {
+          this._hashScrolling = true;
+          try { history.pushState(null, "", `#${encodeURIComponent(id)}`); } catch (_) {}
+          setTimeout(() => { this._hashScrolling = false; }, 50);
+        }
+        return true;
+      }
+
+      scrollFromHash({ behavior = "auto" } = {}) {
+        if (this._hashScrolling) return;
+        const hash = (location.hash || "").trim();
+        if (!hash) return;
+        const id = this.urlTools.decodeHash(hash);
+        this.scrollToId(id, { behavior, updateHash: false });
+      }
+
+      initActiveNav() {
+        const links = Array.from(document.querySelectorAll('.actions .navlink[href^="#"]'));
+        if (!links.length || !("IntersectionObserver" in window)) return;
+
+        const items = links.map(a => {
+          const id = this.urlTools.decodeHash(a.getAttribute("href") || "");
+          const el = id ? document.getElementById(id) : null;
+          return { a, id, el };
+        }).filter(x => x.el);
+
+        if (!items.length) return;
+
+        const setCurrent = (id) => {
+          for (const it of items) {
+            if (it.id === id) it.a.setAttribute("aria-current", "page");
+            else it.a.removeAttribute("aria-current");
+          }
+        };
+
+        for (const it of items) {
+          this.dom.on(it.a, "click", () => setCurrent(it.id));
+        }
+
+        const io = new IntersectionObserver((entries) => {
+          const vis = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (vis && vis.target && vis.target.id) setCurrent(vis.target.id);
+        }, {
+          root: null,
+          threshold: [0.25, 0.45, 0.6]
+        });
+
+        for (const it of items) io.observe(it.el);
+
+        if (location.hash) {
+          const id = this.urlTools.decodeHash(location.hash);
+          setCurrent(id);
+        }
+      }
+
+      onRootClick(e) {
+        const a = e.target.closest("a[href]");
+        if (!a) return;
+
+        const hrefAttr = (a.getAttribute("href") || "").trim();
+
+        if (hrefAttr.startsWith("#")) {
+          e.preventDefault();
+          const id = this.urlTools.decodeHash(hrefAttr);
+          const ok = this.scrollToId(id, { behavior: "smooth", updateHash: true });
+
+          this.analytics.track("anchor_click", {
+            anchor: hrefAttr,
+            ok: ok ? "yes" : "no",
+            label: (a.textContent || "").trim().slice(0, 120)
+          });
+          return;
+        }
+
+        if (!this.isDownloadLink(a)) return;
+
+        e.preventDefault();
+
+        const url = a.href || "";
+        const label = (a.textContent || "").trim() || (a.getAttribute("aria-label") || "").trim();
+        const placement = a.getAttribute("data-track") || "download";
+        const item = this.normalizeItem(a);
+        const fileId = this.urlTools.getDriveFileId(url);
+
+        this.pending = {
+          url,
+          item,
+          placement,
+          label: label.slice(0, 200),
+          file_id: fileId
+        };
+
+        this.analytics.track("lead_modal_open", {
+          placement,
+          item,
+          file_id: fileId,
+          link_url: url
+        });
+
+        this.openModal();
+      }
+
+      async onSubmit(e) {
+        e.preventDefault();
+        if (!this.pending?.url) return this.closeModalOnly();
+
+        this.updateSubmitState();
+        if (this.submitBtn?.disabled) return;
+
+        if (this.submitBtn) this.submitBtn.disabled = true;
+        if (this.hint) this.hint.textContent = "Registrando…";
+
+        const fd = new FormData(this.form);
+        const name = String(fd.get("name") || "").trim();
+        const email = String(fd.get("email") || "").trim();
+        const role = String(fd.get("role") || "").trim();
+        const company = String(fd.get("company") || "").trim();
+        const city = String(fd.get("city") || "").trim();
+        const state = String(fd.get("state") || "").trim().toUpperCase();
+        const optin = !!fd.get("optin");
+        const pageUrl = location.href;
+        const refUrl = document.referrer || "";
+        const uspSelf = new URLSearchParams(location.search);
+        const uspPage = this.urlTools.getSearchParamsFromUrl(pageUrl);
+        const uspRef = this.urlTools.getSearchParamsFromUrl(refUrl);
+        const getUtm = (k) => uspSelf.get(k) || uspPage.get(k) || uspRef.get(k) || "";
+
+        const payload = {
+          request_id: this.urlTools.safeId(),
+          event: "lead_submit",
+          item: this.pending.item,
+          name,
+          email,
+          role,
+          company,
+          city,
+          state,
+          optin,
+          placement: this.pending.placement,
+          label: this.pending.label,
+          file_id: this.pending.file_id,
+          download_url: this.pending.url,
+          page_url: pageUrl,
+          referrer: refUrl,
+          utm_source: getUtm("utm_source"),
+          utm_medium: getUtm("utm_medium"),
+          utm_campaign: getUtm("utm_campaign"),
+          utm_content: getUtm("utm_content"),
+          utm_term: getUtm("utm_term"),
+          user_agent: navigator.userAgent,
+          status: "client_submit"
+        };
+
+        this.analytics.track("lead_submit", {
+          placement: payload.placement,
+          item: payload.item,
+          file_id: payload.file_id,
+          optin: payload.optin ? "yes" : "no"
+        });
+
+        this.closeModalOnly();
+
+        const ok = this.postToEndpointAndDownload(payload);
+        if (!ok) {
+          try { window.open(payload.download_url, "_blank", "noopener,noreferrer"); }
+          catch (_) { location.href = payload.download_url; }
+        }
+      }
+    }
+
+    function initVideoCarousel({ rootSelector = "#pub-rich" } = {}) {
+      const root = document.querySelector(rootSelector);
+      if (!root) return;
+
+      const carousels = Array.from(root.querySelectorAll(".video-carousel[data-carousel]"));
+      if (!carousels.length) return;
+
+      const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+
+      for (const c of carousels) {
+        const track = c.querySelector("[data-track]");
+        const prev = c.querySelector("[data-prev]");
+        const next = c.querySelector("[data-next]");
+        const dots = c.querySelector("[data-dots]");
+        const slides = Array.from(c.querySelectorAll("[data-slide]"));
+
+        if (!track || slides.length === 0) continue;
+
+        if (dots) {
+          dots.innerHTML = "";
+          slides.forEach((_, i) => {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "vdot";
+            b.setAttribute("aria-label", `Ir para vídeo ${i + 1}`);
+            b.addEventListener("click", () => scrollToIndex(i, true));
+            dots.appendChild(b);
+          });
+        }
+
+        const getIndex = () => {
+          const left = track.scrollLeft;
+          const w = track.clientWidth || 1;
+          return clamp(Math.round(left / w), 0, slides.length - 1);
+        };
+
+        const setUI = (i) => {
+          if (prev) prev.disabled = i <= 0;
+          if (next) next.disabled = i >= slides.length - 1;
+          if (dots) {
+            const all = Array.from(dots.querySelectorAll(".vdot"));
+            all.forEach((d, idx) => d.setAttribute("aria-current", idx === i ? "true" : "false"));
+          }
+        };
+
+        const scrollToIndex = (i, smooth) => {
+          const w = track.clientWidth || 1;
+          track.scrollTo({ left: i * w, behavior: smooth ? "smooth" : "auto" });
+          try {
+            if (typeof window.gtag === "function" && typeof GA_MEASUREMENT_ID !== "undefined") {
+              window.gtag("event", "video_carousel_nav", {
+                send_to: GA_MEASUREMENT_ID,
+                index: i + 1,
+                carousel: c.getAttribute("data-carousel") || "videos"
+              });
+            }
+          } catch (_) {}
+        };
+
+        if (prev) prev.addEventListener("click", () => scrollToIndex(getIndex() - 1, true));
+        if (next) next.addEventListener("click", () => scrollToIndex(getIndex() + 1, true));
+
+        track.addEventListener("keydown", (e) => {
+          const k = (e.key || "").toLowerCase();
+          if (k === "arrowleft") { e.preventDefault(); scrollToIndex(getIndex() - 1, true); }
+          if (k === "arrowright") { e.preventDefault(); scrollToIndex(getIndex() + 1, true); }
+        });
+
+        let raf = 0;
+        track.addEventListener("scroll", () => {
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => setUI(getIndex()));
+        }, { passive: true });
+
+        setUI(getIndex());
+      }
+    }
+
+    const dom = new Dom();
+    const urlTools = new UrlTools();
+    const analytics = new Analytics();
+    new LeadCapture(dom, urlTools, analytics).init();
+    initVideoCarousel();
+  </script>
+</body>
+</html>
