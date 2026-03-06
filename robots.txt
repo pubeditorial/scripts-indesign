@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://SEU-USUARIO.github.io/pub-editorial-scripts/sitemap.xml
+
+Sitemap: href="https://github.com/pubeditorial/scripts-indesign/sitemap.xml
