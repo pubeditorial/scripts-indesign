@@ -83,7 +83,6 @@
 }
 </script>
 
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZS7FSCH0R"></script>
   <script>
     const GA_MEASUREMENT_ID = "G-TZS7FSCH0R";
@@ -332,7 +331,18 @@
       will-change: transform;
     }
 
-    #pub-rich .btn svg{ width:18px; height:18px }
+    #pub-rich .btn svg{
+      width:18px;
+      height:18px;
+      display:block;
+      flex:0 0 auto;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
     #pub-rich .btn:active{ transform: translateY(1px) }
 
     #pub-rich .btn--primary{
@@ -613,6 +623,11 @@
       display:flex;
       flex-direction:column;
       min-width:0;
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    #pub-rich .card:hover{
+      transform:translateY(-2px);
     }
 
     #pub-rich .card:before,
@@ -642,17 +657,47 @@
       margin-bottom:var(--s3);
     }
 
-    #pub-rich .card-ic{
-      width:46px;
-      height:46px;
-      border-radius:18px;
+    #pub-rich .card-ic,
+    #pub-rich .iconbox{
+      width:48px;
+      height:48px;
+      border-radius:16px;
       display:flex;
       align-items:center;
       justify-content:center;
-      border:1px solid var(--border-default);
-      background:linear-gradient(180deg, rgba(37,99,235,.10), rgba(124,58,237,.06));
-      color:#1d4ed8;
       flex:0 0 auto;
+      margin-top:2px;
+      border:1px solid rgba(37,99,235,.10);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.62)),
+        linear-gradient(135deg, rgba(37,99,235,.10), rgba(124,58,237,.08));
+      color:#1d4ed8;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 8px 20px rgba(15,23,42,.05);
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    #pub-rich .card-ic svg,
+    #pub-rich .iconbox svg{
+      width:22px;
+      height:22px;
+      display:block;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:1.9;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      vector-effect:non-scaling-stroke;
+    }
+
+    #pub-rich .toolitem:hover .iconbox,
+    #pub-rich .card:hover .card-ic{
+      transform:translateY(-1px);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.8),
+        0 12px 26px rgba(37,99,235,.10);
+      border-color:rgba(37,99,235,.16);
     }
 
     #pub-rich .card-title,
@@ -729,21 +774,11 @@
       gap:var(--s3);
       align-items:flex-start;
       min-height:100%;
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
 
-    #pub-rich .iconbox{
-      width:42px;
-      height:42px;
-      border-radius:15px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border:1px solid var(--border-default);
-      background:linear-gradient(180deg, rgba(37,99,235,.10), rgba(124,58,237,.06));
-      color:#1d4ed8;
-      flex:0 0 auto;
-      margin-top:2px;
-      font-size:18px;
+    #pub-rich .toolitem:hover{
+      transform:translateY(-2px);
     }
 
     #pub-rich .toolitem .desc{
@@ -1451,8 +1486,10 @@
                      data-item="PACOTE GRATUITO"
                      href="https://drive.google.com/uc?export=download&id=18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE"
                      target="_blank" rel="noopener noreferrer">
-                    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v10m0 0l4-4m-4 4l-4-4M4 17v3h16v-3"/>
+                    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                      <path d="M12 3v10"/>
+                      <path d="M8 9l4 4 4-4"/>
+                      <path d="M4 17v3h16v-3"/>
                     </svg>
                     Baixar pacote gratuito
                   </a>
@@ -1462,18 +1499,33 @@
                        href="#pacote"
                        data-track="anchor_pacote"
                        style="background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.22); color: rgba(255,255,255,.96);">
+                      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                        <path d="M5 12h14"/>
+                        <path d="M13 6l6 6-6 6"/>
+                      </svg>
                       Ver o que vem no pacote
                     </a>
 
                     <a class="btn btn--quiet w-full"
                        data-track="whatsapp"
                        href="https://wa.me/5551996581275"
-                       target="_blank" rel="noopener noreferrer">Suporte via WhatsApp</a>
+                       target="_blank" rel="noopener noreferrer">
+                      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                        <path d="M20 11.5a8 8 0 0 1-11.7 7.1L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"/>
+                        <path d="M9.7 9.3c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .5.4l.4 1.2c.1.2 0 .4-.1.6l-.4.5c.6 1.1 1.5 2 2.6 2.6l.5-.4c.2-.1.4-.2.6-.1l1.2.4c.4.1.4.3.4.5v.5c0 .2 0 .4-.4.6-.4.2-.9.4-1.5.3-1-.1-2.4-.7-3.8-2.1-1.4-1.4-2-2.8-2.1-3.8-.1-.6.1-1.1.3-1.5Z"/>
+                      </svg>
+                      Suporte via WhatsApp
+                    </a>
 
                     <a class="btn btn--quiet w-full"
                        data-track="instagram"
                        href="https://instagram.com/pubeditorial"
                        target="_blank" rel="noopener noreferrer">
+                      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                        <rect x="3.5" y="3.5" width="17" height="17" rx="4"/>
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M17.5 6.5h.01"/>
+                      </svg>
                       PUB Editorial no Instagram
                     </a>
                   </div>
@@ -1523,8 +1575,10 @@
                  data-item="PACOTE GRATUITO"
                  href="https://drive.google.com/uc?export=download&id=18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE"
                  target="_blank" rel="noopener noreferrer">
-                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v10m0 0l4-4m-4 4l-4-4M4 17v3h16v-3"/>
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                  <path d="M12 3v10"/>
+                  <path d="M8 9l4 4 4-4"/>
+                  <path d="M4 17v3h16v-3"/>
                 </svg>
                 Baixar pacote gratuito
               </a>
@@ -1619,7 +1673,13 @@
 
             <div class="toollist" aria-label="Lista do pacote">
               <article class="toolitem">
-                <div class="iconbox" aria-hidden="true">📘</div>
+                <div class="iconbox" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 6.5C4 5.67 4.67 5 5.5 5H11v14H5.5A1.5 1.5 0 0 1 4 17.5z"/>
+                    <path d="M20 6.5C20 5.67 19.33 5 18.5 5H13v14h5.5a1.5 1.5 0 0 0 1.5-1.5z"/>
+                    <path d="M11 5a3 3 0 0 1 2 0"/>
+                  </svg>
+                </div>
                 <div>
                   <h3 class="name">CAPA MASTER</h3>
                   <p class="desc">Cria gabarito de capa aberta completo, calcula lombada e orelhas, gera dobras, guias de segurança e sangria, e prepara preset PDF CMYK no padrão gráfico.</p>
@@ -1628,7 +1688,12 @@
               </article>
 
               <article class="toolitem">
-                <div class="iconbox" aria-hidden="true">📄</div>
+                <div class="iconbox" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="6" y="4" width="12" height="16" rx="2"/>
+                    <path d="M9 8h6M9 12h6M9 16h4"/>
+                  </svg>
+                </div>
                 <div>
                   <h3 class="name">MIOLO MASTER</h3>
                   <p class="desc">Cria novo documento de miolo com preset editorial completo: define formato, margens, sangria e páginas espelhadas, além de preparar preset PDF CMYK conforme padrão gráfico.</p>
@@ -1637,7 +1702,12 @@
               </article>
 
               <article class="toolitem">
-                <div class="iconbox" aria-hidden="true">▭</div>
+                <div class="iconbox" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="4" y="4" width="16" height="16" rx="2"/>
+                    <rect x="8" y="7" width="8" height="10" rx="1.5"/>
+                  </svg>
+                </div>
                 <div>
                   <h3 class="name">MANCHA MASTER</h3>
                   <p class="desc">Ajusta quadros de texto à mancha de uma só vez, com escopo por páginas, mestras e intervalos, e filtros por seleção, encadeamento e estilos de parágrafo.</p>
@@ -1646,7 +1716,14 @@
               </article>
 
               <article class="toolitem">
-                <div class="iconbox" aria-hidden="true">↕</div>
+                <div class="iconbox" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 4v16"/>
+                    <path d="M8 8l4-4 4 4"/>
+                    <path d="M8 16l4 4 4-4"/>
+                    <rect x="6" y="9" width="12" height="6" rx="1.5"/>
+                  </svg>
+                </div>
                 <div>
                   <h3 class="name">VERTICAL MASTER</h3>
                   <p class="desc">Aplica alinhamento vertical em quadros de texto de uma só vez, topo, centro, base ou justificado, garantindo consistência de página em página ao longo do documento.</p>
@@ -1655,7 +1732,12 @@
               </article>
 
               <article class="toolitem">
-                <div class="iconbox" aria-hidden="true">≡</div>
+                <div class="iconbox" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 7h14M5 12h14M5 17h14"/>
+                    <path d="M8 5v14"/>
+                  </svg>
+                </div>
                 <div>
                   <h3 class="name">BASELINE MASTER</h3>
                   <p class="desc">Define e ativa a grade baseline do documento, ajusta início e incremento, e aplica alinhar ou não alinhar em estilos de parágrafo e seleção de uma só vez no miolo.</p>
@@ -1664,7 +1746,13 @@
               </article>
 
               <article class="toolitem">
-                <div class="iconbox" aria-hidden="true">🧭</div>
+                <div class="iconbox" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 19a7 7 0 1 0 0-14 7 7 0 0 0 0 14z"/>
+                    <path d="M12 9v3.5"/>
+                    <path d="M12 16h.01"/>
+                  </svg>
+                </div>
                 <div>
                   <h3 class="name">GUIA DE USO</h3>
                   <p class="desc">Instalação no painel Scripts do InDesign, requisitos e compatibilidade, passo a passo de uso e boas práticas de conferência.</p>
@@ -1697,8 +1785,10 @@
 
             <div class="grid cta-inline" style="margin-top: var(--s5);">
               <a class="btn btn--primary" data-track="download_primary_pacote" data-item="PACOTE GRATUITO" href="https://drive.google.com/uc?export=download&id=18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE" target="_blank" rel="noopener noreferrer">
-                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v10m0 0l4-4m-4 4l-4-4M4 17v3h16v-3"/>
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                  <path d="M12 3v10"/>
+                  <path d="M8 9l4 4 4-4"/>
+                  <path d="M4 17v3h16v-3"/>
                 </svg>
                 Baixar pacote gratuito
               </a>
@@ -1860,7 +1950,12 @@
             <div class="split" aria-label="Para quem são e como instalar">
               <article class="card" aria-label="Para quem">
                 <div class="card-head">
-                  <div class="card-ic" aria-hidden="true">⏱</div>
+                  <div class="card-ic" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 7v5l3 3"/>
+                      <path d="M21 12a9 9 0 1 1-9-9"/>
+                    </svg>
+                  </div>
                   <div>
                     <h3 class="card-title">Ideais para</h3>
                     <p class="card-desc">Fluxos recorrentes e necessidade real de padrão técnico.</p>
@@ -1874,8 +1969,10 @@
 
                 <div class="card-foot">
                   <a class="btn btn--primary w-full" data-track="download_publico" data-item="PACOTE GRATUITO" href="https://drive.google.com/uc?export=download&id=18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE" target="_blank" rel="noopener noreferrer">
-                    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v10m0 0l4-4m-4 4l-4-4M4 17v3h16v-3" />
+                    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                      <path d="M12 3v10"/>
+                      <path d="M8 9l4 4 4-4"/>
+                      <path d="M4 17v3h16v-3"/>
                     </svg>
                     Baixar pacote gratuito
                   </a>
@@ -1884,7 +1981,13 @@
 
               <article class="card" id="instalacao" aria-label="Como instalar">
                 <div class="card-head">
-                  <div class="card-ic" aria-hidden="true">⬇</div>
+                  <div class="card-ic" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 4v10"/>
+                      <path d="M8 10l4 4 4-4"/>
+                      <path d="M5 19h14"/>
+                    </svg>
+                  </div>
                   <div>
                     <h3 class="card-title">Como instalar</h3>
                     <p class="card-desc">Fluxo padrão do InDesign usando o painel Scripts</p>
@@ -1902,7 +2005,13 @@
                 </ol>
 
                 <div class="card-foot">
-                  <a class="btn btn--secondary w-full" data-track="whatsapp" href="https://wa.me/5551996581275" target="_blank" rel="noopener noreferrer">Suporte via WhatsApp</a>
+                  <a class="btn btn--secondary w-full" data-track="whatsapp" href="https://wa.me/5551996581275" target="_blank" rel="noopener noreferrer">
+                    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                      <path d="M20 11.5a8 8 0 0 1-11.7 7.1L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"/>
+                      <path d="M9.7 9.3c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .5.4l.4 1.2c.1.2 0 .4-.1.6l-.4.5c.6 1.1 1.5 2 2.6 2.6l.5-.4c.2-.1.4-.2.6-.1l1.2.4c.4.1.4.3.4.5v.5c0 .2 0 .4-.4.6-.4.2-.9.4-1.5.3-1-.1-2.4-.7-3.8-2.1-1.4-1.4-2-2.8-2.1-3.8-.1-.6.1-1.1.3-1.5Z"/>
+                    </svg>
+                    Suporte via WhatsApp
+                  </a>
                 </div>
               </article>
             </div>
@@ -2477,5 +2586,3 @@
   </script>
 </body>
 </html>
-
-
