@@ -8,5 +8,4 @@
 User-agent: *
 Allow: /
 
-# Sitemap principal da landing page
 Sitemap: https://pubeditorial.github.io/scripts-indesign/sitemap.xml
