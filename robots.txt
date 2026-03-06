@@ -1,5 +1,12 @@
+# =========================================================
+# robots.txt — PUB Editorial
+# Ambiente principal: GitHub Pages
+# Site: https://pubeditorial.github.io/
+# Landing: https://pubeditorial.github.io/scripts-indesign/
+# =========================================================
+
 User-agent: *
 Allow: /
 
-
-Sitemap: href="https://github.com/pubeditorial/scripts-indesign/sitemap.xml
+# Sitemap principal da landing page
+Sitemap: https://pubeditorial.github.io/scripts-indesign/sitemap.xml
