@@ -1,6 +1,6 @@
 # PUB Editorial Scripts — landing page oficial
 
-Landing page estática da **PUB Editorial** para apresentação, captação e distribuição gratuita do pacote **PUB Editorial Scripts** para **Adobe InDesign**, com foco em:
+Landing page estática da **PUB Editorial** para apresentação, captação e distribuição do pacote **PUB Editorial Scripts** para **Adobe InDesign**, com foco em:
 
 - posicionamento premium da marca;
 - conversão por formulário de pré-download;
