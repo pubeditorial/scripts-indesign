@@ -2670,6 +2670,24 @@
         this.endpoint = endpoint || "";
       }
 
+      extractRedirectUrlFromHtml(text) {
+        const source = String(text || "");
+
+        const patterns = [
+          /location\.replace\((['"])(.*?)\1\)/i,
+          /location\.href\s*=\s*(['"])(.*?)\1/i,
+          /window\.location\.href\s*=\s*(['"])(.*?)\1/i,
+          /window\.location\.replace\((['"])(.*?)\1\)/i
+        ];
+
+        for (const re of patterns) {
+          const match = source.match(re);
+          if (match && match[2]) return match[2];
+        }
+
+        return "";
+      }
+
       async postJSON(payload) {
         if (!this.endpoint) throw new Error("Endpoint não configurado.");
 
@@ -2683,17 +2701,34 @@
         });
 
         const text = await response.text();
+        const contentType = String(response.headers.get("content-type") || "").toLowerCase();
+
         let data = null;
+        let redirectUrl = "";
 
         try {
           data = JSON.parse(text);
         } catch (_) {
-          data = { ok: false, raw: text };
+          redirectUrl = this.extractRedirectUrlFromHtml(text);
+
+          if (redirectUrl) {
+            data = {
+              ok: true,
+              data: {
+                redirect_url: redirectUrl,
+                transport: "html_redirect"
+              }
+            };
+          } else {
+            data = { ok: false, raw: text };
+          }
         }
 
         return {
           httpOk: response.ok,
           status: response.status,
+          contentType,
+          redirectUrl,
           data
         };
       }
@@ -3016,17 +3051,17 @@
         try {
           const res = await this.api.postJSON(payload);
           const data = res?.data || {};
-          const ok = !!(res.httpOk && data.ok);
-          const appData = data.data || {};
+          const ok = !!(res?.httpOk && data?.ok);
+          const appData = data?.data || {};
 
           if (ok) {
-            redirectUrl = appData.redirect_url || payload.download_url;
+            redirectUrl = appData.redirect_url || res.redirectUrl || payload.download_url;
 
             this.analytics.trackDownload({
               file_name: payload.item,
               link_url: redirectUrl,
               placement: payload.placement,
-              backend_status: "ok",
+              backend_status: appData.transport === "html_redirect" ? "html_redirect" : "ok",
               duplicate: appData.duplicate ? "yes" : "no"
             });
 
@@ -3038,7 +3073,7 @@
           this.analytics.track("lead_submit_error", {
             placement: payload.placement,
             item: payload.item,
-            status: res.status || 0
+            status: res?.status || 0
           });
         } catch (_) {
           this.analytics.track("lead_submit_fetch_error", {
