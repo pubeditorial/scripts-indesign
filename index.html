@@ -1283,7 +1283,8 @@
       border-color: rgba(37,99,235,.30);
     }
 
-    #lead-modal{
+    #lead-modal,
+    #support-modal{
       position: fixed;
       inset: 0;
       display: none;
@@ -1295,9 +1296,10 @@
       backdrop-filter: blur(5px);
     }
 
-    #lead-modal .lead-dialog{
-      width: min(560px, 100%);
-      max-height: min(86vh, 720px);
+    #lead-modal .lead-dialog,
+    #support-modal .support-dialog{
+      width: min(680px, 100%);
+      max-height: min(88vh, 760px);
       background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.94));
       border-radius: var(--radius-card);
       border: 1px solid var(--border-default);
@@ -1307,7 +1309,13 @@
       flex-direction: column;
     }
 
-    #lead-modal .lead-header{
+    #lead-modal .lead-dialog{
+      width: min(560px, 100%);
+      max-height: min(86vh, 720px);
+    }
+
+    #lead-modal .lead-header,
+    #support-modal .support-header{
       padding: 15px 16px;
       border-bottom: 1px solid var(--line);
       display: flex;
@@ -1316,41 +1324,61 @@
       align-items: center;
     }
 
-    #lead-modal .lead-title{
+    #lead-modal .lead-title,
+    #support-modal .support-title{
       font-weight: 950;
       letter-spacing: -.01em;
       color: var(--fg);
     }
 
-    #lead-modal .lead-body{
+    #lead-modal .lead-body,
+    #support-modal .support-body{
       padding: 16px;
       display: grid;
       gap: 12px;
       overflow: auto;
     }
 
-    #lead-modal .lead-field{
+    #lead-modal .lead-field,
+    #support-modal .support-field{
       display: grid;
       gap: 6px;
     }
 
-    #lead-modal .lead-label{
+    #lead-modal .lead-label,
+    #support-modal .support-label{
       font-weight: 800;
       font-size: 13px;
       color: var(--fg);
     }
 
-    #lead-modal .lead-input{
-      height: 48px;
+    #lead-modal .lead-input,
+    #support-modal .support-input,
+    #support-modal .support-select,
+    #support-modal .support-textarea{
       border-radius: var(--radius-control);
       border: 1px solid rgba(2,6,23,.14);
-      padding: 0 12px;
       font-size: 15px;
       background: #fff;
       color: var(--fg);
+      width: 100%;
     }
 
-    #lead-modal .lead-grid-2{
+    #lead-modal .lead-input,
+    #support-modal .support-input,
+    #support-modal .support-select{
+      height: 48px;
+      padding: 0 12px;
+    }
+
+    #support-modal .support-textarea{
+      min-height: 140px;
+      padding: 12px;
+      resize: vertical;
+    }
+
+    #lead-modal .lead-grid-2,
+    #support-modal .support-grid-2{
       display: grid;
       gap: 10px;
       grid-template-columns: 1fr 1fr;
@@ -1365,7 +1393,8 @@
       line-height: 1.35;
     }
 
-    #lead-modal .lead-actions{
+    #lead-modal .lead-actions,
+    #support-modal .support-actions{
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
@@ -1374,12 +1403,14 @@
       align-items: center;
     }
 
-    #lead-modal .lead-hint{
+    #lead-modal .lead-hint,
+    #support-modal .support-hint{
       font-size: 12.5px;
       color: var(--muted2);
     }
 
-    #lead-modal .lead-btn{
+    #lead-modal .lead-btn,
+    #support-modal .support-btn{
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1393,28 +1424,35 @@
       white-space: nowrap;
     }
 
-    #lead-modal .lead-btn--primary{
+    #lead-modal .lead-btn--primary,
+    #support-modal .support-btn--primary{
       background: linear-gradient(135deg, rgba(37,99,235,1), rgba(59,130,246,.94));
       color: #fff;
       box-shadow: 0 12px 28px rgba(37,99,235,.22);
     }
 
-    #lead-modal .lead-btn--secondary{
+    #lead-modal .lead-btn--secondary,
+    #support-modal .support-btn--secondary{
       background: rgba(2,6,23,.06);
       border-color: rgba(2,6,23,.12);
       color: var(--fg);
     }
 
-    #lead-modal .lead-close{
+    #lead-modal .lead-close,
+    #support-modal .support-close{
       min-height: 38px;
       padding: 10px 12px;
     }
 
     @media (max-width: 560px){
-      #lead-modal .lead-body{ padding: 14px; }
-      #lead-modal .lead-grid-2{ grid-template-columns: 1fr; }
-      #lead-modal .lead-actions{ flex-direction: column; }
-      #lead-modal .lead-actions .lead-btn{ width: 100%; }
+      #lead-modal .lead-body,
+      #support-modal .support-body{ padding: 14px; }
+      #lead-modal .lead-grid-2,
+      #support-modal .support-grid-2{ grid-template-columns: 1fr; }
+      #lead-modal .lead-actions,
+      #support-modal .support-actions{ flex-direction: column; }
+      #lead-modal .lead-actions .lead-btn,
+      #support-modal .support-actions .support-btn{ width: 100%; }
     }
   </style>
 </head>
@@ -1515,6 +1553,18 @@
                         <path d="M17.5 6.5h.01"/>
                       </svg>
                       PUB Editorial no Instagram
+                    </a>
+
+                    <a class="btn btn--quiet w-full"
+                       href="#"
+                       id="open-support-modal"
+                       data-track="support_open">
+                      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                        <path d="M8 10h8"/>
+                        <path d="M8 14h5"/>
+                        <path d="M6 5h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 3v-3H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
+                      </svg>
+                      Abrir chamado de suporte
                     </a>
                   </div>
                 </div>
@@ -2089,6 +2139,61 @@
     </div>
   </div>
 
+  <div id="support-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Formulário de suporte">
+    <div class="support-dialog" role="document">
+      <div class="support-header">
+        <div class="support-title">Abrir chamado de suporte</div>
+        <button type="button" id="support-close" class="support-btn support-btn--secondary support-close">Fechar</button>
+      </div>
+
+      <form id="support-form" class="support-body" novalidate>
+        <div class="support-grid-2">
+          <div class="support-field">
+            <label class="support-label" for="support-name">Nome</label>
+            <input id="support-name" class="support-input" name="name" required autocomplete="name">
+          </div>
+
+          <div class="support-field">
+            <label class="support-label" for="support-email">E-mail</label>
+            <input id="support-email" class="support-input" name="email" type="email" required autocomplete="email" inputmode="email">
+          </div>
+        </div>
+
+        <div class="support-grid-2">
+          <div class="support-field">
+            <label class="support-label" for="support-item">Script / item</label>
+            <select id="support-item" class="support-select" name="item" required>
+              <option value="">Selecione</option>
+              <option value="PACOTE GRATUITO">PACOTE GRATUITO</option>
+              <option value="CAPA MASTER">CAPA MASTER</option>
+              <option value="MIOLO MASTER">MIOLO MASTER</option>
+              <option value="MANCHA MASTER">MANCHA MASTER</option>
+              <option value="VERTICAL MASTER">VERTICAL MASTER</option>
+              <option value="BASELINE MASTER">BASELINE MASTER</option>
+              <option value="GUIA DE USO">GUIA DE USO</option>
+            </select>
+          </div>
+
+          <div class="support-field">
+            <label class="support-label" for="support-subject">Assunto</label>
+            <input id="support-subject" class="support-input" name="subject" required placeholder="Ex.: erro ao instalar, dúvida de uso">
+          </div>
+        </div>
+
+        <div class="support-field">
+          <label class="support-label" for="support-message">Mensagem</label>
+          <textarea id="support-message" class="support-textarea" name="message" required placeholder="Descreva o problema, o que você tentou fazer e, se possível, a versão do InDesign."></textarea>
+        </div>
+
+        <div class="support-actions">
+          <button type="submit" id="support-submit" class="support-btn support-btn--primary" disabled style="opacity:.55;">Enviar chamado</button>
+        </div>
+
+        <div id="support-hint" class="support-hint"></div>
+      </form>
+    </div>
+  </div>
+
   <script type="module">
     class Dom {
       byId(id) { return document.getElementById(id); }
@@ -2264,7 +2369,6 @@
         this.analytics = analytics;
         this.api = api;
 
-        this.endpoint = window.PUB_LEADS_ENDPOINT || "";
         this.modal = this.dom.byId("lead-modal");
         this.form = this.dom.byId("lead-form");
         this.btnClose = this.dom.byId("lead-close");
@@ -2611,6 +2715,210 @@
       }
     }
 
+    class SupportCapture {
+      constructor(dom, urlTools, analytics, api) {
+        this.dom = dom;
+        this.urlTools = urlTools;
+        this.analytics = analytics;
+        this.api = api;
+
+        this.modal = this.dom.byId("support-modal");
+        this.form = this.dom.byId("support-form");
+        this.btnClose = this.dom.byId("support-close");
+        this.btnOpen = this.dom.byId("open-support-modal");
+        this.hint = this.dom.byId("support-hint");
+        this.submitBtn = this.dom.byId("support-submit");
+
+        this.nameInput = this.form?.querySelector("input[name='name']") || null;
+        this.emailInput = this.form?.querySelector("input[name='email']") || null;
+        this.itemInput = this.form?.querySelector("[name='item']") || null;
+        this.subjectInput = this.form?.querySelector("input[name='subject']") || null;
+        this.messageInput = this.form?.querySelector("textarea[name='message']") || null;
+
+        this._isSubmitting = false;
+      }
+
+      init() {
+        if (!this.modal || !this.form || !this.btnOpen) return;
+
+        this.dom.on(this.btnOpen, "click", (e) => {
+          e.preventDefault();
+          this.analytics.trackCTA("open_support_modal", {
+            placement: "support_button"
+          });
+          this.openModal();
+        });
+
+        this.dom.on(this.modal, "click", (e) => {
+          if (e.target === this.modal && !this._isSubmitting) this.closeModalOnly();
+        });
+
+        this.dom.on(this.btnClose, "click", () => {
+          if (!this._isSubmitting) this.closeModalOnly();
+        });
+
+        this.dom.on(this.form, "submit", (e) => this.onSubmit(e));
+
+        const update = () => this.updateSubmitState();
+        [this.nameInput, this.emailInput, this.itemInput, this.subjectInput, this.messageInput]
+          .filter(Boolean)
+          .forEach((el) => {
+            this.dom.on(el, "input", update);
+            this.dom.on(el, "change", update);
+          });
+
+        this.dom.on(window, "keydown", (e) => {
+          if ((e.key || "").toLowerCase() === "escape" && this.isOpen() && !this._isSubmitting) {
+            this.closeModalOnly();
+          }
+        });
+
+        this.updateSubmitState();
+      }
+
+      isOpen() {
+        return this.modal && this.modal.style.display === "flex";
+      }
+
+      openModal() {
+        this.modal.style.display = "flex";
+        this.modal.setAttribute("aria-hidden", "false");
+        this.modal.setAttribute("data-state", "open");
+        if (this.hint) this.hint.textContent = "";
+        this.updateSubmitState();
+        try { this.nameInput?.focus(); } catch (_) {}
+      }
+
+      closeModal() {
+        this.modal.style.display = "none";
+        this.modal.setAttribute("aria-hidden", "true");
+        this.modal.removeAttribute("data-state");
+      }
+
+      closeModalOnly() {
+        this.closeModal();
+        if (this.hint) this.hint.textContent = "";
+        try { this.form?.reset(); } catch (_) {}
+        this._isSubmitting = false;
+        this.setSubmittingUI(false);
+        this.updateSubmitState();
+      }
+
+      setSubmittingUI(isSubmitting, message = "") {
+        this._isSubmitting = !!isSubmitting;
+
+        if (this.submitBtn) {
+          this.submitBtn.disabled = isSubmitting || this.submitBtn.disabled;
+          this.submitBtn.textContent = isSubmitting ? "Enviando..." : "Enviar chamado";
+          this.submitBtn.style.opacity = isSubmitting ? ".75" : "1";
+        }
+        if (this.btnClose) this.btnClose.disabled = isSubmitting;
+        if (this.hint && message) this.hint.textContent = message;
+      }
+
+      updateSubmitState() {
+        if (!this.submitBtn) return;
+        if (this._isSubmitting) return;
+
+        const nameOk = String(this.nameInput?.value || "").trim().length > 1;
+        const emailOk = this.emailInput?.value ? this.emailInput.checkValidity() : false;
+        const itemOk = String(this.itemInput?.value || "").trim().length > 0;
+        const subjectOk = String(this.subjectInput?.value || "").trim().length > 2;
+        const messageOk = String(this.messageInput?.value || "").trim().length > 5;
+        const can = nameOk && emailOk && itemOk && subjectOk && messageOk;
+
+        this.submitBtn.disabled = !can;
+        this.submitBtn.style.opacity = can ? "1" : ".55";
+        this.submitBtn.style.cursor = can ? "pointer" : "not-allowed";
+
+        if (this.hint) {
+          if (!can) this.hint.textContent = "Preencha nome, e-mail, item, assunto e mensagem para enviar o chamado.";
+          else this.hint.textContent = "";
+        }
+      }
+
+      buildPayload() {
+        const fd = new FormData(this.form);
+        const pageUrl = location.href;
+        const refUrl = document.referrer || "";
+        const uspSelf = new URLSearchParams(location.search);
+        const uspPage = this.urlTools.getSearchParamsFromUrl(pageUrl);
+        const uspRef = this.urlTools.getSearchParamsFromUrl(refUrl);
+        const getUtm = (k) => uspSelf.get(k) || uspPage.get(k) || uspRef.get(k) || "";
+
+        return {
+          request_id: this.urlTools.safeId("ticket"),
+          action: "create_ticket",
+          event: "support_ticket",
+          name: String(fd.get("name") || "").trim(),
+          email: String(fd.get("email") || "").trim(),
+          item: String(fd.get("item") || "").trim(),
+          subject: String(fd.get("subject") || "").trim(),
+          message: String(fd.get("message") || "").trim(),
+          page_url: pageUrl,
+          referrer: refUrl,
+          utm_source: getUtm("utm_source"),
+          utm_medium: getUtm("utm_medium"),
+          utm_campaign: getUtm("utm_campaign"),
+          utm_content: getUtm("utm_content"),
+          utm_term: getUtm("utm_term"),
+          user_agent: navigator.userAgent
+        };
+      }
+
+      async onSubmit(e) {
+        e.preventDefault();
+        if (this._isSubmitting) return;
+
+        this.updateSubmitState();
+        if (this.submitBtn?.disabled) return;
+
+        const payload = this.buildPayload();
+
+        this.analytics.trackUserData({
+          email: payload.email,
+          full_name: payload.name,
+          country: "BR"
+        });
+
+        this.analytics.trackSupportTicket({
+          item: payload.item,
+          subject: payload.subject,
+          placement: "support_modal"
+        });
+
+        this.setSubmittingUI(true, "Enviando chamado...");
+
+        try {
+          const res = await this.api.postJSON(payload);
+          const data = res?.data || {};
+          const ok = !!(res.httpOk && data.ok);
+
+          if (ok) {
+            const appData = data.data || {};
+            this.analytics.track("support_ticket_success", {
+              ticket_id: appData.ticket_id || "",
+              item: payload.item
+            });
+            this.closeModalOnly();
+            alert(`Chamado enviado com sucesso.${appData.ticket_id ? ` Ticket: ${appData.ticket_id}` : ""}`);
+            return;
+          }
+
+          this.analytics.track("support_ticket_error", {
+            item: payload.item,
+            status: res.status || 0
+          });
+        } catch (_) {
+          this.analytics.track("support_ticket_fetch_error", {
+            item: payload.item
+          });
+        }
+
+        this.setSubmittingUI(false, "Não foi possível enviar agora. Tente novamente em instantes.");
+      }
+    }
+
     function initVideoCarousel({ rootSelector = "#pub-rich" } = {}) {
       const root = document.querySelector(rootSelector);
       if (!root) return;
@@ -2707,6 +3015,7 @@
     const api = new PubApi(window.PUB_LEADS_ENDPOINT);
 
     new LeadCapture(dom, urlTools, analytics, api).init();
+    new SupportCapture(dom, urlTools, analytics, api).init();
     initVideoCarousel();
   </script>
 </body>
