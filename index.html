@@ -1325,11 +1325,11 @@
     }
 
     #support-modal .support-dialog{
-      width: min(720px, 100%);
-      max-height: min(90vh, 860px);
+      width: min(680px, 100%);
+      max-height: min(88vh, 820px);
       border-radius: 28px;
       border: 1px solid rgba(15,23,42,.08);
-      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,250,252,.95));
+      background: linear-gradient(180deg, rgba(255,255,255,.99), rgba(248,250,252,.96));
       box-shadow:
         0 30px 90px rgba(2,6,23,.28),
         0 10px 28px rgba(15,23,42,.08);
@@ -1349,11 +1349,13 @@
     }
 
     #support-modal .support-header{
-      align-items:flex-start;
-      gap:18px;
-      padding:22px 22px 18px;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:16px;
+      align-items:start;
+      padding:20px 20px 16px;
       border-bottom:1px solid rgba(15,23,42,.08);
-      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.92));
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.94));
     }
 
     #lead-modal .lead-title,
@@ -1371,6 +1373,14 @@
       gap:8px;
     }
 
+    #support-modal .support-kicker{
+      font-size:11px;
+      font-weight:950;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:#1d4ed8;
+    }
+
     #support-modal .support-title{
       margin:0;
       font-size:24px;
@@ -1384,8 +1394,8 @@
       margin:0;
       color:#475569;
       font-size:14px;
-      line-height:1.62;
-      max-width:56ch;
+      line-height:1.58;
+      max-width:54ch;
     }
 
     #lead-modal .lead-body,
@@ -1402,9 +1412,9 @@
     }
 
     #support-modal .support-body{
-      padding:20px 22px 22px;
-      gap:16px;
-      background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(248,250,252,.94));
+      padding:18px 20px 20px;
+      gap:14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(248,250,252,.94));
     }
 
     #lead-modal .lead-field,
@@ -1440,7 +1450,7 @@
     #support-modal .support-input,
     #support-modal .support-select,
     #support-modal .support-textarea{
-      border-radius:16px;
+      border-radius:14px;
       border:1px solid rgba(2,6,23,.12);
       transition:
         border-color .18s ease,
@@ -1457,15 +1467,15 @@
 
     #support-modal .support-input,
     #support-modal .support-select{
-      height:50px;
-      padding:0 14px;
+      height:46px;
+      padding:0 13px;
     }
 
     #support-modal .support-textarea{
-      min-height:170px;
-      padding:14px;
+      min-height:150px;
+      padding:13px;
       resize:vertical;
-      line-height:1.6;
+      line-height:1.58;
     }
 
     #support-modal .support-input::placeholder,
@@ -1488,11 +1498,6 @@
       gap: 12px;
       grid-template-columns: 1fr 1fr;
       align-items: start;
-    }
-
-    #support-modal .support-grid-2{
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-      gap:14px;
     }
 
     #lead-modal .lead-optin{
@@ -1524,9 +1529,9 @@
     }
 
     #support-modal .support-hint{
-      min-height:20px;
-      font-size:13px;
+      min-height:18px;
       color:#64748b;
+      line-height:1.45;
     }
 
     #lead-modal .lead-btn,
@@ -1545,8 +1550,9 @@
     }
 
     #support-modal .support-btn{
-      min-height:48px;
-      border-radius:16px;
+      min-height:46px;
+      padding:13px 15px;
+      border-radius:14px;
       font-weight:900;
       transition:
         transform .18s ease,
@@ -1568,7 +1574,6 @@
     }
 
     #support-modal .support-btn--primary{
-      flex:1 1 260px;
       background:linear-gradient(135deg, #2563eb 0%, #3b82f6 58%, #60a5fa 100%);
       box-shadow:0 14px 34px rgba(37,99,235,.22);
     }
@@ -1596,77 +1601,27 @@
       flex: 0 0 auto;
     }
 
-    #support-modal .support-close{
-      min-height:42px;
-    }
-
-    #support-modal .support-intro-card{
-      display:grid;
-      grid-template-columns:44px minmax(0, 1fr);
-      gap:14px;
-      align-items:start;
-      padding:16px;
-      border-radius:22px;
+    #support-modal .support-note{
+      padding:12px 14px;
+      border-radius:16px;
       border:1px solid rgba(37,99,235,.10);
-      background: linear-gradient(180deg, rgba(239,246,255,.96), rgba(248,250,252,.96));
-      box-shadow:0 10px 24px rgba(37,99,235,.05);
-    }
-
-    #support-modal .support-intro-icon{
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#1d4ed8;
-      border:1px solid rgba(37,99,235,.12);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.76)),
-        linear-gradient(135deg, rgba(37,99,235,.12), rgba(124,58,237,.10));
-    }
-
-    #support-modal .support-intro-icon svg{
-      width:21px;
-      height:21px;
-      stroke:currentColor;
-      fill:none;
-      stroke-width:2;
-      stroke-linecap:round;
-      stroke-linejoin:round;
-    }
-
-    #support-modal .support-intro-copy{
-      min-width:0;
-    }
-
-    #support-modal .support-intro-copy strong{
-      display:block;
-      margin-bottom:4px;
-      color:#0f172a;
-      font-size:14px;
-      line-height:1.3;
-      letter-spacing:-.01em;
-    }
-
-    #support-modal .support-intro-copy span{
-      display:block;
+      background:rgba(239,246,255,.72);
       color:#475569;
-      font-size:14px;
-      line-height:1.58;
+      font-size:13.5px;
+      line-height:1.55;
     }
 
-    #support-modal .support-section{
+    #support-modal .support-block{
       display:grid;
-      gap:14px;
-      padding:18px;
-      border-radius:24px;
+      gap:12px;
+      padding:16px;
+      border-radius:20px;
       border:1px solid rgba(15,23,42,.08);
-      background:rgba(255,255,255,.84);
-      box-shadow:0 10px 24px rgba(15,23,42,.035);
+      background:rgba(255,255,255,.88);
+      box-shadow:0 8px 22px rgba(15,23,42,.03);
     }
 
-    #support-modal .support-section-title{
+    #support-modal .support-block-title{
       font-size:11px;
       line-height:1.2;
       font-weight:950;
@@ -1681,13 +1636,19 @@
       color:#64748b;
     }
 
+    #support-modal .support-footer{
+      display:grid;
+      gap:12px;
+      margin-top:2px;
+    }
+
     #support-modal .support-status{
       display:flex;
       align-items:center;
-      gap:12px;
+      gap:10px;
       flex-wrap:wrap;
-      padding:14px 16px;
-      border-radius:18px;
+      padding:12px 14px;
+      border-radius:16px;
       border:1px solid rgba(15,23,42,.08);
       background:rgba(248,250,252,.96);
     }
@@ -1696,12 +1657,12 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-height:32px;
+      min-height:28px;
       padding:0 10px;
       border-radius:999px;
       background:rgba(37,99,235,.10);
       color:#1d4ed8;
-      font-size:11px;
+      font-size:10.5px;
       font-weight:900;
       letter-spacing:.08em;
       text-transform:uppercase;
@@ -1710,7 +1671,14 @@
     #support-modal .support-status-text{
       color:#475569;
       font-size:13px;
-      line-height:1.5;
+      line-height:1.45;
+    }
+
+    #support-modal .support-actions{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:10px;
+      align-items:center;
     }
 
     #support-modal[data-state="success"] .support-status{
@@ -1734,19 +1702,9 @@
     }
 
     @media (max-width:760px){
-      #support-modal .support-dialog{
-        width:min(100%, 640px);
-      }
-
       #support-modal .support-header{
-        flex-direction:column;
-        align-items:stretch;
-        padding:18px 16px 16px;
-        gap:14px;
-      }
-
-      #support-modal .support-close{
-        width:100%;
+        grid-template-columns:1fr;
+        padding:18px 16px 14px;
       }
 
       #support-modal .support-body{
@@ -1758,11 +1716,10 @@
       }
 
       #support-modal .support-actions{
-        flex-direction:column;
-        align-items:stretch;
+        grid-template-columns:1fr;
       }
 
-      #support-modal .support-actions .support-btn{
+      #support-modal .support-close{
         width:100%;
       }
     }
@@ -1796,12 +1753,8 @@
         font-size:22px;
       }
 
-      #support-modal .support-intro-card{
-        grid-template-columns:1fr;
-      }
-
-      #support-modal .support-section{
-        padding:16px;
+      #support-modal .support-block{
+        padding:14px;
       }
     }
   </style>
@@ -1903,7 +1856,7 @@
                         <path d="M8 14h5"/>
                         <path d="M6 5h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 3v-3H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
                       </svg>
-                      Abrir chamado
+                      Enviar mensagem
                     </a>
                   </div>
                 </div>
@@ -2389,7 +2342,7 @@
                       <path d="M8 14h5"/>
                       <path d="M6 5h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 3v-3H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
                     </svg>
-                    Abrir chamado
+                    Enviar mensagem
                   </a>
                 </div>
               </article>
@@ -2486,6 +2439,7 @@
     <div class="support-dialog" role="document">
       <div class="support-header">
         <div class="support-headcopy">
+          <div class="support-kicker">Contato</div>
           <div class="support-title">Fale com a PUB Editorial</div>
           <p class="support-subtitle">
             Envie uma dúvida, comentário, sugestão ou relato de uso. Se for algo técnico, você também pode detalhar o problema por aqui.
@@ -2495,22 +2449,12 @@
       </div>
 
       <form id="support-form" class="support-body" novalidate>
-        <div class="support-intro-card">
-          <div class="support-intro-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M8 10h8"/>
-              <path d="M8 14h5"/>
-              <path d="M6 5h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 3v-3H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
-            </svg>
-          </div>
-          <div class="support-intro-copy">
-            <strong>Canal aberto para contato</strong>
-            <span>Você pode usar este espaço para falar sobre os scripts, a instalação, ideias de melhoria, dúvidas editoriais ou comentários gerais.</span>
-          </div>
+        <div class="support-note">
+          Você pode usar este espaço para falar sobre os scripts, a instalação, ideias de melhoria, dúvidas editoriais ou comentários gerais.
         </div>
 
-        <div class="support-section">
-          <div class="support-section-title">Seus dados</div>
+        <div class="support-block">
+          <div class="support-block-title">Seus dados</div>
 
           <div class="support-grid-2">
             <div class="support-field">
@@ -2525,8 +2469,8 @@
           </div>
         </div>
 
-        <div class="support-section">
-          <div class="support-section-title">Sua mensagem</div>
+        <div class="support-block">
+          <div class="support-block-title">Sua mensagem</div>
 
           <div class="support-grid-2">
             <div class="support-field">
@@ -2570,17 +2514,19 @@
           </div>
         </div>
 
-        <div class="support-status" id="support-status" aria-live="polite">
-          <div class="support-status-badge">Contato</div>
-          <div class="support-status-text">Sua mensagem será enviada para análise.</div>
-        </div>
+        <div class="support-footer">
+          <div class="support-status" id="support-status" aria-live="polite">
+            <div class="support-status-badge">Contato</div>
+            <div class="support-status-text">Sua mensagem será enviada para análise.</div>
+          </div>
 
-        <div class="support-actions">
-          <button type="submit" id="support-submit" class="support-btn support-btn--primary" disabled style="opacity:.55;">Enviar mensagem</button>
-          <button type="button" id="support-cancel" class="support-btn support-btn--secondary">Cancelar</button>
-        </div>
+          <div class="support-actions">
+            <button type="submit" id="support-submit" class="support-btn support-btn--primary" disabled style="opacity:.55;">Enviar mensagem</button>
+            <button type="button" id="support-cancel" class="support-btn support-btn--secondary">Cancelar</button>
+          </div>
 
-        <div id="support-hint" class="support-hint"></div>
+          <div id="support-hint" class="support-hint"></div>
+        </div>
       </form>
     </div>
   </div>
