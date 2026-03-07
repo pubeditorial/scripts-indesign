@@ -103,7 +103,6 @@
   </script>
 
   <script>
-    // URL da Web App publicada do Google Apps Script
     window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxPdJ6RkfapIMinmIwolxSBMrUR7Qo8h04BClShXW2xEULeKNr5c1i2Cy7fbd-ylYmV/exec";
   </script>
 
@@ -1526,7 +1525,7 @@
                 </ul>
 
                 <div class="cta-meta">
-                  Se o download não iniciar automaticamente após o preenchimento do formulário, habilite as permissões de pop-ups no navegador, recarregue a página e tente novamente.
+                  O download é liberado após o envio do formulário. Se houver instabilidade momentânea no endpoint, o arquivo ainda será aberto diretamente.
                 </div>
               </aside>
             </div>
@@ -2108,9 +2107,9 @@
         return "";
       }
 
-      safeId() {
+      safeId(prefix = "req") {
         const r = Math.random().toString(16).slice(2);
-        return `${Date.now().toString(16)}-${r}`;
+        return `${prefix}_${Date.now().toString(16)}_${r}`;
       }
 
       decodeHash(hash) {
@@ -2156,6 +2155,12 @@
 
       trackDownload(params = {}) {
         this.track("file_download", {
+          ...params
+        });
+      }
+
+      trackSupportTicket(params = {}) {
+        this.track("support_ticket_submit", {
           ...params
         });
       }
@@ -2218,11 +2223,46 @@
       }
     }
 
+    class PubApi {
+      constructor(endpoint) {
+        this.endpoint = endpoint || "";
+      }
+
+      async postJSON(payload) {
+        if (!this.endpoint) throw new Error("Endpoint não configurado.");
+
+        const response = await fetch(this.endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify(payload),
+          redirect: "follow"
+        });
+
+        const text = await response.text();
+        let data = null;
+
+        try {
+          data = JSON.parse(text);
+        } catch (_) {
+          data = { ok: false, raw: text };
+        }
+
+        return {
+          httpOk: response.ok,
+          status: response.status,
+          data
+        };
+      }
+    }
+
     class LeadCapture {
-      constructor(dom, urlTools, analytics) {
+      constructor(dom, urlTools, analytics, api) {
         this.dom = dom;
         this.urlTools = urlTools;
         this.analytics = analytics;
+        this.api = api;
 
         this.endpoint = window.PUB_LEADS_ENDPOINT || "";
         this.modal = this.dom.byId("lead-modal");
@@ -2236,14 +2276,19 @@
 
         this.pending = null;
         this._hashScrolling = false;
+        this._isSubmitting = false;
       }
 
       init() {
         if (!this.root || !this.modal || !this.form) return;
 
         this.dom.on(this.root, "click", (e) => this.onRootClick(e), { capture: true });
-        this.dom.on(this.modal, "click", (e) => { if (e.target === this.modal) this.closeModalOnly(); });
-        this.dom.on(this.btnClose, "click", () => this.closeModalOnly());
+        this.dom.on(this.modal, "click", (e) => {
+          if (e.target === this.modal && !this._isSubmitting) this.closeModalOnly();
+        });
+        this.dom.on(this.btnClose, "click", () => {
+          if (!this._isSubmitting) this.closeModalOnly();
+        });
         this.dom.on(this.form, "submit", (e) => this.onSubmit(e));
 
         const update = () => this.updateSubmitState();
@@ -2251,7 +2296,9 @@
         this.dom.on(this.emailInput, "input", update);
 
         this.dom.on(window, "keydown", (e) => {
-          if ((e.key || "").toLowerCase() === "escape" && this.isOpen()) this.closeModalOnly();
+          if ((e.key || "").toLowerCase() === "escape" && this.isOpen() && !this._isSubmitting) {
+            this.closeModalOnly();
+          }
         });
 
         this.scrollFromHash({ behavior: "auto" });
@@ -2278,6 +2325,7 @@
       openModal() {
         this.modal.style.display = "flex";
         this.modal.setAttribute("aria-hidden", "false");
+        this.modal.setAttribute("data-state", "open");
         if (this.hint) this.hint.textContent = "";
         this.updateSubmitState();
         try { this.nameInput?.focus(); } catch (_) {}
@@ -2286,6 +2334,7 @@
       closeModal() {
         this.modal.style.display = "none";
         this.modal.setAttribute("aria-hidden", "true");
+        this.modal.removeAttribute("data-state");
       }
 
       closeModalOnly() {
@@ -2293,13 +2342,28 @@
         this.pending = null;
         if (this.hint) this.hint.textContent = "";
         try { this.form?.reset(); } catch (_) {}
+        this._isSubmitting = false;
+        this.setSubmittingUI(false);
         this.updateSubmitState();
+      }
+
+      setSubmittingUI(isSubmitting, message = "") {
+        this._isSubmitting = !!isSubmitting;
+
+        if (this.submitBtn) {
+          this.submitBtn.disabled = isSubmitting || this.submitBtn.disabled;
+          this.submitBtn.textContent = isSubmitting ? "Enviando..." : "Continuar e baixar";
+          this.submitBtn.style.opacity = isSubmitting ? ".75" : "1";
+        }
+        if (this.btnClose) this.btnClose.disabled = isSubmitting;
+        if (this.hint && message) this.hint.textContent = message;
       }
 
       updateSubmitState() {
         if (!this.submitBtn || !this.nameInput || !this.emailInput) return;
+        if (this._isSubmitting) return;
 
-        const nameOk = String(this.nameInput.value || "").trim().length > 0;
+        const nameOk = String(this.nameInput.value || "").trim().length > 1;
         const emailOk = this.emailInput.value ? this.emailInput.checkValidity() : false;
         const can = nameOk && emailOk;
 
@@ -2312,31 +2376,6 @@
           else if (!nameOk) this.hint.textContent = "Preencha seu nome para liberar o download.";
           else if (!emailOk) this.hint.textContent = "Digite um e-mail válido para liberar o download.";
           else this.hint.textContent = "";
-        }
-      }
-
-      postToEndpoint(payload) {
-        if (!this.endpoint) return false;
-
-        try {
-          const f = document.createElement("form");
-          f.method = "POST";
-          f.action = this.endpoint;
-          f.target = "_blank";
-          f.acceptCharset = "UTF-8";
-
-          const i = document.createElement("input");
-          i.type = "hidden";
-          i.name = "payload";
-          i.value = JSON.stringify(payload);
-
-          f.appendChild(i);
-          document.body.appendChild(f);
-          f.submit();
-          f.remove();
-          return true;
-        } catch (_) {
-          return false;
         }
       }
 
@@ -2389,7 +2428,7 @@
 
         const io = new IntersectionObserver((entries) => {
           const vis = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-          if (vis && vis.target && vis.target.id) setCurrent(vis.target.id);
+          if (vis?.target?.id) setCurrent(vis.target.id);
         }, {
           root: null,
           threshold: [0.25, 0.45, 0.6]
@@ -2459,16 +2498,7 @@
         this.openModal();
       }
 
-      onSubmit(e) {
-        e.preventDefault();
-        if (!this.pending?.url) return this.closeModalOnly();
-
-        this.updateSubmitState();
-        if (this.submitBtn?.disabled) return;
-
-        if (this.submitBtn) this.submitBtn.disabled = true;
-        if (this.hint) this.hint.textContent = "Registrando…";
-
+      buildPayload() {
         const fd = new FormData(this.form);
         const name = String(fd.get("name") || "").trim();
         const email = String(fd.get("email") || "").trim();
@@ -2484,9 +2514,10 @@
         const uspRef = this.urlTools.getSearchParamsFromUrl(refUrl);
         const getUtm = (k) => uspSelf.get(k) || uspPage.get(k) || uspRef.get(k) || "";
 
-        const payload = {
-          request_id: this.urlTools.safeId(),
+        return {
+          request_id: this.urlTools.safeId("lead"),
           event: "lead_submit",
+          action: "capture_lead",
           item: this.pending.item,
           name,
           email,
@@ -2494,6 +2525,7 @@
           company,
           city,
           state,
+          country: "BR",
           optin,
           placement: this.pending.placement,
           label: this.pending.label,
@@ -2509,12 +2541,22 @@
           user_agent: navigator.userAgent,
           status: "client_submit"
         };
+      }
+
+      async onSubmit(e) {
+        e.preventDefault();
+        if (!this.pending?.url || this._isSubmitting) return;
+
+        this.updateSubmitState();
+        if (this.submitBtn?.disabled) return;
+
+        const payload = this.buildPayload();
 
         this.analytics.trackUserData({
-          email,
-          full_name: name,
-          city,
-          region: state,
+          email: payload.email,
+          full_name: payload.name,
+          city: payload.city,
+          region: payload.state,
           country: "BR"
         });
 
@@ -2526,20 +2568,46 @@
           role: payload.role || "(not set)"
         });
 
-        this.closeModalOnly();
+        this.setSubmittingUI(true, "Registrando e liberando o download...");
 
-        const ok = this.postToEndpoint(payload);
+        let redirectUrl = payload.download_url;
 
-        this.analytics.trackDownload({
-          file_name: payload.item,
-          link_url: payload.download_url,
-          placement: payload.placement
-        });
+        try {
+          const res = await this.api.postJSON(payload);
+          const data = res?.data || {};
+          const ok = !!(res.httpOk && data.ok);
+          const appData = data.data || {};
 
-        if (!ok) {
-          try { window.open(payload.download_url, "_blank", "noopener,noreferrer"); }
-          catch (_) { location.href = payload.download_url; }
+          if (ok) {
+            redirectUrl = appData.redirect_url || payload.download_url;
+
+            this.analytics.trackDownload({
+              file_name: payload.item,
+              link_url: redirectUrl,
+              placement: payload.placement,
+              backend_status: "ok",
+              duplicate: appData.duplicate ? "yes" : "no"
+            });
+
+            this.closeModalOnly();
+            window.location.href = redirectUrl;
+            return;
+          }
+
+          this.analytics.track("lead_submit_error", {
+            placement: payload.placement,
+            item: payload.item,
+            status: res.status || 0
+          });
+        } catch (_) {
+          this.analytics.track("lead_submit_fetch_error", {
+            placement: payload.placement,
+            item: payload.item
+          });
         }
+
+        this.closeModalOnly();
+        window.location.href = redirectUrl;
       }
     }
 
@@ -2636,10 +2704,10 @@
     const dom = new Dom();
     const urlTools = new UrlTools();
     const analytics = new Analytics();
+    const api = new PubApi(window.PUB_LEADS_ENDPOINT);
 
-    new LeadCapture(dom, urlTools, analytics).init();
+    new LeadCapture(dom, urlTools, analytics, api).init();
     initVideoCarousel();
   </script>
 </body>
 </html>
-
