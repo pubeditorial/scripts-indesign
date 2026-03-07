@@ -1283,9 +1283,9 @@
       border-color: rgba(37,99,235,.30);
     }
 
-  #lead-modal .lead-dialog,
+#lead-modal .lead-dialog,
 #support-modal .support-dialog{
-  width: min(680px, calc(100vw - 28px));
+  width: min(680px, 100%);
   max-height: min(88vh, 760px);
   background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.94));
   border-radius: var(--radius-card);
@@ -1297,7 +1297,7 @@
 }
 
 #lead-modal .lead-dialog{
-  width: min(560px, calc(100vw - 28px));
+  width: min(560px, 100%);
   max-height: min(86vh, 720px);
 }
 
@@ -1307,9 +1307,8 @@
   border-bottom: 1px solid var(--line);
   display: flex;
   justify-content: space-between;
-  gap: 14px;
+  gap: 12px;
   align-items: center;
-  flex-wrap: wrap;
 }
 
 #lead-modal .lead-title,
@@ -1325,9 +1324,14 @@
 #support-modal .support-body{
   padding: 20px;
   display: grid;
-  gap: 16px;
-  overflow: auto;
+  gap: 14px;
+  overflow-y: auto;
+  overflow-x: hidden;
   align-content: start;
+}
+
+#support-modal .support-body{
+  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(248,250,252,.94));
 }
 
 #lead-modal .lead-field,
@@ -1362,28 +1366,13 @@
 #lead-modal .lead-input,
 #support-modal .support-input,
 #support-modal .support-select{
-  min-height: 48px;
   height: 48px;
-  padding: 0 14px;
-}
-
-#support-modal .support-select{
-  appearance: none;
-  -webkit-appearance: none;
-  background-image:
-    linear-gradient(45deg, transparent 50%, #64748b 50%),
-    linear-gradient(135deg, #64748b 50%, transparent 50%);
-  background-position:
-    calc(100% - 18px) calc(50% - 3px),
-    calc(100% - 12px) calc(50% - 3px);
-  background-size: 6px 6px, 6px 6px;
-  background-repeat: no-repeat;
-  padding-right: 38px;
+  padding: 0 12px;
 }
 
 #support-modal .support-textarea{
   min-height: 160px;
-  padding: 14px;
+  padding: 12px;
   resize: vertical;
   line-height: 1.55;
 }
@@ -1391,8 +1380,8 @@
 #lead-modal .lead-grid-2,
 #support-modal .support-grid-2{
   display: grid;
-  gap: 14px;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
   align-items: start;
 }
 
@@ -1402,7 +1391,7 @@
   align-items: flex-start;
   font-size: 13.5px;
   color: #334155;
-  line-height: 1.45;
+  line-height: 1.4;
 }
 
 #lead-modal .lead-actions,
@@ -1464,33 +1453,15 @@
 }
 
 @media (max-width: 560px){
-  #lead-modal .lead-dialog,
-  #support-modal .support-dialog{
-    width: min(100%, calc(100vw - 20px));
-    border-radius: 22px;
-  }
-
-  #lead-modal .lead-header,
-  #support-modal .support-header{
-    padding: 16px 16px 14px;
-    align-items: stretch;
-  }
-
-  #lead-modal .lead-title,
-  #support-modal .support-title{
-    font-size: 17px;
-  }
-
   #lead-modal .lead-body,
   #support-modal .support-body{
     padding: 16px;
-    gap: 14px;
+    gap: 12px;
   }
 
   #lead-modal .lead-grid-2,
   #support-modal .support-grid-2{
     grid-template-columns: 1fr;
-    gap: 12px;
   }
 
   #lead-modal .lead-actions,
@@ -1500,20 +1471,11 @@
   }
 
   #lead-modal .lead-actions .lead-btn,
-  #support-modal .support-actions .support-btn,
-  #support-modal .support-close{
+  #support-modal .support-actions .support-btn{
     width: 100%;
   }
 }
-    #support-modal .support-body{
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.96), rgba(248,250,252,.94));
-}
-
-#support-modal .support-field + .support-field{
-  margin-top: 0;
-}
-  </style>
+    </style>
 </head>
 
 <body>
@@ -3077,4 +3039,5 @@
   </script>
 </body>
 </html>
+
 
