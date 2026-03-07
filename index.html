@@ -1283,212 +1283,475 @@
       border-color: rgba(37,99,235,.30);
     }
 
-#lead-modal,
-#support-modal{
-  position: fixed;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(14px, 3vw, 22px);
-  background: rgba(2,6,23,.58);
-  z-index: 99999;
-  backdrop-filter: blur(5px);
-}
+    #lead-modal,
+    #support-modal{
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(14px, 3vw, 22px);
+      z-index: 99999;
+      backdrop-filter: blur(5px);
+    }
 
-#lead-modal .lead-dialog,
-#support-modal .support-dialog{
-  width: min(680px, 100%);
-  max-height: min(88vh, 760px);
-  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.94));
-  border-radius: var(--radius-card);
-  border: 1px solid var(--border-default);
-  box-shadow: var(--shadow-pop);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
+    #lead-modal{
+      background: rgba(2,6,23,.58);
+    }
 
-#lead-modal .lead-dialog{
-  width: min(560px, 100%);
-  max-height: min(86vh, 720px);
-}
+    #support-modal{
+      background:
+        radial-gradient(700px 220px at 20% 0%, rgba(37,99,235,.14), transparent 60%),
+        radial-gradient(700px 220px at 80% 0%, rgba(124,58,237,.12), transparent 60%),
+        rgba(2,6,23,.62);
+      backdrop-filter: blur(7px);
+    }
 
-#lead-modal .lead-header,
-#support-modal .support-header{
-  padding: 18px 20px;
-  border-bottom: 1px solid var(--line);
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: center;
-}
+    #lead-modal .lead-dialog,
+    #support-modal .support-dialog{
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.94));
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-default);
+      box-shadow: var(--shadow-pop);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
 
-#lead-modal .lead-title,
-#support-modal .support-title{
-  font-weight: 950;
-  letter-spacing: -.01em;
-  color: var(--fg);
-  font-size: 18px;
-  line-height: 1.25;
-}
+    #lead-modal .lead-dialog{
+      width: min(560px, 100%);
+      max-height: min(86vh, 720px);
+    }
 
-#lead-modal .lead-body,
-#support-modal .support-body{
-  padding: 20px;
-  display: grid;
-  gap: 14px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  align-content: start;
-}
+    #support-modal .support-dialog{
+      width: min(760px, 100%);
+      max-height: min(90vh, 860px);
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,250,252,.95));
+      border-radius: 28px;
+      border: 1px solid rgba(15,23,42,.08);
+      box-shadow:
+        0 32px 90px rgba(2,6,23,.28),
+        0 10px 30px rgba(15,23,42,.08);
+    }
 
-#support-modal .support-body{
-  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(248,250,252,.94));
-}
+    #lead-modal .lead-header,
+    #support-modal .support-header{
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
 
-#lead-modal .lead-field,
-#support-modal .support-field{
-  display: grid;
-  gap: 7px;
-  min-width: 0;
-}
+    #support-modal .support-header{
+      padding: 20px 22px;
+      border-bottom: 1px solid rgba(15,23,42,.08);
+      align-items: flex-start;
+      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
+    }
 
-#lead-modal .lead-label,
-#support-modal .support-label{
-  font-weight: 800;
-  font-size: 13px;
-  color: var(--fg);
-  line-height: 1.3;
-}
+    #lead-modal .lead-title,
+    #support-modal .support-title{
+      font-weight: 950;
+      letter-spacing: -.01em;
+      color: var(--fg);
+      font-size: 18px;
+      line-height: 1.25;
+    }
 
-#lead-modal .lead-input,
-#support-modal .support-input,
-#support-modal .support-select,
-#support-modal .support-textarea{
-  border-radius: var(--radius-control);
-  border: 1px solid rgba(2,6,23,.14);
-  font-size: 15px;
-  background: #fff;
-  color: var(--fg);
-  width: 100%;
-  max-width: 100%;
-  display: block;
-}
+    #support-modal .support-title{
+      font-weight: 980;
+      letter-spacing: -.03em;
+      font-size: 24px;
+      line-height: 1.1;
+      margin: 0;
+    }
 
-#lead-modal .lead-input,
-#support-modal .support-input,
-#support-modal .support-select{
-  height: 48px;
-  padding: 0 12px;
-}
+    #support-modal .support-subtitle{
+      margin: 8px 0 0;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 52ch;
+    }
 
-#support-modal .support-textarea{
-  min-height: 160px;
-  padding: 12px;
-  resize: vertical;
-  line-height: 1.55;
-}
+    #lead-modal .lead-body,
+    #support-modal .support-body{
+      padding: 20px;
+      display: grid;
+      gap: 14px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      align-content: start;
+    }
 
-#lead-modal .lead-grid-2,
-#support-modal .support-grid-2{
-  display: grid;
-  gap: 12px;
-  grid-template-columns: 1fr 1fr;
-  align-items: start;
-}
+    #support-modal .support-body{
+      padding: 22px;
+      gap: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(248,250,252,.94));
+    }
 
-#lead-modal .lead-optin{
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  font-size: 13.5px;
-  color: #334155;
-  line-height: 1.4;
-}
+    #lead-modal .lead-field,
+    #support-modal .support-field{
+      display: grid;
+      gap: 7px;
+      min-width: 0;
+    }
 
-#lead-modal .lead-actions,
-#support-modal .support-actions{
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 4px;
-  justify-content: flex-start;
-  align-items: center;
-}
+    #lead-modal .lead-label,
+    #support-modal .support-label{
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--fg);
+      line-height: 1.3;
+    }
 
-#lead-modal .lead-hint,
-#support-modal .support-hint{
-  font-size: 12.5px;
-  color: var(--muted2);
-  line-height: 1.5;
-  min-height: 18px;
-}
+    #lead-modal .lead-input,
+    #support-modal .support-input,
+    #support-modal .support-select,
+    #support-modal .support-textarea{
+      border-radius: var(--radius-control);
+      border: 1px solid rgba(2,6,23,.14);
+      font-size: 15px;
+      background: #fff;
+      color: var(--fg);
+      width: 100%;
+      max-width: 100%;
+      display: block;
+    }
 
-#lead-modal .lead-btn,
-#support-modal .support-btn{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 14px 16px;
-  border-radius: var(--radius-control);
-  font-weight: 850;
-  border: 1px solid transparent;
-  cursor: pointer;
-  min-height: 46px;
-  white-space: nowrap;
-}
+    #support-modal .support-input,
+    #support-modal .support-select,
+    #support-modal .support-textarea{
+      border-radius: 16px;
+      border: 1px solid rgba(2,6,23,.12);
+      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    }
 
-#lead-modal .lead-btn--primary,
-#support-modal .support-btn--primary{
-  background: linear-gradient(135deg, rgba(37,99,235,1), rgba(59,130,246,.94));
-  color: #fff;
-  box-shadow: 0 12px 28px rgba(37,99,235,.22);
-}
+    #lead-modal .lead-input,
+    #support-modal .support-input,
+    #support-modal .support-select{
+      height: 48px;
+      padding: 0 12px;
+    }
 
-#lead-modal .lead-btn--secondary,
-#support-modal .support-btn--secondary{
-  background: rgba(2,6,23,.06);
-  border-color: rgba(2,6,23,.12);
-  color: var(--fg);
-}
+    #support-modal .support-input,
+    #support-modal .support-select{
+      height: 50px;
+      padding: 0 14px;
+    }
 
-#lead-modal .lead-close,
-#support-modal .support-close{
-  min-height: 40px;
-  padding: 10px 14px;
-  flex: 0 0 auto;
-}
+    #support-modal .support-input::placeholder,
+    #support-modal .support-textarea::placeholder{
+      color: #94a3b8;
+    }
 
-#support-modal .support-actions .support-btn--primary{
-  width: 100%;
-}
+    #support-modal .support-input:focus,
+    #support-modal .support-select:focus,
+    #support-modal .support-textarea:focus{
+      outline: none;
+      border-color: rgba(37,99,235,.35);
+      box-shadow: 0 0 0 4px rgba(96,165,250,.16);
+      background: #fff;
+    }
 
-@media (max-width: 560px){
-  #lead-modal .lead-body,
-  #support-modal .support-body{
-    padding: 16px;
-    gap: 12px;
-  }
+    #support-modal .support-textarea{
+      min-height: 170px;
+      padding: 14px;
+      resize: vertical;
+      line-height: 1.6;
+    }
 
-  #lead-modal .lead-grid-2,
-  #support-modal .support-grid-2{
-    grid-template-columns: 1fr;
-  }
+    #lead-modal .lead-grid-2,
+    #support-modal .support-grid-2{
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
 
-  #lead-modal .lead-actions,
-  #support-modal .support-actions{
-    flex-direction: column;
-    align-items: stretch;
-  }
+    #lead-modal .lead-optin{
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13.5px;
+      color: #334155;
+      line-height: 1.4;
+    }
 
-  #lead-modal .lead-actions .lead-btn,
-  #support-modal .support-actions .support-btn{
-    width: 100%;
-  }
-}
-    </style>
+    #lead-modal .lead-actions,
+    #support-modal .support-actions{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    #support-modal .support-actions{
+      margin-top: 0;
+    }
+
+    #lead-modal .lead-hint,
+    #support-modal .support-hint{
+      font-size: 12.5px;
+      color: var(--muted2);
+      line-height: 1.5;
+      min-height: 18px;
+    }
+
+    #support-modal .support-hint{
+      font-size: 13px;
+      min-height: 20px;
+    }
+
+    #lead-modal .lead-btn,
+    #support-modal .support-btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border-radius: var(--radius-control);
+      font-weight: 850;
+      border: 1px solid transparent;
+      cursor: pointer;
+      min-height: 46px;
+      white-space: nowrap;
+    }
+
+    #support-modal .support-btn{
+      min-height: 48px;
+      font-weight: 900;
+      transition: transform .18s ease, filter .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+
+    #support-modal .support-btn:active{
+      transform: translateY(1px);
+    }
+
+    #lead-modal .lead-btn--primary,
+    #support-modal .support-btn--primary{
+      background: linear-gradient(135deg, rgba(37,99,235,1), rgba(59,130,246,.94));
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(37,99,235,.22);
+    }
+
+    #support-modal .support-btn--primary{
+      flex: 1 1 260px;
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 58%, #60a5fa 100%);
+      box-shadow: 0 14px 34px rgba(37,99,235,.22);
+    }
+
+    #support-modal .support-btn--primary:hover{
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    #lead-modal .lead-btn--secondary,
+    #support-modal .support-btn--secondary{
+      background: rgba(2,6,23,.06);
+      border-color: rgba(2,6,23,.12);
+      color: var(--fg);
+    }
+
+    #support-modal .support-btn--secondary:hover{
+      background: rgba(2,6,23,.08);
+    }
+
+    #lead-modal .lead-close,
+    #support-modal .support-close{
+      min-height: 40px;
+      padding: 10px 14px;
+      flex: 0 0 auto;
+    }
+
+    #support-modal .support-close{
+      min-height: 42px;
+    }
+
+    #support-modal .support-intro-card{
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 14px;
+      align-items: start;
+      border: 1px solid rgba(37,99,235,.12);
+      background: linear-gradient(180deg, rgba(239,246,255,.96), rgba(248,250,252,.96));
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: 0 10px 24px rgba(37,99,235,.06);
+    }
+
+    #support-modal .support-intro-icon{
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1d4ed8;
+      border: 1px solid rgba(37,99,235,.12);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.72)),
+        linear-gradient(135deg, rgba(37,99,235,.12), rgba(124,58,237,.10));
+    }
+
+    #support-modal .support-intro-icon svg{
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    #support-modal .support-intro-copy strong{
+      display: block;
+      margin-bottom: 4px;
+      color: #0f172a;
+      font-size: 14px;
+      line-height: 1.3;
+      letter-spacing: -.01em;
+    }
+
+    #support-modal .support-intro-copy span{
+      display: block;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    #support-modal .support-section{
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(15,23,42,.08);
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 10px 26px rgba(15,23,42,.04);
+    }
+
+    #support-modal .support-section-title{
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #1d4ed8;
+    }
+
+    #support-modal .support-field-tip{
+      font-size: 12.5px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    #support-modal .support-status{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(15,23,42,.08);
+      background: rgba(248,250,252,.96);
+    }
+
+    #support-modal .support-status-badge{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: rgba(37,99,235,.10);
+      color: #1d4ed8;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    #support-modal .support-status-text{
+      color: #475569;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    #support-modal[data-state="success"] .support-status{
+      border-color: rgba(22,163,74,.16);
+      background: rgba(240,253,244,.96);
+    }
+
+    #support-modal[data-state="success"] .support-status-badge{
+      background: rgba(22,163,74,.12);
+      color: #15803d;
+    }
+
+    #support-modal[data-state="error"] .support-status{
+      border-color: rgba(220,38,38,.14);
+      background: rgba(254,242,242,.96);
+    }
+
+    #support-modal[data-state="error"] .support-status-badge{
+      background: rgba(220,38,38,.10);
+      color: #b91c1c;
+    }
+
+    @media (max-width: 640px){
+      #support-modal .support-header{
+        padding: 18px 16px;
+      }
+
+      #support-modal .support-body{
+        padding: 16px;
+        gap: 14px;
+      }
+
+      #support-modal .support-grid-2{
+        grid-template-columns: 1fr;
+      }
+
+      #support-modal .support-actions{
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      #support-modal .support-actions .support-btn{
+        width: 100%;
+      }
+
+      #support-modal .support-intro-card{
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px){
+      #lead-modal .lead-body,
+      #support-modal .support-body{
+        padding: 16px;
+        gap: 12px;
+      }
+
+      #lead-modal .lead-grid-2,
+      #support-modal .support-grid-2{
+        grid-template-columns: 1fr;
+      }
+
+      #lead-modal .lead-actions,
+      #support-modal .support-actions{
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      #lead-modal .lead-actions .lead-btn,
+      #support-modal .support-actions .support-btn{
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -2169,51 +2432,91 @@
   <div id="support-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Abrir chamado">
     <div class="support-dialog" role="document">
       <div class="support-header">
-        <div class="support-title">Abrir chamado</div>
+        <div>
+          <div class="support-title">Abrir chamado</div>
+          <p class="support-subtitle">Descreva o problema ou a dúvida sobre instalação, uso ou comportamento dos scripts.</p>
+        </div>
         <button type="button" id="support-close" class="support-btn support-btn--secondary support-close">Fechar</button>
       </div>
 
       <form id="support-form" class="support-body" novalidate>
-        <div class="support-grid-2">
-          <div class="support-field">
-            <label class="support-label" for="support-name">Nome</label>
-            <input id="support-name" class="support-input" name="name" required autocomplete="name">
+        <div class="support-intro-card" aria-hidden="false">
+          <div class="support-intro-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 10h8"/>
+              <path d="M8 14h5"/>
+              <path d="M6 5h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 3v-3H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
+            </svg>
           </div>
-
-          <div class="support-field">
-            <label class="support-label" for="support-email">E-mail</label>
-            <input id="support-email" class="support-input" name="email" type="email" required autocomplete="email" inputmode="email">
-          </div>
-        </div>
-
-        <div class="support-grid-2">
-          <div class="support-field">
-            <label class="support-label" for="support-item">Script / item</label>
-            <select id="support-item" class="support-select" name="item" required>
-              <option value="">Selecione</option>
-              <option value="PACOTE GRATUITO">PACOTE GRATUITO</option>
-              <option value="CAPA MASTER">CAPA MASTER</option>
-              <option value="MIOLO MASTER">MIOLO MASTER</option>
-              <option value="MANCHA MASTER">MANCHA MASTER</option>
-              <option value="VERTICAL MASTER">VERTICAL MASTER</option>
-              <option value="BASELINE MASTER">BASELINE MASTER</option>
-              <option value="GUIA DE USO">GUIA DE USO</option>
-            </select>
-          </div>
-
-          <div class="support-field">
-            <label class="support-label" for="support-subject">Assunto</label>
-            <input id="support-subject" class="support-input" name="subject" required placeholder="Ex.: erro ao instalar, dúvida de uso">
+          <div class="support-intro-copy">
+            <strong>Envie um chamado técnico</strong>
+            <span>Informe o script, o contexto e o que aconteceu. Quanto mais específico, mais rápida tende a ser a análise.</span>
           </div>
         </div>
 
-        <div class="support-field">
-          <label class="support-label" for="support-message">Mensagem</label>
-          <textarea id="support-message" class="support-textarea" name="message" required placeholder="Descreva o problema, o que você tentou fazer e, se possível, a versão do InDesign."></textarea>
+        <div class="support-section">
+          <div class="support-section-title">Seus dados</div>
+
+          <div class="support-grid-2">
+            <div class="support-field">
+              <label class="support-label" for="support-name">Nome</label>
+              <input id="support-name" class="support-input" name="name" required autocomplete="name" placeholder="Seu nome">
+            </div>
+
+            <div class="support-field">
+              <label class="support-label" for="support-email">E-mail</label>
+              <input id="support-email" class="support-input" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="voce@exemplo.com">
+            </div>
+          </div>
+        </div>
+
+        <div class="support-section">
+          <div class="support-section-title">Sobre o chamado</div>
+
+          <div class="support-grid-2">
+            <div class="support-field">
+              <label class="support-label" for="support-item">Script / item</label>
+              <select id="support-item" class="support-select" name="item" required>
+                <option value="">Selecione</option>
+                <option value="PACOTE GRATUITO">PACOTE GRATUITO</option>
+                <option value="CAPA MASTER">CAPA MASTER</option>
+                <option value="MIOLO MASTER">MIOLO MASTER</option>
+                <option value="MANCHA MASTER">MANCHA MASTER</option>
+                <option value="VERTICAL MASTER">VERTICAL MASTER</option>
+                <option value="BASELINE MASTER">BASELINE MASTER</option>
+                <option value="GUIA DE USO">GUIA DE USO</option>
+              </select>
+            </div>
+
+            <div class="support-field">
+              <label class="support-label" for="support-subject">Assunto</label>
+              <input id="support-subject" class="support-input" name="subject" required placeholder="Ex.: erro ao instalar, dúvida de uso">
+            </div>
+          </div>
+
+          <div class="support-field">
+            <label class="support-label" for="support-message">Mensagem</label>
+            <textarea
+              id="support-message"
+              class="support-textarea"
+              name="message"
+              required
+              placeholder="Descreva o problema, o que você tentou fazer, o resultado esperado e a versão do InDesign."
+            ></textarea>
+            <div class="support-field-tip">
+              Dica: inclua versão do InDesign, nome do script e em qual etapa o problema aconteceu.
+            </div>
+          </div>
+        </div>
+
+        <div class="support-status" id="support-status" aria-live="polite">
+          <div class="support-status-badge">Atendimento</div>
+          <div class="support-status-text">Seu chamado será enviado diretamente para análise.</div>
         </div>
 
         <div class="support-actions">
           <button type="submit" id="support-submit" class="support-btn support-btn--primary" disabled style="opacity:.55;">Enviar chamado</button>
+          <button type="button" id="support-cancel" class="support-btn support-btn--secondary">Cancelar</button>
         </div>
 
         <div id="support-hint" class="support-hint"></div>
@@ -2765,6 +3068,9 @@
         this.subjectInput = this.form?.querySelector("input[name='subject']") || null;
         this.messageInput = this.form?.querySelector("textarea[name='message']") || null;
 
+        this.cancelBtn = this.dom.byId("support-cancel");
+        this.statusBox = this.dom.byId("support-status");
+
         this._isSubmitting = false;
       }
 
@@ -2786,6 +3092,10 @@
         });
 
         this.dom.on(this.btnClose, "click", () => {
+          if (!this._isSubmitting) this.closeModalOnly();
+        });
+
+        this.dom.on(this.cancelBtn, "click", () => {
           if (!this._isSubmitting) this.closeModalOnly();
         });
 
@@ -2817,6 +3127,7 @@
         this.modal.setAttribute("aria-hidden", "false");
         this.modal.setAttribute("data-state", "open");
         if (this.hint) this.hint.textContent = "";
+        this.setStatus("Atendimento", "Seu chamado será enviado diretamente para análise.");
         this.updateSubmitState();
         try { this.nameInput?.focus(); } catch (_) {}
       }
@@ -2833,7 +3144,18 @@
         try { this.form?.reset(); } catch (_) {}
         this._isSubmitting = false;
         this.setSubmittingUI(false);
+        this.setStatus("Atendimento", "Seu chamado será enviado diretamente para análise.");
         this.updateSubmitState();
+      }
+
+      setStatus(label, text) {
+        if (!this.statusBox) return;
+
+        const badge = this.statusBox.querySelector(".support-status-badge");
+        const copy = this.statusBox.querySelector(".support-status-text");
+
+        if (badge) badge.textContent = label || "";
+        if (copy) copy.textContent = text || "";
       }
 
       setSubmittingUI(isSubmitting, message = "") {
@@ -2841,11 +3163,19 @@
 
         if (this.submitBtn) {
           this.submitBtn.disabled = isSubmitting || this.submitBtn.disabled;
-          this.submitBtn.textContent = isSubmitting ? "Enviando..." : "Enviar chamado";
+          this.submitBtn.textContent = isSubmitting ? "Enviando chamado..." : "Enviar chamado";
           this.submitBtn.style.opacity = isSubmitting ? ".75" : "1";
         }
+
         if (this.btnClose) this.btnClose.disabled = isSubmitting;
-        if (this.hint && message) this.hint.textContent = message;
+        if (this.cancelBtn) this.cancelBtn.disabled = isSubmitting;
+
+        if (message) {
+          this.setStatus(
+            isSubmitting ? "Enviando" : "Atendimento",
+            message
+          );
+        }
       }
 
       updateSubmitState() {
@@ -2856,7 +3186,7 @@
         const emailOk = this.emailInput?.value ? this.emailInput.checkValidity() : false;
         const itemOk = String(this.itemInput?.value || "").trim().length > 0;
         const subjectOk = String(this.subjectInput?.value || "").trim().length > 2;
-        const messageOk = String(this.messageInput?.value || "").trim().length > 5;
+        const messageOk = String(this.messageInput?.value || "").trim().length > 10;
         const can = nameOk && emailOk && itemOk && subjectOk && messageOk;
 
         this.submitBtn.disabled = !can;
@@ -2864,8 +3194,11 @@
         this.submitBtn.style.cursor = can ? "pointer" : "not-allowed";
 
         if (this.hint) {
-          if (!can) this.hint.textContent = "Preencha nome, e-mail, item, assunto e mensagem para enviar o chamado.";
-          else this.hint.textContent = "";
+          if (!can) {
+            this.hint.textContent = "Preencha nome, e-mail, item, assunto e uma mensagem mais detalhada para enviar o chamado.";
+          } else {
+            this.hint.textContent = "";
+          }
         }
       }
 
@@ -2919,7 +3252,8 @@
           placement: "support_modal"
         });
 
-        this.setSubmittingUI(true, "Enviando chamado...");
+        this.modal.setAttribute("data-state", "sending");
+        this.setSubmittingUI(true, "Estamos registrando seu chamado.");
 
         try {
           const res = await this.api.postJSON(payload);
@@ -2928,12 +3262,30 @@
 
           if (ok) {
             const appData = data.data || {};
+
             this.analytics.track("support_ticket_success", {
               ticket_id: appData.ticket_id || "",
               item: payload.item
             });
-            this.closeModalOnly();
-            alert(`Chamado enviado com sucesso.${appData.ticket_id ? ` Ticket: ${appData.ticket_id}` : ""}`);
+
+            this._isSubmitting = false;
+            this.setSubmittingUI(false);
+            this.modal.setAttribute("data-state", "success");
+            this.setStatus(
+              "Enviado",
+              `Chamado enviado com sucesso.${appData.ticket_id ? ` Ticket: ${appData.ticket_id}.` : ""}`
+            );
+
+            if (this.hint) {
+              this.hint.textContent = "Recebemos sua solicitação. Você já pode fechar esta janela.";
+            }
+
+            if (this.submitBtn) {
+              this.submitBtn.disabled = true;
+              this.submitBtn.textContent = "Chamado enviado";
+              this.submitBtn.style.opacity = "1";
+            }
+
             return;
           }
 
@@ -2947,7 +3299,17 @@
           });
         }
 
-        this.setSubmittingUI(false, "Não foi possível enviar agora. Tente novamente em instantes.");
+        this._isSubmitting = false;
+        this.setSubmittingUI(false);
+        this.modal.setAttribute("data-state", "error");
+        this.setStatus(
+          "Erro",
+          "Não foi possível enviar agora. Revise os dados e tente novamente em instantes."
+        );
+
+        if (this.hint) {
+          this.hint.textContent = "Falha no envio no momento. Tente novamente.";
+        }
       }
     }
 
@@ -3052,6 +3414,3 @@
   </script>
 </body>
 </html>
-
-
-
