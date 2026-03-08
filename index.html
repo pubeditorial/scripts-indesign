@@ -34,53 +34,167 @@
   <meta name="twitter:image:alt" content="Pacote PUB Editorial Scripts com cinco scripts para Adobe InDesign" />
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "VideoObject",
-      "@id": "https://pubeditorial.github.io/scripts-indesign/#video-instalar",
-      "name": "Baixar e instalar os scripts PUB Editorial",
-      "description": "Tutorial para instalar os arquivos JSX no painel Scripts do Adobe InDesign.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/V4WoT7v7f1s/maxresdefault.jpg",
-      "embedUrl": "https://www.youtube-nocookie.com/embed/V4WoT7v7f1s",
-      "contentUrl": "https://www.youtube.com/watch?v=V4WoT7v7f1s",
-      "uploadDate": "2026-01-01T10:00:00-03:00",
-      "dateModified": "2026-01-01T10:00:00-03:00",
-      "publisher": {
-        "@id": "https://pubeditorial.github.io/#organization"
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://pubeditorial.github.io/#organization",
+        "name": "PUB Editorial",
+        "url": "https://pubeditorial.github.io/",
+        "sameAs": [
+          "https://instagram.com/pubeditorial"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://pubeditorial.github.io/#website",
+        "url": "https://pubeditorial.github.io/",
+        "name": "PUB Editorial"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://pubeditorial.github.io/scripts-indesign/#webpage",
+        "url": "https://pubeditorial.github.io/scripts-indesign/",
+        "name": "Scripts para Adobe InDesign (JSX) | PUB Editorial Scripts",
+        "description": "Baixe scripts JSX para Adobe InDesign e acelere a produção editorial: capa, miolo, mancha, alinhamento vertical, baseline grid e exportação de PDF para impressão.",
+        "isPartOf": {
+          "@id": "https://pubeditorial.github.io/#website"
+        },
+        "about": {
+          "@id": "https://pubeditorial.github.io/scripts-indesign/#product"
+        },
+        "publisher": {
+          "@id": "https://pubeditorial.github.io/#organization"
+        },
+        "inLanguage": "pt-BR"
+      },
+      {
+        "@type": "Product",
+        "@id": "https://pubeditorial.github.io/scripts-indesign/#product",
+        "name": "PUB Editorial Scripts para Adobe InDesign",
+        "description": "Pacote com scripts JSX para Adobe InDesign voltados à produção editorial de livros: CAPA MASTER, MIOLO MASTER, MANCHA MASTER, VERTICAL MASTER, BASELINE MASTER e guia de uso.",
+        "brand": {
+          "@id": "https://pubeditorial.github.io/#organization"
+        },
+        "category": "Software",
+        "image": "https://pubeditorial.github.io/scripts-indesign/assets/scripts-para-adobe-indesign-producao-editorial-pub-editorial.jpg",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "BRL",
+          "availability": "https://schema.org/InStock",
+          "url": "https://pubeditorial.github.io/scripts-indesign/"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://pubeditorial.github.io/scripts-indesign/#faqpage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "O que são scripts para InDesign (JSX) e para que servem?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "São automações em JavaScript, arquivos .jsx, executadas no painel Scripts do InDesign. Elas reduzem tarefas repetitivas na produção editorial, padronizando gabaritos e aplicando ajustes em lote com precisão."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "O pacote funciona em qual versão do Adobe InDesign?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "O pacote foi preparado para Adobe InDesign CC 20 ou superior."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Como instalar arquivos JSX no Adobe InDesign?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No InDesign, vá em Janela > Utilitários > Scripts, clique com o botão direito em User/Usuário, escolha Reveal in Finder/Explorer, abra Scripts Panel e copie os arquivos .jsx. Se não aparecerem no painel, reinicie o InDesign."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "O que o CAPA MASTER faz e por que isso evita erro de gráfica?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ele cria o gabarito de capa aberta com cálculos de lombada e orelhas, dobras, guias e sangria, além de preparar preset de PDF."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Quais scripts ajudam na diagramação de livros no InDesign?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "O pacote reúne scripts para capa, miolo, mancha, alinhamento vertical e baseline grid, cobrindo etapas técnicas frequentes da diagramação de livros e da produção editorial no Adobe InDesign."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "O que significa mancha, alinhamento vertical e baseline na diagramação?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Mancha é a área útil de texto, definida pelas margens. Alinhamento vertical controla a distribuição do conteúdo no quadro. Baseline padroniza a linha de base para manter ritmo tipográfico."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Esses scripts substituem revisão e fechamento editorial?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Não. Eles aceleram e padronizam tarefas técnicas, mas a conferência visual e editorial continua essencial."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Como escolher entre baixar o pacote completo ou itens individuais?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Para fluxo editorial completo, use o pacote. Para testes pontuais, use os downloads individuais."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "VideoObject",
+        "@id": "https://pubeditorial.github.io/scripts-indesign/#video-instalar",
+        "name": "Baixar e instalar os scripts PUB Editorial",
+        "description": "Tutorial para instalar os arquivos JSX no painel Scripts do Adobe InDesign.",
+        "thumbnailUrl": "https://i.ytimg.com/vi/V4WoT7v7f1s/maxresdefault.jpg",
+        "embedUrl": "https://www.youtube-nocookie.com/embed/V4WoT7v7f1s",
+        "contentUrl": "https://www.youtube.com/watch?v=V4WoT7v7f1s",
+        "publisher": {
+          "@id": "https://pubeditorial.github.io/#organization"
+        }
+      },
+      {
+        "@type": "VideoObject",
+        "@id": "https://pubeditorial.github.io/scripts-indesign/#video-capa-master",
+        "name": "Como usar o CAPA MASTER | PUB Editorial Scripts (InDesign)",
+        "description": "Demonstração da criação de capa aberta com lombada, dobras, guias e sangria no Adobe InDesign.",
+        "thumbnailUrl": "https://i.ytimg.com/vi/K0kM5cEKGWc/maxresdefault.jpg",
+        "embedUrl": "https://www.youtube-nocookie.com/embed/K0kM5cEKGWc",
+        "contentUrl": "https://www.youtube.com/watch?v=K0kM5cEKGWc",
+        "publisher": {
+          "@id": "https://pubeditorial.github.io/#organization"
+        }
+      },
+      {
+        "@type": "VideoObject",
+        "@id": "https://pubeditorial.github.io/scripts-indesign/#video-vertical-master",
+        "name": "Como usar o VERTICAL MASTER | PUB Editorial Scripts (InDesign)",
+        "description": "Exemplo de aplicação de alinhamento vertical em lote para manter consistência de páginas no Adobe InDesign.",
+        "thumbnailUrl": "https://i.ytimg.com/vi/t6QHOl6996U/maxresdefault.jpg",
+        "embedUrl": "https://www.youtube-nocookie.com/embed/t6QHOl6996U",
+        "contentUrl": "https://www.youtube.com/watch?v=t6QHOl6996U",
+        "publisher": {
+          "@id": "https://pubeditorial.github.io/#organization"
+        }
       }
-    },
-    {
-      "@type": "VideoObject",
-      "@id": "https://pubeditorial.github.io/scripts-indesign/#video-capa-master",
-      "name": "Como usar o CAPA MASTER | PUB Editorial Scripts (InDesign)",
-      "description": "Demonstração da criação de capa aberta com lombada, dobras, guias e sangria no Adobe InDesign.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/K0kM5cEKGWc/maxresdefault.jpg",
-      "embedUrl": "https://www.youtube-nocookie.com/embed/K0kM5cEKGWc",
-      "contentUrl": "https://www.youtube.com/watch?v=K0kM5cEKGWc",
-      "uploadDate": "2026-01-01T10:00:00-03:00",
-      "dateModified": "2026-01-01T10:00:00-03:00",
-      "publisher": {
-        "@id": "https://pubeditorial.github.io/#organization"
-      }
-    },
-    {
-      "@type": "VideoObject",
-      "@id": "https://pubeditorial.github.io/scripts-indesign/#video-vertical-master",
-      "name": "Como usar o VERTICAL MASTER | PUB Editorial Scripts (InDesign)",
-      "description": "Exemplo de aplicação de alinhamento vertical em lote para manter consistência de páginas no Adobe InDesign.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/t6QHOl6996U/maxresdefault.jpg",
-      "embedUrl": "https://www.youtube-nocookie.com/embed/t6QHOl6996U",
-      "contentUrl": "https://www.youtube.com/watch?v=t6QHOl6996U",
-      "uploadDate": "2026-01-01T10:00:00-03:00",
-      "dateModified": "2026-01-01T10:00:00-03:00",
-      "publisher": {
-        "@id": "https://pubeditorial.github.io/#organization"
-      }
-    }
-  ]
-}
+    ]
+  }
   </script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZS7FSCH0R"></script>
@@ -168,8 +282,8 @@
       -webkit-overflow-scrolling:touch;
     }
 
-    #pub-rich *{ box-sizing:border-box }
-    #pub-rich a{ color:inherit; text-decoration:none }
+    #pub-rich *{ box-sizing:border-box; }
+    #pub-rich a{ color:inherit; text-decoration:none; }
 
     #pub-rich :focus-visible{
       outline:3px solid var(--focus);
@@ -192,10 +306,10 @@
       #pub-rich [id]{ scroll-margin-top:64px; }
     }
 
-    #pub-rich .grid{ display:grid; gap:var(--s4) }
-    #pub-rich .muted{ color:#475569; font-size:var(--text-md); line-height:1.75 }
-    #pub-rich .mini{ font-size:var(--text-xs); color:var(--muted2); line-height:1.55; text-align:center }
-    #pub-rich .sep{ height:1px; background:var(--line); width:100% }
+    #pub-rich .grid{ display:grid; gap:var(--s4); }
+    #pub-rich .muted{ color:#475569; font-size:var(--text-md); line-height:1.75; }
+    #pub-rich .mini{ font-size:var(--text-xs); color:var(--muted2); line-height:1.55; text-align:center; }
+    #pub-rich .sep{ height:1px; background:var(--line); width:100%; }
 
     #pub-rich .skip{
       position:absolute;
@@ -219,12 +333,13 @@
       z-index:9999;
     }
 
-    #pub-rich .stripe{ padding:var(--s8) 0 }
+    #pub-rich .stripe{ padding:var(--s8) 0; }
+
     @media (max-width:760px){
-      #pub-rich .stripe{ padding:var(--s7) 0 }
+      #pub-rich .stripe{ padding:var(--s7) 0; }
     }
 
-    #pub-rich .stripe--plain{ background: transparent; }
+    #pub-rich .stripe--plain{ background:transparent; }
 
     #pub-rich .stripe--soft{
       background:
@@ -307,9 +422,10 @@
       user-select:none;
       cursor:pointer;
       min-height:54px;
-      transition: transform .18s ease, filter .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease, opacity .18s ease;
+      transition:transform .18s ease, filter .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease, opacity .18s ease;
       white-space:nowrap;
-      will-change: transform;
+      will-change:transform;
+      font:inherit;
     }
 
     #pub-rich .btn svg{
@@ -324,7 +440,7 @@
       stroke-linejoin:round;
     }
 
-    #pub-rich .btn:active{ transform: translateY(1px) }
+    #pub-rich .btn:active{ transform:translateY(1px); }
 
     #pub-rich .btn--primary{
       background:linear-gradient(135deg, #2563eb 0%, #3b82f6 58%, #60a5fa 100%);
@@ -343,7 +459,7 @@
       color:var(--fg);
     }
 
-    #pub-rich .btn--secondary:hover{ background:rgba(15,23,42,.08) }
+    #pub-rich .btn--secondary:hover{ background:rgba(15,23,42,.08); }
 
     #pub-rich .btn--quiet{
       background:rgba(255,255,255,.04);
@@ -351,8 +467,8 @@
       color:rgba(241,245,249,.92);
     }
 
-    #pub-rich .btn--quiet:hover{ background:rgba(255,255,255,.08) }
-    #pub-rich .w-full{ width:100% }
+    #pub-rich .btn--quiet:hover{ background:rgba(255,255,255,.08); }
+    #pub-rich .w-full{ width:100%; }
 
     #pub-rich .hero{
       position:relative;
@@ -360,7 +476,7 @@
       border:1px solid rgba(255,255,255,.10);
       background:linear-gradient(180deg, #0a1222 0%, #07111f 52%, #050b16 100%);
       color:#fff;
-      box-shadow: var(--shadow-hero);
+      box-shadow:var(--shadow-hero);
       overflow:hidden;
       margin-top:16px;
     }
@@ -388,7 +504,7 @@
     }
 
     #pub-rich .hero-inner{
-      padding: clamp(22px, 2.8vw, 34px);
+      padding:clamp(22px, 2.8vw, 34px);
       position:relative;
       z-index:1;
     }
@@ -409,7 +525,8 @@
       flex-wrap:wrap;
     }
 
-    #pub-rich .brand{ display:flex; flex-direction:column; gap:4px }
+    #pub-rich .brand{ display:flex; flex-direction:column; gap:4px; }
+
     #pub-rich .logo{
       font-weight:980;
       font-size:26px;
@@ -422,7 +539,7 @@
       font-weight:800;
       letter-spacing:.16em;
       text-transform:uppercase;
-      color:rgba(226,232,240,.70)
+      color:rgba(226,232,240,.70);
     }
 
     #pub-rich .actions{
@@ -444,7 +561,7 @@
       font-size:12px;
       font-weight:800;
       letter-spacing:.01em;
-      backdrop-filter: blur(8px);
+      backdrop-filter:blur(8px);
     }
 
     #pub-rich .navlink:hover{
@@ -458,20 +575,21 @@
     }
 
     #pub-rich .hero-body{
-      margin-top: clamp(22px, 2.6vw, 34px);
+      margin-top:clamp(22px, 2.6vw, 34px);
       display:grid;
-      gap: clamp(18px, 2.4vw, 30px);
-      align-items: stretch;
+      gap:clamp(18px, 2.4vw, 30px);
+      align-items:stretch;
     }
 
     #pub-rich .hero-divider{ display:none; }
 
     @media (min-width:900px){
       #pub-rich .hero-body{
-        grid-template-columns: minmax(0, 1.08fr) 1px minmax(320px, 388px);
-        column-gap: clamp(22px, 2.3vw, 34px);
-        row-gap: clamp(18px, 2.4vw, 30px);
+        grid-template-columns:minmax(0, 1.08fr) 1px minmax(320px, 388px);
+        column-gap:clamp(22px, 2.3vw, 34px);
+        row-gap:clamp(18px, 2.4vw, 30px);
       }
+
       #pub-rich .hero-divider{
         display:block;
         background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.14), rgba(255,255,255,.02));
@@ -485,8 +603,8 @@
       display:flex;
       flex-direction:column;
       gap:18px;
-      max-width: 700px;
-      padding-right: min(1vw, 10px);
+      max-width:700px;
+      padding-right:min(1vw, 10px);
     }
 
     #pub-rich .hero-kicker{
@@ -497,26 +615,27 @@
     }
 
     #pub-rich .hero-kicker .tag{ color:rgba(191,219,254,.92); }
+
     #pub-rich .hero-kicker .tag:before{
       background:linear-gradient(135deg, rgba(96,165,250,.95), rgba(167,139,250,.85));
     }
 
     #pub-rich .hero .seo-kicker{
-      margin: 0;
-      color: rgba(226,232,240,.90);
-      font-size: 16px;
-      line-height: 1.6;
-      max-width: 54ch;
+      margin:0;
+      color:rgba(226,232,240,.90);
+      font-size:16px;
+      line-height:1.6;
+      max-width:54ch;
     }
 
-    #pub-rich .hero .seo-kicker strong{ color: rgba(255,255,255,.98); }
+    #pub-rich .hero .seo-kicker strong{ color:rgba(255,255,255,.98); }
 
     #pub-rich .hero .lead{
       margin:0;
       color:rgba(226,232,240,.88);
       font-size:15.5px;
       line-height:1.78;
-      max-width: 58ch;
+      max-width:58ch;
     }
 
     #pub-rich .hero .mini-hero{
@@ -524,20 +643,20 @@
       color:rgba(226,232,240,.68);
       font-size:13px;
       line-height:1.7;
-      max-width: 60ch;
+      max-width:60ch;
     }
 
     #pub-rich .cta{
       border-radius:30px;
       border:1px solid rgba(255,255,255,.12);
       background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
-      padding: clamp(20px, 2vw, 26px);
+      padding:clamp(20px, 2vw, 26px);
       display:grid;
-      gap: clamp(12px, 1.6vw, 16px);
+      gap:clamp(12px, 1.6vw, 16px);
       align-content:start;
       box-shadow:0 20px 50px rgba(0,0,0,.18);
       align-self:center;
-      backdrop-filter: blur(12px);
+      backdrop-filter:blur(12px);
     }
 
     #pub-rich .cta-title{
@@ -560,8 +679,8 @@
       color:rgba(226,232,240,.84);
       font-size:13px;
       line-height:1.5;
-      margin-top: 8px;
-      padding-top: 12px;
+      margin-top:8px;
+      padding-top:12px;
       border-top:1px solid rgba(255,255,255,.10);
     }
 
@@ -581,9 +700,7 @@
       max-width:900px;
     }
 
-    #pub-rich .head--wide{
-      max-width:none;
-    }
+    #pub-rich .head--wide{ max-width:none; }
 
     #pub-rich .split{
       display:grid;
@@ -607,9 +724,7 @@
       transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
 
-    #pub-rich .card:hover{
-      transform:translateY(-2px);
-    }
+    #pub-rich .card:hover{ transform:translateY(-2px); }
 
     #pub-rich .card:before,
     #pub-rich .video-card::before{
@@ -620,14 +735,16 @@
       top:16px;
       height:5px;
       border-radius:999px;
-      background: linear-gradient(90deg, rgba(37,99,235,.40), rgba(124,58,237,.30));
+      background:linear-gradient(90deg, rgba(37,99,235,.40), rgba(124,58,237,.30));
       opacity:.22;
       z-index:2;
     }
 
     @media (max-width:760px){
       #pub-rich .card:before,
-      #pub-rich .video-card::before{ display:none; }
+      #pub-rich .video-card::before{
+        display:none;
+      }
     }
 
     #pub-rich .card-head{
@@ -731,7 +848,7 @@
     }
 
     #pub-rich .bullets li,
-    #pub-rich .steps li{ line-height:1.6 }
+    #pub-rich .steps li{ line-height:1.6; }
 
     #pub-rich .card-foot{
       margin-top:auto;
@@ -758,8 +875,39 @@
       transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
 
-    #pub-rich .toolitem:hover{
-      transform:translateY(-2px);
+    #pub-rich .toolitem:hover{ transform:translateY(-2px); }
+
+    #pub-rich .toolcontent{
+      display:grid;
+      gap:12px;
+      min-width:0;
+      flex:1 1 auto;
+    }
+
+    #pub-rich .toolactions{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    #pub-rich .btn--micro{
+      min-height:38px;
+      padding:10px 12px;
+      border-radius:12px;
+      font-size:12.5px;
+      font-weight:900;
+      letter-spacing:-.01em;
+      background:rgba(37,99,235,.06);
+      border:1px solid rgba(37,99,235,.14);
+      color:#1d4ed8;
+      box-shadow:none;
+    }
+
+    #pub-rich .btn--micro:hover{
+      background:rgba(37,99,235,.10);
+      border-color:rgba(37,99,235,.22);
+      transform:translateY(-1px);
     }
 
     #pub-rich .toolitem .desc{
@@ -800,10 +948,10 @@
       width:18px;
       height:18px;
       flex:0 0 auto;
-      transition: transform .15s ease;
+      transition:transform .15s ease;
     }
 
-    #pub-rich details[open] .chev{ transform: rotate(180deg); }
+    #pub-rich details[open] .chev{ transform:rotate(180deg); }
 
     #pub-rich .pillgrid{
       display:grid;
@@ -837,7 +985,7 @@
       font-weight:900;
       letter-spacing:.04em;
       line-height:1.2;
-      transition: background .15s ease, transform .15s ease, border-color .15s ease;
+      transition:background .15s ease, transform .15s ease, border-color .15s ease;
     }
 
     #pub-rich .pill:hover{
@@ -911,7 +1059,7 @@
       line-height:1.76;
       color:#334155;
       margin:0;
-      max-width: 62ch;
+      max-width:62ch;
     }
 
     #pub-rich .highlight-grid{
@@ -922,15 +1070,13 @@
     }
 
     @media (max-width:760px){
-      #pub-rich .highlight-grid{
-        grid-template-columns:1fr;
-      }
+      #pub-rich .highlight-grid{ grid-template-columns:1fr; }
     }
 
     #pub-rich .highlight{
       border:1px solid rgba(15,23,42,.08);
       background:rgba(255,255,255,.74);
-      backdrop-filter: blur(6px);
+      backdrop-filter:blur(6px);
       border-radius:22px;
       padding:16px;
       box-shadow:0 10px 24px rgba(15,23,42,.04);
@@ -1031,7 +1177,7 @@
     #pub-rich .videos-intro{
       display:grid;
       gap:18px;
-      margin-bottom: var(--s5);
+      margin-bottom:var(--s5);
     }
 
     @media (min-width:900px){
@@ -1147,48 +1293,50 @@
 
     #pub-rich .video-carousel{
       position:relative;
-      margin-top: var(--s5);
+      margin-top:var(--s5);
     }
 
     #pub-rich .video-track{
       display:grid;
-      grid-auto-flow: column;
-      grid-auto-columns: clamp(300px, 38vw, 520px);
-      gap: var(--s4);
+      grid-auto-flow:column;
+      grid-auto-columns:clamp(300px, 38vw, 520px);
+      gap:var(--s4);
       overflow-x:auto;
       overflow-y:visible;
-      scroll-snap-type: x mandatory;
-      scroll-padding-left: 2px;
-      -webkit-overflow-scrolling: touch;
-      padding: 2px 2px 10px;
-      border-radius: var(--radius-card);
-      scrollbar-color: rgba(2,6,23,.22) rgba(2,6,23,.06);
-      scrollbar-width: thin;
+      scroll-snap-type:x mandatory;
+      scroll-padding-left:2px;
+      -webkit-overflow-scrolling:touch;
+      padding:2px 2px 10px;
+      border-radius:var(--radius-card);
+      scrollbar-color:rgba(2,6,23,.22) rgba(2,6,23,.06);
+      scrollbar-width:thin;
     }
 
     #pub-rich .video-track::-webkit-scrollbar{ height:10px; }
+
     #pub-rich .video-track::-webkit-scrollbar-track{
-      background: rgba(2,6,23,.06);
-      border-radius: 999px;
+      background:rgba(2,6,23,.06);
+      border-radius:999px;
     }
+
     #pub-rich .video-track::-webkit-scrollbar-thumb{
-      background: rgba(2,6,23,.18);
-      border-radius: 999px;
+      background:rgba(2,6,23,.18);
+      border-radius:999px;
     }
 
     #pub-rich .video-card{
       position:relative;
       scroll-snap-align:start;
-      border-radius: var(--radius-card);
-      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
+      border-radius:var(--radius-card);
+      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
       overflow:hidden;
       min-width:0;
     }
 
     #pub-rich .video-frame{
       position:relative;
-      aspect-ratio: 16 / 9;
-      background: linear-gradient(180deg, #0b1220, #020617);
+      aspect-ratio:16 / 9;
+      background:linear-gradient(180deg, #0b1220, #020617);
     }
 
     #pub-rich .video-frame iframe{
@@ -1201,44 +1349,45 @@
 
     #pub-rich .video-caption{
       margin:0;
-      padding: 14px 16px 6px;
-      color: #0f172a;
-      font-size: 15px;
-      line-height: 1.5;
-      font-weight: 900;
+      padding:14px 16px 6px;
+      color:#0f172a;
+      font-size:15px;
+      line-height:1.5;
+      font-weight:900;
       letter-spacing:-.01em;
     }
 
     #pub-rich .video-note{
       margin:0;
-      padding: 0 16px 16px;
-      color: #64748b;
-      font-size: 12.8px;
-      line-height: 1.6;
+      padding:0 16px 16px;
+      color:#64748b;
+      font-size:12.8px;
+      line-height:1.6;
       text-align:left;
     }
 
     #pub-rich .vbtn{
       position:absolute;
-      top: calc(50% - 24px);
+      top:calc(50% - 24px);
       width:48px;
       height:48px;
-      border-radius: 999px;
+      border-radius:999px;
       border:1px solid rgba(2,6,23,.12);
       background:#fff;
-      box-shadow: var(--shadow-pop);
+      box-shadow:var(--shadow-pop);
       display:flex;
       align-items:center;
       justify-content:center;
       cursor:pointer;
       z-index:3;
+      font:inherit;
     }
 
     #pub-rich .vbtn span{
-      font-size: 28px;
-      line-height: 1;
-      transform: translateY(-1px);
-      color: #0f172a;
+      font-size:28px;
+      line-height:1;
+      transform:translateY(-1px);
+      color:#0f172a;
     }
 
     #pub-rich .vbtn[disabled]{
@@ -1247,82 +1396,82 @@
       box-shadow:none;
     }
 
-    #pub-rich .vbtn--prev{ left: -12px; }
-    #pub-rich .vbtn--next{ right: -12px; }
+    #pub-rich .vbtn--prev{ left:-12px; }
+    #pub-rich .vbtn--next{ right:-12px; }
 
     @media (max-width:760px){
       #pub-rich .vbtn{ display:none; }
-      #pub-rich .video-track{ grid-auto-columns: minmax(82vw, 1fr); }
+      #pub-rich .video-track{ grid-auto-columns:minmax(82vw, 1fr); }
     }
 
     #pub-rich .vdots{
       display:flex;
       gap:8px;
       justify-content:center;
-      margin-top: 12px;
+      margin-top:12px;
     }
 
     #pub-rich .vdot{
       width:10px;
       height:10px;
-      border-radius: 999px;
+      border-radius:999px;
       border:1px solid rgba(2,6,23,.18);
-      background: rgba(2,6,23,.06);
+      background:rgba(2,6,23,.06);
       cursor:pointer;
     }
 
     #pub-rich .vdot[aria-current="true"]{
-      background: linear-gradient(135deg, rgba(37,99,235,.90), rgba(124,58,237,.85));
-      border-color: rgba(37,99,235,.30);
+      background:linear-gradient(135deg, rgba(37,99,235,.90), rgba(124,58,237,.85));
+      border-color:rgba(37,99,235,.30);
     }
 
     #lead-modal,
     #support-modal{
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:99999;
     }
 
     #lead-modal{
-      padding: clamp(14px, 3vw, 22px);
-      background: rgba(2,6,23,.58);
-      backdrop-filter: blur(5px);
+      padding:clamp(14px, 3vw, 22px);
+      background:rgba(2,6,23,.58);
+      backdrop-filter:blur(5px);
     }
 
     #support-modal{
-      padding: clamp(16px, 3vw, 28px);
+      padding:clamp(16px, 3vw, 28px);
       background:
         radial-gradient(700px 220px at 20% 0%, rgba(37,99,235,.14), transparent 60%),
         radial-gradient(700px 220px at 80% 0%, rgba(124,58,237,.12), transparent 60%),
         rgba(2,6,23,.64);
-      backdrop-filter: blur(8px);
+      backdrop-filter:blur(8px);
     }
 
     #lead-modal .lead-dialog,
     #support-modal .support-dialog{
-      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.94));
-      border-radius: var(--radius-card);
-      border: 1px solid var(--border-default);
-      box-shadow: var(--shadow-pop);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+      background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.94));
+      border-radius:var(--radius-card);
+      border:1px solid var(--border-default);
+      box-shadow:var(--shadow-pop);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
     }
 
     #lead-modal .lead-dialog{
-      width: min(560px, 100%);
-      max-height: min(86vh, 720px);
+      width:min(560px, 100%);
+      max-height:min(86vh, 720px);
     }
 
     #support-modal .support-dialog{
-      width: min(720px, 100%);
-      max-height: min(88vh, 860px);
-      border-radius: 28px;
-      border: 1px solid rgba(15,23,42,.08);
-      background: linear-gradient(180deg, rgba(255,255,255,.99), rgba(248,250,252,.96));
+      width:min(720px, 100%);
+      max-height:min(88vh, 860px);
+      border-radius:28px;
+      border:1px solid rgba(15,23,42,.08);
+      background:linear-gradient(180deg, rgba(255,255,255,.99), rgba(248,250,252,.96));
       box-shadow:
         0 30px 90px rgba(2,6,23,.28),
         0 10px 28px rgba(15,23,42,.08);
@@ -1330,16 +1479,14 @@
 
     #lead-modal .lead-header,
     #support-modal .support-header{
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
     }
 
-    #lead-modal .lead-header{
-      padding: 18px 20px;
-    }
+    #lead-modal .lead-header{ padding:18px 20px; }
 
     #support-modal .support-header{
       display:grid;
@@ -1348,16 +1495,16 @@
       align-items:start;
       padding:20px 20px 16px;
       border-bottom:1px solid rgba(15,23,42,.08);
-      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.94));
+      background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.94));
     }
 
     #lead-modal .lead-title,
     #support-modal .support-title{
-      font-weight: 950;
-      letter-spacing: -.01em;
-      color: var(--fg);
-      font-size: 18px;
-      line-height: 1.25;
+      font-weight:950;
+      letter-spacing:-.01em;
+      color:var(--fg);
+      font-size:18px;
+      line-height:1.25;
     }
 
     #support-modal .support-headcopy{
@@ -1393,10 +1540,10 @@
 
     #lead-modal .lead-body,
     #support-modal .support-body{
-      display: grid;
-      overflow-y: auto;
-      overflow-x: hidden;
-      align-content: start;
+      display:grid;
+      overflow-y:auto;
+      overflow-x:hidden;
+      align-content:start;
     }
 
     #lead-modal .lead-body{
@@ -1407,22 +1554,22 @@
     #support-modal .support-body{
       padding:18px 20px 20px;
       gap:14px;
-      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(248,250,252,.94));
+      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(248,250,252,.94));
     }
 
     #lead-modal .lead-field,
     #support-modal .support-field{
-      display: grid;
-      gap: 7px;
-      min-width: 0;
+      display:grid;
+      gap:7px;
+      min-width:0;
     }
 
     #lead-modal .lead-label,
     #support-modal .support-label{
-      font-weight: 800;
-      font-size: 13px;
-      color: var(--fg);
-      line-height: 1.3;
+      font-weight:800;
+      font-size:13px;
+      color:var(--fg);
+      line-height:1.3;
     }
 
     #lead-modal .lead-input,
@@ -1433,11 +1580,11 @@
       min-width:0;
       max-width:100%;
       display:block;
-      border-radius: var(--radius-control);
-      border: 1px solid rgba(2,6,23,.14);
-      font-size: 15px;
-      background: #fff;
-      color: var(--fg);
+      border-radius:var(--radius-control);
+      border:1px solid rgba(2,6,23,.14);
+      font-size:15px;
+      background:#fff;
+      color:var(--fg);
     }
 
     #support-modal .support-input,
@@ -1445,17 +1592,14 @@
     #support-modal .support-textarea{
       border-radius:14px;
       border:1px solid rgba(2,6,23,.12);
-      transition:
-        border-color .18s ease,
-        box-shadow .18s ease,
-        background .18s ease;
+      transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
     }
 
     #lead-modal .lead-input,
     #support-modal .support-input,
     #support-modal .support-select{
-      height: 48px;
-      padding: 0 12px;
+      height:48px;
+      padding:0 12px;
     }
 
     #support-modal .support-input,
@@ -1472,9 +1616,7 @@
     }
 
     #support-modal .support-input::placeholder,
-    #support-modal .support-textarea::placeholder{
-      color:#94a3b8;
-    }
+    #support-modal .support-textarea::placeholder{ color:#94a3b8; }
 
     #support-modal .support-input:focus,
     #support-modal .support-select:focus,
@@ -1487,38 +1629,38 @@
 
     #lead-modal .lead-grid-2,
     #support-modal .support-grid-2{
-      display: grid;
-      gap: 12px;
-      grid-template-columns: 1fr 1fr;
-      align-items: start;
+      display:grid;
+      gap:12px;
+      grid-template-columns:1fr 1fr;
+      align-items:start;
     }
 
     #lead-modal .lead-optin{
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      font-size: 13.5px;
-      color: #334155;
-      line-height: 1.4;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      font-size:13.5px;
+      color:#334155;
+      line-height:1.4;
     }
 
     #lead-modal .lead-actions,
     #support-modal .support-actions{
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      align-items: center;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-start;
+      align-items:center;
     }
 
     #lead-modal .lead-actions{ margin-top:4px; }
 
     #lead-modal .lead-hint,
     #support-modal .support-hint{
-      font-size: 12.5px;
-      color: var(--muted2);
-      line-height: 1.5;
-      min-height: 18px;
+      font-size:12.5px;
+      color:var(--muted2);
+      line-height:1.5;
+      min-height:18px;
     }
 
     #support-modal .support-hint{
@@ -1529,17 +1671,18 @@
 
     #lead-modal .lead-btn,
     #support-modal .support-btn{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px 16px;
-      border-radius: var(--radius-control);
-      font-weight: 850;
-      border: 1px solid transparent;
-      cursor: pointer;
-      min-height: 46px;
-      white-space: nowrap;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:14px 16px;
+      border-radius:var(--radius-control);
+      font-weight:850;
+      border:1px solid transparent;
+      cursor:pointer;
+      min-height:46px;
+      white-space:nowrap;
+      font:inherit;
     }
 
     #support-modal .support-btn{
@@ -1547,23 +1690,16 @@
       padding:13px 15px;
       border-radius:14px;
       font-weight:900;
-      transition:
-        transform .18s ease,
-        filter .18s ease,
-        background .18s ease,
-        border-color .18s ease,
-        box-shadow .18s ease;
+      transition:transform .18s ease, filter .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
     }
 
-    #support-modal .support-btn:active{
-      transform:translateY(1px);
-    }
+    #support-modal .support-btn:active{ transform:translateY(1px); }
 
     #lead-modal .lead-btn--primary,
     #support-modal .support-btn--primary{
-      background: linear-gradient(135deg, rgba(37,99,235,1), rgba(59,130,246,.94));
-      color: #fff;
-      box-shadow: 0 12px 28px rgba(37,99,235,.22);
+      background:linear-gradient(135deg, rgba(37,99,235,1), rgba(59,130,246,.94));
+      color:#fff;
+      box-shadow:0 12px 28px rgba(37,99,235,.22);
     }
 
     #support-modal .support-btn--primary{
@@ -1578,20 +1714,18 @@
 
     #lead-modal .lead-btn--secondary,
     #support-modal .support-btn--secondary{
-      background: rgba(2,6,23,.06);
-      border-color: rgba(2,6,23,.12);
-      color: var(--fg);
+      background:rgba(2,6,23,.06);
+      border-color:rgba(2,6,23,.12);
+      color:var(--fg);
     }
 
-    #support-modal .support-btn--secondary:hover{
-      background:rgba(2,6,23,.08);
-    }
+    #support-modal .support-btn--secondary:hover{ background:rgba(2,6,23,.08); }
 
     #lead-modal .lead-close,
     #support-modal .support-close{
-      min-height: 40px;
-      padding: 10px 14px;
-      flex: 0 0 auto;
+      min-height:40px;
+      padding:10px 14px;
+      flex:0 0 auto;
     }
 
     #support-modal .support-note{
@@ -1722,9 +1856,7 @@
       opacity:1;
     }
 
-    #support-modal .support-step--active{
-      transform:translateY(-1px);
-    }
+    #support-modal .support-step--active{ transform:translateY(-1px); }
 
     #support-modal .support-step-num{
       width:28px;
@@ -1771,9 +1903,7 @@
       gap:14px;
     }
 
-    #support-modal .support-step-panel[hidden]{
-      display:none !important;
-    }
+    #support-modal .support-step-panel[hidden]{ display:none !important; }
 
     #support-modal .support-guidance{
       display:grid;
@@ -1787,9 +1917,7 @@
       line-height:1.55;
     }
 
-    #support-modal .support-guidance strong{
-      color:#0f172a;
-    }
+    #support-modal .support-guidance strong{ color:#0f172a; }
 
     #support-modal .support-guidance ul{
       margin:0;
@@ -1812,9 +1940,7 @@
       flex:0 0 auto;
     }
 
-    #support-modal .support-textarea--sm{
-      min-height:110px;
-    }
+    #support-modal .support-textarea--sm{ min-height:110px; }
 
     #support-modal .support-step-actions{
       display:flex;
@@ -1856,34 +1982,22 @@
         padding:18px 16px 14px;
       }
 
-      #support-modal .support-body{
-        padding:16px;
-      }
+      #support-modal .support-body{ padding:16px; }
 
-      #support-modal .support-grid-2{
-        grid-template-columns:1fr;
-      }
+      #support-modal .support-grid-2{ grid-template-columns:1fr; }
 
-      #support-modal .support-actions{
-        grid-template-columns:1fr;
-      }
+      #support-modal .support-actions{ grid-template-columns:1fr; }
 
-      #support-modal .support-close{
-        width:100%;
-      }
+      #support-modal .support-close{ width:100%; }
 
       #support-modal .support-stepper{
         grid-template-columns:1fr;
         gap:8px;
       }
 
-      #support-modal .support-step-line{
-        display:none;
-      }
+      #support-modal .support-step-line{ display:none; }
 
-      #support-modal .support-step{
-        justify-content:flex-start;
-      }
+      #support-modal .support-step{ justify-content:flex-start; }
 
       #support-modal .support-step-actions,
       #support-modal .support-step-actions--split{
@@ -1898,32 +2012,20 @@
         gap:12px;
       }
 
-      #lead-modal .lead-grid-2{
-        grid-template-columns:1fr;
-      }
+      #lead-modal .lead-grid-2{ grid-template-columns:1fr; }
 
       #lead-modal .lead-actions{
         flex-direction:column;
         align-items:stretch;
       }
 
-      #lead-modal .lead-actions .lead-btn{
-        width:100%;
-      }
+      #lead-modal .lead-actions .lead-btn{ width:100%; }
     }
 
     @media (max-width:520px){
-      #support-modal{
-        padding:12px;
-      }
-
-      #support-modal .support-title{
-        font-size:22px;
-      }
-
-      #support-modal .support-block{
-        padding:14px;
-      }
+      #support-modal{ padding:12px; }
+      #support-modal .support-title{ font-size:22px; }
+      #support-modal .support-block{ padding:14px; }
     }
   </style>
 </head>
@@ -1995,7 +2097,7 @@
                     <a class="btn btn--secondary w-full"
                        href="#pacote"
                        data-track="anchor_pacote"
-                       style="background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.22); color: rgba(255,255,255,.96);">
+                       style="background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.22); color:rgba(255,255,255,.96);">
                       <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
                         <path d="M5 12h14"/>
                         <path d="M13 6l6 6-6 6"/>
@@ -2015,17 +2117,17 @@
                       PUB Editorial no Instagram
                     </a>
 
-                    <a class="btn btn--quiet w-full"
-                       href="#"
-                       id="open-support-modal"
-                       data-track="support_open">
+                    <button class="btn btn--quiet w-full"
+                            type="button"
+                            id="open-support-modal"
+                            data-track="support_open">
                       <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
                         <path d="M8 10h8"/>
                         <path d="M8 14h5"/>
                         <path d="M6 5h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 3v-3H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
                       </svg>
                       Falar com a PUB Editorial
-                    </a>
+                    </button>
                   </div>
                 </div>
 
@@ -2067,7 +2169,7 @@
               </article>
             </div>
 
-            <div class="grid" style="margin-top: var(--s5);">
+            <div class="grid" style="margin-top:var(--s5);">
               <a class="btn btn--primary"
                  data-track="download_results"
                  data-item="PACOTE GRATUITO"
@@ -2178,10 +2280,24 @@
                     <path d="M11 5a3 3 0 0 1 2 0"/>
                   </svg>
                 </div>
-                <div>
-                  <h3 class="name">CAPA MASTER</h3>
-                  <p class="desc">Cria gabarito de capa aberta completo, calcula lombada e orelhas, gera dobras, guias de segurança e sangria, e prepara preset PDF CMYK no padrão gráfico.</p>
-                  <div class="when">Use ao iniciar a capa para garantir medidas corretas, dobras precisas e guias de segurança desde o começo.</div>
+                <div class="toolcontent">
+                  <div>
+                    <h3 class="name">CAPA MASTER</h3>
+                    <p class="desc">Cria gabarito de capa aberta completo, calcula lombada e orelhas, gera dobras, guias de segurança e sangria, e prepara preset PDF CMYK no padrão gráfico.</p>
+                    <div class="when">Use ao iniciar a capa para garantir medidas corretas, dobras precisas e guias de segurança desde o começo.</div>
+                  </div>
+                  <div class="toolactions">
+                    <button
+                      type="button"
+                      class="btn btn--micro"
+                      data-support-open="item"
+                      data-support-item="CAPA MASTER"
+                      data-support-subject="Quero saber mais sobre CAPA MASTER"
+                      data-support-message="Olá. Gostaria de saber mais sobre o CAPA MASTER, especialmente sobre em que casos ele é mais útil no fluxo editorial e como funciona na prática."
+                      data-track="support_item_interest">
+                      Tirar dúvida
+                    </button>
+                  </div>
                 </div>
               </article>
 
@@ -2192,10 +2308,24 @@
                     <path d="M9 8h6M9 12h6M9 16h4"/>
                   </svg>
                 </div>
-                <div>
-                  <h3 class="name">MIOLO MASTER</h3>
-                  <p class="desc">Cria novo documento de miolo com preset editorial completo: define formato, margens, sangria e páginas espelhadas, além de preparar preset PDF CMYK conforme padrão gráfico.</p>
-                  <div class="when">Ideal para padronizar o miolo desde a primeira página e manter conformidade no fechamento.</div>
+                <div class="toolcontent">
+                  <div>
+                    <h3 class="name">MIOLO MASTER</h3>
+                    <p class="desc">Cria novo documento de miolo com preset editorial completo: define formato, margens, sangria e páginas espelhadas, além de preparar preset PDF CMYK conforme padrão gráfico.</p>
+                    <div class="when">Ideal para padronizar o miolo desde a primeira página e manter conformidade no fechamento.</div>
+                  </div>
+                  <div class="toolactions">
+                    <button
+                      type="button"
+                      class="btn btn--micro"
+                      data-support-open="item"
+                      data-support-item="MIOLO MASTER"
+                      data-support-subject="Quero saber mais sobre MIOLO MASTER"
+                      data-support-message="Olá. Gostaria de saber mais sobre o MIOLO MASTER, especialmente sobre criação de documento, margens, sangria e uso no fluxo editorial."
+                      data-track="support_item_interest">
+                      Tirar dúvida
+                    </button>
+                  </div>
                 </div>
               </article>
 
@@ -2206,10 +2336,24 @@
                     <rect x="8" y="7" width="8" height="10" rx="1.5"/>
                   </svg>
                 </div>
-                <div>
-                  <h3 class="name">MANCHA MASTER</h3>
-                  <p class="desc">Ajusta quadros de texto à mancha de uma só vez, com escopo por páginas, mestras e intervalos, e filtros por seleção, encadeamento e estilos de parágrafo.</p>
-                  <div class="when">Permite reenquadrar quadros na área útil definida pelas margens, evitando ajustes manuais página por página.</div>
+                <div class="toolcontent">
+                  <div>
+                    <h3 class="name">MANCHA MASTER</h3>
+                    <p class="desc">Ajusta quadros de texto à mancha de uma só vez, com escopo por páginas, mestras e intervalos, e filtros por seleção, encadeamento e estilos de parágrafo.</p>
+                    <div class="when">Permite reenquadrar quadros na área útil definida pelas margens, evitando ajustes manuais página por página.</div>
+                  </div>
+                  <div class="toolactions">
+                    <button
+                      type="button"
+                      class="btn btn--micro"
+                      data-support-open="item"
+                      data-support-item="MANCHA MASTER"
+                      data-support-subject="Quero saber mais sobre MANCHA MASTER"
+                      data-support-message="Olá. Gostaria de saber mais sobre o MANCHA MASTER, especialmente sobre ajuste de quadros de texto, escopo por páginas e aplicação em lote."
+                      data-track="support_item_interest">
+                      Tirar dúvida
+                    </button>
+                  </div>
                 </div>
               </article>
 
@@ -2222,10 +2366,24 @@
                     <rect x="6" y="9" width="12" height="6" rx="1.5"/>
                   </svg>
                 </div>
-                <div>
-                  <h3 class="name">VERTICAL MASTER</h3>
-                  <p class="desc">Aplica alinhamento vertical em quadros de texto de uma só vez, topo, centro, base ou justificado, garantindo consistência de página em página ao longo do documento.</p>
-                  <div class="when">Reorganiza o alinhamento vertical em todas as páginas com rapidez e precisão.</div>
+                <div class="toolcontent">
+                  <div>
+                    <h3 class="name">VERTICAL MASTER</h3>
+                    <p class="desc">Aplica alinhamento vertical em quadros de texto de uma só vez, topo, centro, base ou justificado, garantindo consistência de página em página ao longo do documento.</p>
+                    <div class="when">Reorganiza o alinhamento vertical em todas as páginas com rapidez e precisão.</div>
+                  </div>
+                  <div class="toolactions">
+                    <button
+                      type="button"
+                      class="btn btn--micro"
+                      data-support-open="item"
+                      data-support-item="VERTICAL MASTER"
+                      data-support-subject="Quero saber mais sobre VERTICAL MASTER"
+                      data-support-message="Olá. Gostaria de saber mais sobre o VERTICAL MASTER, especialmente sobre alinhamento vertical em lote e situações em que ele traz mais ganho."
+                      data-track="support_item_interest">
+                      Tirar dúvida
+                    </button>
+                  </div>
                 </div>
               </article>
 
@@ -2236,10 +2394,24 @@
                     <path d="M8 5v14"/>
                   </svg>
                 </div>
-                <div>
-                  <h3 class="name">BASELINE MASTER</h3>
-                  <p class="desc">Define e ativa a grade baseline do documento, ajusta início e incremento, e aplica alinhar ou não alinhar em estilos de parágrafo e seleção de uma só vez no miolo.</p>
-                  <div class="when">Ideal para implantar ou ajustar a baseline grid e padronizar a aderência dos estilos.</div>
+                <div class="toolcontent">
+                  <div>
+                    <h3 class="name">BASELINE MASTER</h3>
+                    <p class="desc">Define e ativa a grade baseline do documento, ajusta início e incremento, e aplica alinhar ou não alinhar em estilos de parágrafo e seleção de uma só vez no miolo.</p>
+                    <div class="when">Ideal para implantar ou ajustar a baseline grid e padronizar a aderência dos estilos.</div>
+                  </div>
+                  <div class="toolactions">
+                    <button
+                      type="button"
+                      class="btn btn--micro"
+                      data-support-open="item"
+                      data-support-item="BASELINE MASTER"
+                      data-support-subject="Quero saber mais sobre BASELINE MASTER"
+                      data-support-message="Olá. Gostaria de saber mais sobre o BASELINE MASTER, especialmente sobre configuração de baseline grid e aplicação nos estilos de parágrafo."
+                      data-track="support_item_interest">
+                      Tirar dúvida
+                    </button>
+                  </div>
                 </div>
               </article>
 
@@ -2251,10 +2423,24 @@
                     <path d="M12 16h.01"/>
                   </svg>
                 </div>
-                <div>
-                  <h3 class="name">GUIA DE USO</h3>
-                  <p class="desc">Instalação no painel Scripts do InDesign, requisitos e compatibilidade, passo a passo de uso e boas práticas de conferência.</p>
-                  <div class="when">Recomendado antes de instalar e executar, para entender escopo, filtros e compatibilidade.</div>
+                <div class="toolcontent">
+                  <div>
+                    <h3 class="name">GUIA DE USO</h3>
+                    <p class="desc">Instalação no painel Scripts do InDesign, requisitos e compatibilidade, passo a passo de uso e boas práticas de conferência.</p>
+                    <div class="when">Recomendado antes de instalar e executar, para entender escopo, filtros e compatibilidade.</div>
+                  </div>
+                  <div class="toolactions">
+                    <button
+                      type="button"
+                      class="btn btn--micro"
+                      data-support-open="item"
+                      data-support-item="GUIA DE USO"
+                      data-support-subject="Quero saber mais sobre o GUIA DE USO"
+                      data-support-message="Olá. Gostaria de saber mais sobre o GUIA DE USO, especialmente sobre instalação, compatibilidade e boas práticas para começar a usar os scripts."
+                      data-track="support_item_interest">
+                      Tirar dúvida
+                    </button>
+                  </div>
                 </div>
               </article>
             </div>
@@ -2267,7 +2453,7 @@
                 </svg>
               </summary>
 
-              <div class="mini" style="margin-top: 10px;">
+              <div class="mini" style="margin-top:10px;">
                 Use se você preferir baixar apenas um item. Para o fluxo completo, o recomendado é o pacote.
               </div>
 
@@ -2281,8 +2467,12 @@
               </ul>
             </details>
 
-            <div class="grid" style="margin-top: var(--s5);">
-              <a class="btn btn--primary" data-track="download_primary_pacote" data-item="PACOTE GRATUITO" href="https://drive.google.com/uc?export=download&id=18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE" target="_blank" rel="noopener noreferrer">
+            <div class="grid" style="margin-top:var(--s5);">
+              <a class="btn btn--primary"
+                 data-track="download_primary_pacote"
+                 data-item="PACOTE GRATUITO"
+                 href="https://drive.google.com/uc?export=download&id=18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE"
+                 target="_blank" rel="noopener noreferrer">
                 <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
                   <path d="M12 3v10"/>
                   <path d="M8 9l4 4 4-4"/>
@@ -2295,8 +2485,7 @@
           </div>
         </div>
       </section>
-
-      <section class="stripe stripe--soft" id="videos" aria-label="Vídeos">
+            <section class="stripe stripe--soft" id="videos" aria-label="Vídeos">
         <div class="wrap">
           <div class="panel">
             <div class="videos-intro">
@@ -2501,17 +2690,17 @@
                 </ol>
 
                 <div class="card-foot">
-                  <a class="btn btn--secondary w-full"
-                     href="#"
-                     id="open-support-modal-install"
-                     data-track="support_open_install">
+                  <button class="btn btn--secondary w-full"
+                          type="button"
+                          id="open-support-modal-install"
+                          data-track="support_open_install">
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
                       <path d="M8 10h8"/>
                       <path d="M8 14h5"/>
                       <path d="M6 5h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 3v-3H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
                     </svg>
                     Falar com a PUB Editorial
-                  </a>
+                  </button>
                 </div>
               </article>
             </div>
@@ -3117,8 +3306,7 @@
         };
       }
     }
-
-    class LeadCapture {
+        class LeadCapture {
       constructor(dom, urlTools, analytics, api, sessionStore) {
         this.dom = dom;
         this.urlTools = urlTools;
@@ -3144,12 +3332,15 @@
         if (!this.root || !this.modal || !this.form) return;
 
         this.dom.on(this.root, "click", (e) => this.onRootClick(e), { capture: true });
+
         this.dom.on(this.modal, "click", (e) => {
           if (e.target === this.modal && !this._isSubmitting) this.closeModalOnly();
         });
+
         this.dom.on(this.btnClose, "click", () => {
           if (!this._isSubmitting) this.closeModalOnly();
         });
+
         this.dom.on(this.form, "submit", (e) => this.onSubmit(e));
 
         const update = () => this.updateSubmitState();
@@ -3187,7 +3378,9 @@
         this.modal.style.display = "flex";
         this.modal.setAttribute("aria-hidden", "false");
         this.modal.setAttribute("data-state", "open");
-        if (this.hint) this.hint.textContent = "Se você enviar uma mensagem depois, poderemos reaproveitar seus dados de contato no formulário de suporte.";
+        if (this.hint) {
+          this.hint.textContent = "Se você enviar uma mensagem depois, poderemos reaproveitar seus dados de contato no formulário de suporte.";
+        }
         this.updateSubmitState();
         try { this.nameInput?.focus(); } catch (_) {}
       }
@@ -3218,6 +3411,7 @@
           this.submitBtn.textContent = isSubmitting ? "Enviando..." : "Continuar e baixar";
           this.submitBtn.style.opacity = isSubmitting ? ".75" : "1";
         }
+
         if (this.btnClose) this.btnClose.disabled = isSubmitting;
         if (this.hint && message) this.hint.textContent = message;
       }
@@ -3459,7 +3653,7 @@
               file_name: payload.item,
               link_url: redirectUrl,
               placement: payload.placement,
-              backend_status: appData.transport === "html_redirect" ? "html_redirect" : "ok",
+              backend_status: appData.transport || "ok",
               duplicate: appData.duplicate ? "yes" : "no"
             });
 
@@ -3495,7 +3689,8 @@
         window.location.href = redirectUrl;
       }
     }
-        class SupportCapture {
+
+    class SupportCapture {
       constructor(dom, urlTools, analytics, api, sessionStore) {
         this.dom = dom;
         this.urlTools = urlTools;
@@ -3552,6 +3747,10 @@
         this.currentStep = 1;
         this._isSubmitting = false;
         this._prefilledFromLead = false;
+        this.openContext = {
+          origin: "",
+          itemInterest: false
+        };
       }
 
       init() {
@@ -3565,6 +3764,25 @@
             });
             this.openModal(btn.getAttribute("data-track") || "");
           });
+        });
+
+        this.dom.on(document, "click", (e) => {
+          const btn = e.target.closest("[data-support-open='item']");
+          if (!btn) return;
+
+          e.preventDefault();
+
+          const item = btn.getAttribute("data-support-item") || "";
+          const subject = btn.getAttribute("data-support-subject") || "";
+          const message = btn.getAttribute("data-support-message") || "";
+          const placement = btn.getAttribute("data-track") || "support_item_interest";
+
+          this.analytics.trackCTA("open_support_modal_item", {
+            placement,
+            item
+          });
+
+          this.openModalWithPrefill({ item, subject, message }, placement);
         });
 
         this.dom.on(this.modal, "click", (e) => {
@@ -3660,11 +3878,6 @@
         return raw.replace(/[^\d+]/g, "");
       }
 
-      hasLeadPrefill() {
-        const lead = this.sessionStore.getLead();
-        return !!(lead && (lead.name || lead.email));
-      }
-
       applyLeadPrefill() {
         const lead = this.sessionStore.getLead();
         if (!lead) {
@@ -3695,6 +3908,11 @@
       }
 
       openModal(origin = "") {
+        this.openContext = {
+          origin,
+          itemInterest: false
+        };
+
         this.modal.style.display = "flex";
         this.modal.setAttribute("aria-hidden", "false");
         this.modal.setAttribute("data-state", "open");
@@ -3717,6 +3935,32 @@
         } catch (_) {}
       }
 
+      openModalWithPrefill(prefill = {}, origin = "support_item_interest") {
+        this.openModal(origin);
+
+        this.openContext = {
+          origin,
+          itemInterest: true
+        };
+
+        const item = String(prefill.item || "").trim();
+        const subject = String(prefill.subject || "").trim();
+        const message = String(prefill.message || "").trim();
+
+        if (this.itemInput && item) this.itemInput.value = item;
+        if (this.subjectInput && subject) this.subjectInput.value = subject;
+        if (this.messageInput && message && !String(this.messageInput.value || "").trim()) {
+          this.messageInput.value = message;
+        }
+
+        this.syncSupportContext();
+        this.updateSubmitState();
+
+        try {
+          (this.subjectInput || this.messageInput || this.itemInput)?.focus();
+        } catch (_) {}
+      }
+
       closeModal() {
         this.modal.style.display = "none";
         this.modal.setAttribute("aria-hidden", "true");
@@ -3729,6 +3973,10 @@
         try { this.form?.reset(); } catch (_) {}
         this._isSubmitting = false;
         this._prefilledFromLead = false;
+        this.openContext = {
+          origin: "",
+          itemInterest: false
+        };
         this.setSubmittingUI(false);
         this.setStatus("Contato", "Sua mensagem será enviada para análise. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.");
         if (this.prefillNote) this.prefillNote.hidden = true;
@@ -3927,10 +4175,6 @@
           }
         }
 
-        if (this.contactPreferenceInput && !whatsapp && String(this.contactPreferenceInput.value || "") === "whatsapp" && !isTechHeavy) {
-          this.contactPreferenceInput.value = "email";
-        }
-
         this.updateSubmitState();
       }
 
@@ -4023,27 +4267,13 @@
         const contactPreference = String(fd.get("contact_preference") || "email").trim() || "email";
         const whatsappConsent = !!fd.get("whatsapp_consent");
 
-        const detailLines = [];
-
-        if (String(fd.get("script_name") || "").trim()) detailLines.push(`Nome do script: ${String(fd.get("script_name") || "").trim()}`);
-        if (String(fd.get("script_version") || "").trim()) detailLines.push(`Versão do script: ${String(fd.get("script_version") || "").trim()}`);
-        if (String(fd.get("script_id") || "").trim()) detailLines.push(`ID do script: ${String(fd.get("script_id") || "").trim()}`);
-        if (String(fd.get("indesign_version") || "").trim()) detailLines.push(`Versão do Adobe InDesign: ${String(fd.get("indesign_version") || "").trim()}`);
-        if (String(fd.get("os_name") || "").trim()) detailLines.push(`Sistema operacional: ${String(fd.get("os_name") || "").trim()}`);
-        if (String(fd.get("problem_stage") || "").trim()) detailLines.push(`Etapa do problema: ${String(fd.get("problem_stage") || "").trim()}`);
-        if (String(fd.get("expected_behavior") || "").trim()) detailLines.push(`Comportamento esperado: ${String(fd.get("expected_behavior") || "").trim()}`);
-        if (whatsapp) detailLines.push(`WhatsApp informado: ${whatsapp}`);
-        detailLines.push(`Preferência de contato: ${contactPreference}`);
-        detailLines.push(`Consentimento para WhatsApp: ${whatsappConsent ? "sim" : "não"}`);
-
-        const finalMessage = detailLines.length
-          ? `${baseMessage}\n\n---\nDADOS COMPLEMENTARES\n${detailLines.join("\n")}`
-          : baseMessage;
-
         return {
           request_id: this.urlTools.safeId("ticket"),
           action: "create_ticket",
           event: "support_ticket",
+          origin: this.openContext?.origin || "",
+          interest_type: this.openContext?.itemInterest ? "item_question" : "general_contact",
+          interest_stage: this.openContext?.itemInterest ? "pre_download" : "general",
           name: String(fd.get("name") || "").trim(),
           email: String(fd.get("email") || "").trim(),
           whatsapp,
@@ -4051,7 +4281,7 @@
           whatsapp_consent: whatsappConsent,
           item,
           subject,
-          message: finalMessage,
+          message: baseMessage,
           script_name: String(fd.get("script_name") || "").trim(),
           script_version: String(fd.get("script_version") || "").trim(),
           script_id: String(fd.get("script_id") || "").trim(),
@@ -4094,7 +4324,8 @@
           script_name: payload.script_name || "",
           script_version: payload.script_version || "",
           contact_preference: payload.contact_preference || "email",
-          has_whatsapp: payload.whatsapp ? "yes" : "no"
+          has_whatsapp: payload.whatsapp ? "yes" : "no",
+          interest_type: payload.interest_type || "general_contact"
         });
 
         this.modal.setAttribute("data-state", "sending");
@@ -4107,27 +4338,34 @@
 
           if (ok) {
             const appData = data.data || {};
+            const isDuplicate = !!appData.duplicate;
 
             this.analytics.track("support_ticket_success", {
               ticket_id: appData.ticket_id || "",
-              item: payload.item
+              item: payload.item,
+              duplicate: isDuplicate ? "yes" : "no"
             });
 
             this._isSubmitting = false;
             this.setSubmittingUI(false);
             this.modal.setAttribute("data-state", "success");
+
             this.setStatus(
-              "Enviado",
-              `Mensagem enviada com sucesso.${appData.ticket_id ? ` Protocolo: ${appData.ticket_id}.` : ""} Se necessário, o atendimento continuará pelo canal informado.`
+              isDuplicate ? "Reaproveitado" : "Enviado",
+              isDuplicate
+                ? `Sua mensagem já havia sido registrada.${appData.ticket_id ? ` Protocolo: ${appData.ticket_id}.` : ""} Reaproveitamos o atendimento existente.`
+                : `Mensagem enviada com sucesso.${appData.ticket_id ? ` Protocolo: ${appData.ticket_id}.` : ""} Se necessário, o atendimento continuará pelo canal informado.`
             );
 
             if (this.hint) {
-              this.hint.textContent = "Recebemos sua mensagem. Você já pode fechar esta janela.";
+              this.hint.textContent = isDuplicate
+                ? "Encontramos um atendimento recente equivalente. Você já pode fechar esta janela."
+                : "Recebemos sua mensagem. Você já pode fechar esta janela.";
             }
 
             if (this.submitBtn) {
               this.submitBtn.disabled = true;
-              this.submitBtn.textContent = "Mensagem enviada";
+              this.submitBtn.textContent = isDuplicate ? "Mensagem reaproveitada" : "Mensagem enviada";
               this.submitBtn.style.opacity = "1";
             }
 
@@ -4232,8 +4470,14 @@
 
         track.addEventListener("keydown", (e) => {
           const k = (e.key || "").toLowerCase();
-          if (k === "arrowleft") { e.preventDefault(); scrollToIndex(getIndex() - 1, true); }
-          if (k === "arrowright") { e.preventDefault(); scrollToIndex(getIndex() + 1, true); }
+          if (k === "arrowleft") {
+            e.preventDefault();
+            scrollToIndex(getIndex() - 1, true);
+          }
+          if (k === "arrowright") {
+            e.preventDefault();
+            scrollToIndex(getIndex() + 1, true);
+          }
         });
 
         let raf = 0;
@@ -4260,4 +4504,3 @@
   </script>
 </body>
 </html>
-
