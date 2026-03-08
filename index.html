@@ -1433,6 +1433,203 @@
       background:linear-gradient(135deg, rgba(37,99,235,.90), rgba(124,58,237,.85));
       border-color:rgba(37,99,235,.30);
     }
+
+    #lead-modal,
+    #support-modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      padding:clamp(16px,3vw,28px);
+      background:rgba(2,6,23,.62);
+      backdrop-filter: blur(8px);
+      align-items:center;
+      justify-content:center;
+    }
+
+    #lead-modal[data-state="open"],
+    #support-modal[data-state="open"]{
+      display:flex;
+    }
+
+    .lead-dialog,
+    .support-dialog{
+      width:min(760px, 100%);
+      max-height:min(86vh, 920px);
+      overflow:auto;
+      border-radius:22px;
+      background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.92));
+      border:1px solid rgba(15,23,42,.10);
+      box-shadow:0 24px 90px rgba(2,6,23,.25);
+    }
+
+    .lead-header,
+    .support-header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      padding:18px 18px 12px;
+      border-bottom:1px solid rgba(2,6,23,.08);
+    }
+
+    .lead-title{
+      font-weight:950;
+      letter-spacing:-.02em;
+    }
+
+    .lead-body,
+    .support-body{
+      padding:16px 18px 18px;
+      display:grid;
+      gap:12px;
+    }
+
+    .lead-field,
+    .support-field{
+      display:grid;
+      gap:6px;
+    }
+
+    .lead-label,
+    .support-label{
+      font-size:13px;
+      font-weight:900;
+      color:#0f172a;
+    }
+
+    .lead-input,
+    .support-input,
+    .support-select,
+    .support-textarea{
+      width:100%;
+      min-height:46px;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.14);
+      background:#fff;
+      font:inherit;
+    }
+
+    .support-textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    .support-textarea--sm{
+      min-height:90px;
+    }
+
+    .lead-grid-2,
+    .support-grid-2{
+      display:grid;
+      gap:12px;
+    }
+
+    @media (min-width:720px){
+      .lead-grid-2,
+      .support-grid-2{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    .lead-optin,
+    .support-check{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      font-size:13px;
+      color:#334155;
+    }
+
+    .lead-actions{
+      display:flex;
+      justify-content:flex-end;
+      margin-top:6px;
+    }
+
+    .lead-hint,
+    .support-hint{
+      font-size:13px;
+      color:#64748b;
+      min-height:18px;
+    }
+
+    .lead-btn,
+    .support-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      font-weight:900;
+      border:1px solid rgba(15,23,42,.12);
+      background:#fff;
+      cursor:pointer;
+      font:inherit;
+    }
+
+    .lead-btn--primary,
+    .support-btn--primary{
+      background:linear-gradient(135deg, #2563eb 0%, #3b82f6 58%, #60a5fa 100%);
+      border-color:transparent;
+      color:#fff;
+    }
+
+    .lead-btn--secondary,
+    .support-btn--secondary{
+      background:rgba(15,23,42,.06);
+    }
+
+    .support-step-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+    }
+
+    .support-step-actions--split{
+      justify-content:space-between;
+    }
+
+    .support-stepper{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 0 14px;
+    }
+
+    .support-step{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
+      font-weight:900;
+      color:#64748b;
+    }
+
+    .support-step--active{ color:#0f172a; }
+
+    .support-step-num{
+      width:24px;
+      height:24px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid rgba(15,23,42,.14);
+      background:#fff;
+    }
+
+    .support-step-line{
+      flex:1 1 auto;
+      height:1px;
+      background:rgba(15,23,42,.12);
+    }
+
+    body.modal-open{
+      overflow:hidden;
+    }
   </style>
 </head>
 
@@ -1676,8 +1873,7 @@
               <h2 class="h2">Cinco scripts para Adobe InDesign: CAPA MASTER, MIOLO MASTER, MANCHA MASTER, VERTICAL MASTER e BASELINE MASTER</h2>
               <div class="muted">Arquivos JSX e guia de uso cobrindo instalação, compatibilidade e boas práticas de conferência.</div>
             </div>
-
-            <div class="toollist" aria-label="Lista do pacote">
+                        <div class="toollist" aria-label="Lista do pacote">
               <article class="toolitem">
                 <div class="iconbox" aria-hidden="true">
                   <svg viewBox="0 0 24 24">
@@ -1762,7 +1958,8 @@
                   </div>
                 </div>
               </article>
-                            <article class="toolitem">
+
+              <article class="toolitem">
                 <div class="iconbox" aria-hidden="true">
                   <svg viewBox="0 0 24 24">
                     <path d="M12 4v16"/>
@@ -2295,7 +2492,8 @@
             <button type="button" class="support-btn support-btn--primary" id="support-next-1">Continuar</button>
           </div>
         </section>
-                <section class="support-block support-step-panel" data-step-panel="2" aria-label="Dados de contato" hidden>
+
+        <section class="support-block support-step-panel" data-step-panel="2" aria-label="Dados de contato" hidden>
           <div class="support-block-title">Etapa 2 · Seus dados</div>
 
           <div class="support-prefill-note" id="support-prefill-note" hidden>
@@ -2777,6 +2975,7 @@
       }
 
       openModal() {
+        document.body.classList.add("modal-open");
         this.modal.style.display = "flex";
         this.modal.setAttribute("aria-hidden", "false");
         this.modal.setAttribute("data-state", "open");
@@ -2788,6 +2987,7 @@
       }
 
       closeModal() {
+        document.body.classList.remove("modal-open");
         this.modal.style.display = "none";
         this.modal.setAttribute("aria-hidden", "true");
         this.modal.removeAttribute("data-state");
@@ -2949,13 +3149,19 @@
         const placement = trigger.getAttribute("data-track") || "download";
         const label = (trigger.textContent || "").trim().slice(0, 200);
 
+        const nearestSection = trigger.closest("section[id]");
+        const ctaSection = nearestSection?.id || placement || "";
+        const ctaText = label || item || "";
+
         if (!fileId || !item) return;
 
         this.pending = {
           file_id: fileId,
           item,
           placement,
-          label
+          label,
+          cta_text: ctaText,
+          cta_section: ctaSection
         };
 
         this.analytics.trackCTA("open_download_modal", {
@@ -2976,6 +3182,7 @@
         const city = String(fd.get("city") || "").trim();
         const state = String(fd.get("state") || "").trim().toUpperCase();
         const optin = !!fd.get("optin");
+
         const pageUrl = location.href;
         const refUrl = document.referrer || "";
         const uspSelf = new URLSearchParams(location.search);
@@ -2983,10 +3190,26 @@
         const uspRef = this.urlTools.getSearchParamsFromUrl(refUrl);
         const getUtm = (k) => uspSelf.get(k) || uspPage.get(k) || uspRef.get(k) || "";
 
+        const pageTitle = document.title || "";
+        const pagePath = location.pathname || "";
+        const pageHash = location.hash || "";
+        const language = navigator.language || document.documentElement.lang || "pt-BR";
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+        const platform = navigator.platform || "";
+        const viewportWidth = String(window.innerWidth || 0);
+        const viewportHeight = String(window.innerHeight || 0);
+        const screenWidth = String((window.screen && window.screen.width) || 0);
+        const screenHeight = String((window.screen && window.screen.height) || 0);
+        const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? "true" : "false";
+
+        const previousLead = this.sessionStore.getLead();
+        const sessionHasPreviousLead = previousLead ? "true" : "false";
+
         return {
           request_id: this.urlTools.safeId("lead"),
           event: "lead_submit",
           action: "capture_lead",
+
           item: this.pending.item,
           name,
           email,
@@ -2996,16 +3219,35 @@
           state,
           country: "BR",
           optin,
+
           placement: this.pending.placement,
           label: this.pending.label,
+          cta_text: this.pending.cta_text || this.pending.label || "",
+          cta_section: this.pending.cta_section || this.pending.placement || "",
           file_id: this.pending.file_id,
+
           page_url: pageUrl,
+          page_title: pageTitle,
+          page_path: pagePath,
+          page_hash: pageHash,
           referrer: refUrl,
+
+          language,
+          timezone,
+          platform,
+          viewport_width: viewportWidth,
+          viewport_height: viewportHeight,
+          screen_width: screenWidth,
+          screen_height: screenHeight,
+          is_mobile: isMobile,
+          session_has_previous_lead: sessionHasPreviousLead,
+
           utm_source: getUtm("utm_source"),
           utm_medium: getUtm("utm_medium"),
           utm_campaign: getUtm("utm_campaign"),
           utm_content: getUtm("utm_content"),
           utm_term: getUtm("utm_term"),
+
           user_agent: navigator.userAgent,
           status: "client_submit"
         };
@@ -3148,8 +3390,7 @@
           itemInterest: false
         };
       }
-
-      init() {
+            init() {
         if (!this.modal || !this.form || !this.btnOpenButtons.length) return;
 
         this.btnOpenButtons.forEach((btn) => {
@@ -3309,6 +3550,8 @@
           itemInterest: false
         };
 
+        this._prefilledFromLead = false;
+
         this.modal.style.display = "flex";
         this.modal.setAttribute("aria-hidden", "false");
         this.modal.setAttribute("data-state", "open");
@@ -3320,7 +3563,11 @@
         this.applyLeadPrefill();
 
         if (this.hint) this.hint.textContent = "";
-        this.setStatus("Contato", "Sua mensagem será enviada para análise. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.");
+        this.setStatus(
+          "Contato",
+          "Sua mensagem será enviada para análise. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente."
+        );
+
         this.syncSupportContext();
         this.goToStep(1, { silent: true });
         this.updateSubmitState();
@@ -3350,6 +3597,7 @@
         }
 
         this.syncSupportContext();
+        this.goToStep(1, { silent: true });
         this.updateSubmitState();
 
         try {
@@ -3663,21 +3911,38 @@
         const contactPreference = String(fd.get("contact_preference") || "email").trim() || "email";
         const whatsappConsent = !!fd.get("whatsapp_consent");
 
+        const pageTitle = document.title || "";
+        const pagePath = location.pathname || "";
+        const pageHash = location.hash || "";
+        const language = navigator.language || document.documentElement.lang || "pt-BR";
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+        const platform = navigator.platform || "";
+        const viewportWidth = String(window.innerWidth || 0);
+        const viewportHeight = String(window.innerHeight || 0);
+        const screenWidth = String((window.screen && window.screen.width) || 0);
+        const screenHeight = String((window.screen && window.screen.height) || 0);
+        const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? "true" : "false";
+
         return {
           request_id: this.urlTools.safeId("ticket"),
           action: "create_ticket",
           event: "support_ticket",
+
           origin: this.openContext?.origin || "",
           interest_type: this.openContext?.itemInterest ? "item_question" : "general_contact",
           interest_stage: this.openContext?.itemInterest ? "pre_download" : "general",
+          prefilled_from_lead: this._prefilledFromLead ? "true" : "false",
+
           name: String(fd.get("name") || "").trim(),
           email: String(fd.get("email") || "").trim(),
           whatsapp,
           contact_preference: contactPreference,
           whatsapp_consent: whatsappConsent,
+
           item,
           subject,
           message: baseMessage,
+
           script_name: String(fd.get("script_name") || "").trim(),
           script_version: String(fd.get("script_version") || "").trim(),
           script_id: String(fd.get("script_id") || "").trim(),
@@ -3685,13 +3950,28 @@
           os_name: String(fd.get("os_name") || "").trim(),
           problem_stage: String(fd.get("problem_stage") || "").trim(),
           expected_behavior: String(fd.get("expected_behavior") || "").trim(),
+
           page_url: pageUrl,
+          page_title: pageTitle,
+          page_path: pagePath,
+          page_hash: pageHash,
           referrer: refUrl,
+
+          language,
+          timezone,
+          platform,
+          viewport_width: viewportWidth,
+          viewport_height: viewportHeight,
+          screen_width: screenWidth,
+          screen_height: screenHeight,
+          is_mobile: isMobile,
+
           utm_source: getUtm("utm_source"),
           utm_medium: getUtm("utm_medium"),
           utm_campaign: getUtm("utm_campaign"),
           utm_content: getUtm("utm_content"),
           utm_term: getUtm("utm_term"),
+
           user_agent: navigator.userAgent
         };
       }
