@@ -112,19 +112,14 @@
       --fg:#0f172a;
       --muted:#475569;
       --muted2:#64748b;
-
       --blue:#2563eb;
       --violet:#7c3aed;
-
       --surface-1:rgba(255,255,255,.88);
-
       --border-default: rgba(15,23,42,.08);
       --line:#e2e8f0;
       --focus: rgba(96,165,250,.50);
-
       --container:1120px;
       --gutter:clamp(18px,3vw,30px);
-
       --s1:8px;
       --s2:12px;
       --s3:16px;
@@ -133,15 +128,12 @@
       --s6:36px;
       --s7:52px;
       --s8:72px;
-
       --radius-control:16px;
       --radius-card:26px;
       --radius-hero:34px;
-
       --shadow-card:0 10px 30px rgba(15,23,42,.05);
       --shadow-pop:0 18px 60px rgba(15,23,42,.10);
       --shadow-hero:0 28px 80px rgba(2,6,23,.20);
-
       --text-xl: clamp(24px,2.5vw,36px);
       --text-lg: 18px;
       --text-md: 16px;
@@ -1701,6 +1693,10 @@
       color:#b91c1c;
     }
 
+    #support-tech-block[hidden]{
+      display:none !important;
+    }
+
     @media (max-width:760px){
       #support-modal .support-header{
         grid-template-columns:1fr;
@@ -2379,8 +2375,7 @@
       </section>
     </main>
   </div>
-
-  <div id="lead-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Formulário de pré-download">
+    <div id="lead-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Formulário de pré-download">
     <div class="lead-dialog" role="document">
       <div class="lead-header">
         <div class="lead-title">Preencha para liberar o download</div>
@@ -2442,14 +2437,14 @@
           <div class="support-kicker">Contato</div>
           <div class="support-title">Fale com a PUB Editorial</div>
           <p class="support-subtitle">
-            Envie uma dúvida, comentário, sugestão ou relato de uso. Se for algo técnico, você também pode detalhar o problema por aqui.
+            Envie uma dúvida, comentário, sugestão ou relato de uso. Em questões técnicas, você pode informar também dados do script para agilizar a análise.
           </p>
         </div>
         <button type="button" id="support-close" class="support-btn support-btn--secondary support-close">Fechar</button>
       </div>
 
       <form id="support-form" class="support-body" novalidate>
-        <div class="support-note">
+        <div class="support-note" id="support-note">
           Você pode usar este espaço para falar sobre os scripts, a instalação, ideias de melhoria, dúvidas editoriais ou comentários gerais.
         </div>
 
@@ -2495,7 +2490,7 @@
 
             <div class="support-field">
               <label class="support-label" for="support-subject">Título</label>
-              <input id="support-subject" class="support-input" name="subject" required placeholder="Ex.: dúvida sobre instalação, sugestão de melhoria">
+              <input id="support-subject" class="support-input" name="subject" required placeholder="Ex.: dúvida sobre instalação, problema ao executar o script">
             </div>
           </div>
 
@@ -2506,10 +2501,75 @@
               class="support-textarea"
               name="message"
               required
-              placeholder="Escreva sua mensagem com o máximo de contexto que achar útil. Se for algo técnico, informe também a versão do InDesign e o que aconteceu."
+              placeholder="Escreva sua mensagem com o máximo de contexto que achar útil. Em caso técnico, descreva também o que aconteceu e em que etapa ocorreu."
             ></textarea>
-            <div class="support-field-tip">
+            <div class="support-field-tip" id="support-message-tip">
               Você pode enviar dúvidas gerais, comentários sobre a página, sugestões de novos recursos ou questões técnicas.
+            </div>
+          </div>
+        </div>
+
+        <div class="support-block" id="support-tech-block" hidden>
+          <div class="support-block-title">Dados técnicos do script</div>
+
+          <div class="support-note" style="margin:0;">
+            Se o script já estiver instalado, informe também o nome do script, a versão e o ID exibidos na janela <strong>Planos do script</strong>. Esses dados ajudam a agilizar a análise técnica.
+          </div>
+
+          <div class="support-grid-2">
+            <div class="support-field">
+              <label class="support-label" for="support-script-name">Nome do script</label>
+              <input
+                id="support-script-name"
+                class="support-input"
+                name="script_name"
+                placeholder="Ex.: CAPA MASTER"
+              >
+            </div>
+
+            <div class="support-field">
+              <label class="support-label" for="support-script-version">Versão do script</label>
+              <input
+                id="support-script-version"
+                class="support-input"
+                name="script_version"
+                placeholder="Ex.: 3.1"
+              >
+            </div>
+          </div>
+
+          <div class="support-grid-2">
+            <div class="support-field">
+              <label class="support-label" for="support-script-id">ID do script</label>
+              <input
+                id="support-script-id"
+                class="support-input"
+                name="script_id"
+                placeholder="Disponível na janela Planos do script"
+              >
+            </div>
+
+            <div class="support-field">
+              <label class="support-label" for="support-indesign-version">Versão do Adobe InDesign</label>
+              <input
+                id="support-indesign-version"
+                class="support-input"
+                name="indesign_version"
+                placeholder="Ex.: InDesign 20.0"
+              >
+            </div>
+          </div>
+
+          <div class="support-field">
+            <label class="support-label" for="support-os-name">Sistema operacional</label>
+            <input
+              id="support-os-name"
+              class="support-input"
+              name="os_name"
+              placeholder="Ex.: Windows 11 / macOS Sonoma"
+            >
+            <div class="support-field-tip">
+              Para problemas técnicos, tente informar também em que etapa ocorreu o problema e qual comportamento você esperava.
             </div>
           </div>
         </div>
@@ -3101,8 +3161,11 @@
           this.dom.byId("open-support-modal"),
           this.dom.byId("open-support-modal-install")
         ].filter(Boolean);
+
         this.hint = this.dom.byId("support-hint");
         this.submitBtn = this.dom.byId("support-submit");
+        this.cancelBtn = this.dom.byId("support-cancel");
+        this.statusBox = this.dom.byId("support-status");
 
         this.nameInput = this.form?.querySelector("input[name='name']") || null;
         this.emailInput = this.form?.querySelector("input[name='email']") || null;
@@ -3110,8 +3173,15 @@
         this.subjectInput = this.form?.querySelector("input[name='subject']") || null;
         this.messageInput = this.form?.querySelector("textarea[name='message']") || null;
 
-        this.cancelBtn = this.dom.byId("support-cancel");
-        this.statusBox = this.dom.byId("support-status");
+        this.techBlock = this.dom.byId("support-tech-block");
+        this.noteBox = this.dom.byId("support-note");
+        this.messageTip = this.dom.byId("support-message-tip");
+
+        this.scriptNameInput = this.form?.querySelector("input[name='script_name']") || null;
+        this.scriptVersionInput = this.form?.querySelector("input[name='script_version']") || null;
+        this.scriptIdInput = this.form?.querySelector("input[name='script_id']") || null;
+        this.indesignVersionInput = this.form?.querySelector("input[name='indesign_version']") || null;
+        this.osNameInput = this.form?.querySelector("input[name='os_name']") || null;
 
         this._isSubmitting = false;
       }
@@ -3125,7 +3195,7 @@
             this.analytics.trackCTA("open_support_modal", {
               placement: btn.getAttribute("data-track") || "support_button"
             });
-            this.openModal();
+            this.openModal(btn.getAttribute("data-track") || "");
           });
         });
 
@@ -3143,8 +3213,23 @@
 
         this.dom.on(this.form, "submit", (e) => this.onSubmit(e));
 
-        const update = () => this.updateSubmitState();
-        [this.nameInput, this.emailInput, this.itemInput, this.subjectInput, this.messageInput]
+        const update = () => {
+          this.syncSupportContext();
+          this.updateSubmitState();
+        };
+
+        [
+          this.nameInput,
+          this.emailInput,
+          this.itemInput,
+          this.subjectInput,
+          this.messageInput,
+          this.scriptNameInput,
+          this.scriptVersionInput,
+          this.scriptIdInput,
+          this.indesignVersionInput,
+          this.osNameInput
+        ]
           .filter(Boolean)
           .forEach((el) => {
             this.dom.on(el, "input", update);
@@ -3157,6 +3242,7 @@
           }
         });
 
+        this.syncSupportContext();
         this.updateSubmitState();
       }
 
@@ -3164,13 +3250,30 @@
         return this.modal && this.modal.style.display === "flex";
       }
 
-      openModal() {
+      isTechnicalContext() {
+        const item = String(this.itemInput?.value || "").trim().toUpperCase();
+        return item === "PROBLEMA TECNICO" || item === "USO DOS SCRIPTS";
+      }
+
+      isInstallationContext() {
+        const item = String(this.itemInput?.value || "").trim().toUpperCase();
+        return item === "INSTALACAO";
+      }
+
+      openModal(origin = "") {
         this.modal.style.display = "flex";
         this.modal.setAttribute("aria-hidden", "false");
         this.modal.setAttribute("data-state", "open");
+
+        if (origin === "support_open_install" && this.itemInput && !this.itemInput.value) {
+          this.itemInput.value = "INSTALACAO";
+        }
+
         if (this.hint) this.hint.textContent = "";
         this.setStatus("Contato", "Sua mensagem será enviada para análise.");
+        this.syncSupportContext();
         this.updateSubmitState();
+
         try { this.nameInput?.focus(); } catch (_) {}
       }
 
@@ -3187,7 +3290,43 @@
         this._isSubmitting = false;
         this.setSubmittingUI(false);
         this.setStatus("Contato", "Sua mensagem será enviada para análise.");
+        this.syncSupportContext();
         this.updateSubmitState();
+      }
+
+      syncSupportContext() {
+        const isTechnical = this.isTechnicalContext();
+        const isInstallation = this.isInstallationContext();
+
+        if (this.techBlock) {
+          this.techBlock.hidden = !(isTechnical || isInstallation);
+        }
+
+        if (this.noteBox) {
+          if (isTechnical) {
+            this.noteBox.innerHTML =
+              'Você pode usar este espaço para relatar um problema técnico. Se o script já estiver instalado, informe também o nome do script, a versão, o ID na janela <strong>Planos do script</strong>, a versão do InDesign e o sistema operacional.';
+          } else if (isInstallation) {
+            this.noteBox.innerHTML =
+              'Você pode usar este espaço para relatar uma dificuldade de instalação. Se já conseguiu instalar o script, informe também o nome, a versão e o ID exibidos na janela <strong>Planos do script</strong>.';
+          } else {
+            this.noteBox.textContent =
+              'Você pode usar este espaço para falar sobre os scripts, a instalação, ideias de melhoria, dúvidas editoriais ou comentários gerais.';
+          }
+        }
+
+        if (this.messageTip) {
+          if (isTechnical) {
+            this.messageTip.textContent =
+              'Descreva o que aconteceu, em que etapa ocorreu, qual script estava em uso e o que você esperava que acontecesse.';
+          } else if (isInstallation) {
+            this.messageTip.textContent =
+              'Descreva em que etapa da instalação houve dificuldade. Se já instalou, envie também os dados do script.';
+          } else {
+            this.messageTip.textContent =
+              'Você pode enviar dúvidas gerais, comentários sobre a página, sugestões de novos recursos ou questões técnicas.';
+          }
+        }
       }
 
       setStatus(label, text) {
@@ -3229,15 +3368,47 @@
         const itemOk = String(this.itemInput?.value || "").trim().length > 0;
         const subjectOk = String(this.subjectInput?.value || "").trim().length > 2;
         const messageOk = String(this.messageInput?.value || "").trim().length > 10;
-        const can = nameOk && emailOk && itemOk && subjectOk && messageOk;
+
+        const isTechnical = this.isTechnicalContext();
+        const isInstallation = this.isInstallationContext();
+
+        const scriptName = String(this.scriptNameInput?.value || "").trim();
+        const scriptVersion = String(this.scriptVersionInput?.value || "").trim();
+        const scriptId = String(this.scriptIdInput?.value || "").trim();
+        const indesignVersion = String(this.indesignVersionInput?.value || "").trim();
+
+        let techHint = "";
+
+        if (isTechnical) {
+          const hasAnyTechnicalData = !!(scriptName || scriptVersion || scriptId || indesignVersion);
+          if (hasAnyTechnicalData) {
+            if (!scriptName) techHint = "Para análise técnica, informe também o nome do script.";
+            else if (!scriptVersion) techHint = "Para análise técnica, informe também a versão do script.";
+            else if (!scriptId) techHint = "Para análise técnica, informe também o ID do script na janela Planos do script.";
+            else if (!indesignVersion) techHint = "Para análise técnica, informe também a versão do Adobe InDesign.";
+          }
+        }
+
+        if (isInstallation) {
+          const hasAnyInstallationTechData = !!(scriptName || scriptVersion || scriptId || indesignVersion);
+          if (hasAnyInstallationTechData) {
+            if (!scriptName) techHint = "Se já instalou o script, informe também o nome do script.";
+            else if (!scriptVersion) techHint = "Se já instalou o script, informe também a versão.";
+            else if (!scriptId) techHint = "Se já instalou o script, informe também o ID na janela Planos do script.";
+          }
+        }
+
+        const can = nameOk && emailOk && itemOk && subjectOk && messageOk && !techHint;
 
         this.submitBtn.disabled = !can;
         this.submitBtn.style.opacity = can ? "1" : ".55";
         this.submitBtn.style.cursor = can ? "pointer" : "not-allowed";
 
         if (this.hint) {
-          if (!can) {
+          if (!nameOk || !emailOk || !itemOk || !subjectOk || !messageOk) {
             this.hint.textContent = "Preencha nome, e-mail, assunto principal, título e mensagem para enviar.";
+          } else if (techHint) {
+            this.hint.textContent = techHint;
           } else {
             this.hint.textContent = "";
           }
@@ -3262,6 +3433,11 @@
           item: String(fd.get("item") || "").trim(),
           subject: String(fd.get("subject") || "").trim(),
           message: String(fd.get("message") || "").trim(),
+          script_name: String(fd.get("script_name") || "").trim(),
+          script_version: String(fd.get("script_version") || "").trim(),
+          script_id: String(fd.get("script_id") || "").trim(),
+          indesign_version: String(fd.get("indesign_version") || "").trim(),
+          os_name: String(fd.get("os_name") || "").trim(),
           page_url: pageUrl,
           referrer: refUrl,
           utm_source: getUtm("utm_source"),
@@ -3277,6 +3453,7 @@
         e.preventDefault();
         if (this._isSubmitting) return;
 
+        this.syncSupportContext();
         this.updateSubmitState();
         if (this.submitBtn?.disabled) return;
 
@@ -3291,7 +3468,9 @@
         this.analytics.trackSupportTicket({
           item: payload.item,
           subject: payload.subject,
-          placement: "support_modal"
+          placement: "support_modal",
+          script_name: payload.script_name || "",
+          script_version: payload.script_version || ""
         });
 
         this.modal.setAttribute("data-state", "sending");
@@ -3456,11 +3635,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
