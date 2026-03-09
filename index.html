@@ -219,6 +219,51 @@
   <script>
     window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwMebXZxaH3MwYX_0YTg2CFO7YHxYq2RVR9IPCvpky8fMKA8USfXao0pac5aepjjL1XNw/exec";
     window.PUB_SESSION_KEY = "PUB_FRONT_SESSION_V2";
+
+    window.PUBCRM_CONTRACT = {
+      version: "1.3",
+      leadItems: [
+        "PACOTE GRATUITO",
+        "CAPA MASTER",
+        "MIOLO MASTER",
+        "MANCHA MASTER",
+        "VERTICAL MASTER",
+        "BASELINE MASTER",
+        "GUIA DE USO"
+      ],
+      ticketItems: [
+        "DUVIDA GERAL",
+        "COMENTARIO",
+        "SUGESTAO",
+        "INSTALACAO",
+        "USO DOS SCRIPTS",
+        "PROBLEMA TECNICO",
+        "PACOTE GRATUITO",
+        "CAPA MASTER",
+        "MIOLO MASTER",
+        "MANCHA MASTER",
+        "VERTICAL MASTER",
+        "BASELINE MASTER",
+        "GUIA DE USO"
+      ],
+      leadPlacements: [
+        "download_primary",
+        "download_results",
+        "download_pill",
+        "download_primary_pacote",
+        "download_publico",
+        "download_footer"
+      ],
+      downloads: {
+        "18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE": "PACOTE GRATUITO",
+        "1AHKC3hYZCo_qoZ5LnLmNrt1GmAThnomm": "CAPA MASTER",
+        "1CiKz2brCrVzXqwEvRVXZS9MKr9tuyFsL": "MIOLO MASTER",
+        "1ny87txfaUhN1mV0lB4WRC3KYWd9giVXJ": "MANCHA MASTER",
+        "1qmLtu_szJ_rgak3x0gHYYtlktQS3BXpi": "VERTICAL MASTER",
+        "16ttuf7bM8xC5YWkldqXLDdxWYdJ2u9qs": "BASELINE MASTER",
+        "11iAOd6cnB34jLMJt5FBZOd9ZhWRKzZSc": "GUIA DE USO"
+      }
+    };
   </script>
 
   <style>
@@ -1440,9 +1485,10 @@
       position:fixed;
       inset:0;
       z-index:9999;
-      padding:clamp(16px,3vw,28px);
-      background:rgba(2,6,23,.62);
-      backdrop-filter: blur(8px);
+      padding:clamp(16px,3vw,32px);
+      background:rgba(2,6,23,.68);
+      backdrop-filter:blur(10px) saturate(1.08);
+      -webkit-backdrop-filter:blur(10px) saturate(1.08);
       align-items:center;
       justify-content:center;
     }
@@ -1454,47 +1500,142 @@
 
     .lead-dialog,
     .support-dialog{
+      position:relative;
       width:min(760px, 100%);
-      max-height:min(86vh, 920px);
+      max-height:min(88vh, 940px);
       overflow:auto;
-      border-radius:22px;
-      background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.92));
+      border-radius:28px;
+      background:
+        radial-gradient(720px 220px at 0% 0%, rgba(37,99,235,.08), transparent 60%),
+        radial-gradient(720px 220px at 100% 0%, rgba(124,58,237,.07), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.985), rgba(250,252,255,.95));
       border:1px solid rgba(15,23,42,.10);
-      box-shadow:0 24px 90px rgba(2,6,23,.25);
+      box-shadow:
+        0 30px 100px rgba(2,6,23,.28),
+        0 12px 36px rgba(15,23,42,.08),
+        inset 0 1px 0 rgba(255,255,255,.72);
+      scrollbar-width:thin;
+      scrollbar-color:rgba(15,23,42,.18) rgba(15,23,42,.05);
+    }
+
+    .support-dialog{
+      width:min(860px, 100%);
+    }
+
+    .lead-dialog::before,
+    .support-dialog::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      border-radius:inherit;
+      background:linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,0));
+    }
+
+    .lead-dialog::-webkit-scrollbar,
+    .support-dialog::-webkit-scrollbar{
+      width:10px;
+      height:10px;
+    }
+
+    .lead-dialog::-webkit-scrollbar-track,
+    .support-dialog::-webkit-scrollbar-track{
+      background:rgba(15,23,42,.05);
+      border-radius:999px;
+    }
+
+    .lead-dialog::-webkit-scrollbar-thumb,
+    .support-dialog::-webkit-scrollbar-thumb{
+      background:rgba(15,23,42,.18);
+      border-radius:999px;
     }
 
     .lead-header,
     .support-header{
+      position:sticky;
+      top:0;
+      z-index:3;
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
-      gap:12px;
-      padding:18px 18px 12px;
+      gap:16px;
+      padding:22px 22px 16px;
+      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
       border-bottom:1px solid rgba(2,6,23,.08);
+      backdrop-filter:blur(10px);
+    }
+
+    .lead-header::after,
+    .support-header::after{
+      content:"";
+      position:absolute;
+      left:22px;
+      right:22px;
+      bottom:-1px;
+      height:1px;
+      background:linear-gradient(90deg, rgba(37,99,235,.16), rgba(124,58,237,.12), rgba(15,23,42,.04));
     }
 
     .lead-title{
-      font-weight:950;
-      letter-spacing:-.02em;
+      font-size:clamp(22px,2.2vw,28px);
+      line-height:1.1;
+      font-weight:980;
+      letter-spacing:-.03em;
+      color:#0f172a;
+      max-width:26ch;
+    }
+
+    .support-headcopy{
+      display:grid;
+      gap:8px;
+      min-width:0;
+    }
+
+    .support-kicker{
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:#2563eb;
+    }
+
+    .support-title{
+      font-size:clamp(24px,2.3vw,30px);
+      line-height:1.08;
+      font-weight:980;
+      letter-spacing:-.03em;
+      color:#0f172a;
+      max-width:24ch;
+    }
+
+    .support-subtitle{
+      margin:0;
+      max-width:64ch;
+      color:#475569;
+      font-size:14.5px;
+      line-height:1.72;
     }
 
     .lead-body,
     .support-body{
-      padding:16px 18px 18px;
+      position:relative;
+      z-index:1;
+      padding:20px 22px 22px;
       display:grid;
-      gap:12px;
+      gap:16px;
     }
 
     .lead-field,
     .support-field{
       display:grid;
-      gap:6px;
+      gap:7px;
     }
 
     .lead-label,
     .support-label{
-      font-size:13px;
-      font-weight:900;
+      font-size:12.5px;
+      font-weight:950;
+      letter-spacing:.01em;
       color:#0f172a;
     }
 
@@ -1503,27 +1644,60 @@
     .support-select,
     .support-textarea{
       width:100%;
-      min-height:46px;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid rgba(15,23,42,.14);
-      background:#fff;
+      min-height:50px;
+      padding:13px 14px;
+      border-radius:16px;
+      border:1px solid rgba(15,23,42,.12);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.94), rgba(248,250,252,.96));
+      color:#0f172a;
       font:inherit;
+      line-height:1.4;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 1px 2px rgba(15,23,42,.03);
+      transition:border-color .18s ease, box-shadow .18s ease, background .18s ease, transform .18s ease;
+    }
+
+    .lead-input::placeholder,
+    .support-input::placeholder,
+    .support-textarea::placeholder{
+      color:#94a3b8;
+    }
+
+    .lead-input:hover,
+    .support-input:hover,
+    .support-select:hover,
+    .support-textarea:hover{
+      border-color:rgba(37,99,235,.18);
+      background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,250,252,.98));
+    }
+
+    .lead-input:focus,
+    .support-input:focus,
+    .support-select:focus,
+    .support-textarea:focus{
+      outline:none;
+      border-color:rgba(37,99,235,.34);
+      box-shadow:
+        0 0 0 4px rgba(96,165,250,.18),
+        inset 0 1px 0 rgba(255,255,255,.78);
+      background:#fff;
     }
 
     .support-textarea{
-      min-height:120px;
+      min-height:132px;
       resize:vertical;
     }
 
     .support-textarea--sm{
-      min-height:90px;
+      min-height:96px;
     }
 
     .lead-grid-2,
     .support-grid-2{
       display:grid;
-      gap:12px;
+      gap:14px;
     }
 
     @media (min-width:720px){
@@ -1538,21 +1712,32 @@
       display:flex;
       gap:10px;
       align-items:flex-start;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(15,23,42,.08);
+      background:rgba(248,250,252,.78);
       font-size:13px;
+      line-height:1.6;
       color:#334155;
+    }
+
+    .lead-optin input,
+    .support-check input{
+      margin-top:3px;
     }
 
     .lead-actions{
       display:flex;
       justify-content:flex-end;
-      margin-top:6px;
+      margin-top:4px;
     }
 
     .lead-hint,
     .support-hint{
-      font-size:13px;
-      color:#64748b;
       min-height:18px;
+      font-size:13px;
+      line-height:1.55;
+      color:#64748b;
     }
 
     .lead-btn,
@@ -1561,74 +1746,307 @@
       align-items:center;
       justify-content:center;
       gap:10px;
-      padding:12px 14px;
-      border-radius:14px;
+      min-height:46px;
+      padding:12px 15px;
+      border-radius:15px;
       font-weight:900;
+      letter-spacing:-.01em;
       border:1px solid rgba(15,23,42,.12);
-      background:#fff;
+      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(241,245,249,.92));
+      color:#0f172a;
       cursor:pointer;
       font:inherit;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 8px 20px rgba(15,23,42,.05);
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease, opacity .18s ease;
+    }
+
+    .lead-btn:hover,
+    .support-btn:hover{
+      transform:translateY(-1px);
+      border-color:rgba(37,99,235,.18);
+    }
+
+    .lead-btn:active,
+    .support-btn:active{
+      transform:translateY(0);
     }
 
     .lead-btn--primary,
     .support-btn--primary{
-      background:linear-gradient(135deg, #2563eb 0%, #3b82f6 58%, #60a5fa 100%);
+      background:linear-gradient(135deg, #2563eb 0%, #3b82f6 56%, #60a5fa 100%);
       border-color:transparent;
       color:#fff;
+      box-shadow:
+        0 16px 34px rgba(37,99,235,.24),
+        inset 0 1px 0 rgba(255,255,255,.18);
+    }
+
+    .lead-btn--primary:hover,
+    .support-btn--primary:hover{
+      filter:brightness(1.02);
+      box-shadow:
+        0 20px 40px rgba(37,99,235,.28),
+        inset 0 1px 0 rgba(255,255,255,.2);
     }
 
     .lead-btn--secondary,
     .support-btn--secondary{
-      background:rgba(15,23,42,.06);
+      background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(241,245,249,.96));
+      color:#334155;
+    }
+
+    .support-stepper{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:2px 2px 10px;
+    }
+
+    .support-step{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.01em;
+      color:#64748b;
+      transition:color .18s ease;
+    }
+
+    .support-step--active{
+      color:#0f172a;
+    }
+
+    .support-step--done{
+      color:#1d4ed8;
+    }
+
+    .support-step-num{
+      width:28px;
+      height:28px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex:0 0 auto;
+      border:1px solid rgba(15,23,42,.12);
+      background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(241,245,249,.94));
+      color:#475569;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 6px 14px rgba(15,23,42,.05);
+    }
+
+    .support-step--active .support-step-num{
+      border-color:rgba(37,99,235,.30);
+      background:linear-gradient(135deg, rgba(37,99,235,.96), rgba(124,58,237,.86));
+      color:#fff;
+      box-shadow:0 12px 24px rgba(37,99,235,.22);
+    }
+
+    .support-step--done .support-step-num{
+      border-color:rgba(37,99,235,.18);
+      background:rgba(37,99,235,.08);
+      color:#1d4ed8;
+    }
+
+    .support-step-line{
+      flex:1 1 auto;
+      min-width:18px;
+      height:2px;
+      border-radius:999px;
+      background:linear-gradient(90deg, rgba(15,23,42,.10), rgba(15,23,42,.06));
+    }
+
+    .support-block{
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:22px;
+      padding:16px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.96), rgba(248,250,252,.90));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 10px 28px rgba(15,23,42,.04);
+    }
+
+    .support-step-panel--active{
+      animation:modalPanelIn .18s ease;
+    }
+
+    @keyframes modalPanelIn{
+      from{
+        opacity:0;
+        transform:translateY(4px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .support-block-title{
+      margin:0 0 12px;
+      font-size:15px;
+      line-height:1.3;
+      font-weight:950;
+      letter-spacing:-.02em;
+      color:#0f172a;
+    }
+
+    .support-note,
+    .support-guidance,
+    .support-prefill-note,
+    .support-field-tip,
+    .support-postsend-note{
+      font-size:13px;
+      line-height:1.65;
+      color:#64748b;
+    }
+
+    .support-note,
+    .support-guidance,
+    .support-prefill-note{
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(15,23,42,.07);
+      background:rgba(248,250,252,.82);
+    }
+
+    .support-note--soft{
+      background:linear-gradient(180deg, rgba(248,250,252,.88), rgba(255,255,255,.92));
+    }
+
+    .support-guidance strong{
+      color:#0f172a;
+    }
+
+    .support-guidance ul{
+      margin:8px 0 0;
+      padding-left:18px;
+    }
+
+    .support-status{
+      display:grid;
+      gap:8px;
+      padding:14px 15px;
+      border-radius:18px;
+      border:1px solid rgba(37,99,235,.12);
+      background:
+        radial-gradient(520px 180px at 0% 0%, rgba(37,99,235,.08), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,250,252,.95));
+    }
+
+    .support-status-badge{
+      display:inline-flex;
+      align-items:center;
+      width:max-content;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(37,99,235,.08);
+      color:#1d4ed8;
+      font-size:11px;
+      font-weight:950;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+    }
+
+    .support-status-text{
+      color:#475569;
+      font-size:13.5px;
+      line-height:1.65;
+    }
+
+    .support-footer{
+      display:grid;
+      gap:14px;
+      margin-top:6px;
+    }
+
+    .support-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
     }
 
     .support-step-actions{
       display:flex;
       justify-content:flex-end;
       gap:10px;
+      margin-top:4px;
     }
 
     .support-step-actions--split{
       justify-content:space-between;
     }
 
-    .support-stepper{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:8px 0 14px;
-    }
-
-    .support-step{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      font-size:12px;
-      font-weight:900;
-      color:#64748b;
-    }
-
-    .support-step--active{ color:#0f172a; }
-
-    .support-step-num{
-      width:24px;
-      height:24px;
-      border-radius:999px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border:1px solid rgba(15,23,42,.14);
-      background:#fff;
-    }
-
-    .support-step-line{
-      flex:1 1 auto;
-      height:1px;
-      background:rgba(15,23,42,.12);
-    }
-
     body.modal-open{
       overflow:hidden;
+    }
+
+    @media (max-width:760px){
+      #lead-modal,
+      #support-modal{
+        padding:12px;
+      }
+
+      .lead-dialog,
+      .support-dialog{
+        width:100%;
+        max-height:92vh;
+        border-radius:24px;
+      }
+
+      .lead-header,
+      .support-header{
+        padding:18px 16px 14px;
+      }
+
+      .lead-header::after,
+      .support-header::after{
+        left:16px;
+        right:16px;
+      }
+
+      .lead-body,
+      .support-body{
+        padding:16px;
+      }
+
+      .support-stepper{
+        gap:8px;
+      }
+
+      .support-step-text{
+        display:none;
+      }
+
+      .support-step-line{
+        min-width:10px;
+      }
+
+      .support-block{
+        border-radius:18px;
+        padding:14px;
+      }
+
+      .support-actions,
+      .support-step-actions,
+      .lead-actions{
+        grid-template-columns:1fr;
+      }
+
+      .support-actions,
+      .lead-actions{
+        display:grid;
+      }
+
+      .lead-btn,
+      .support-btn{
+        width:100%;
+      }
     }
   </style>
 </head>
@@ -1873,7 +2291,8 @@
               <h2 class="h2">Cinco scripts para Adobe InDesign: CAPA MASTER, MIOLO MASTER, MANCHA MASTER, VERTICAL MASTER e BASELINE MASTER</h2>
               <div class="muted">Arquivos JSX e guia de uso cobrindo instalação, compatibilidade e boas práticas de conferência.</div>
             </div>
-                        <div class="toollist" aria-label="Lista do pacote">
+
+            <div class="toollist" aria-label="Lista do pacote">
               <article class="toolitem">
                 <div class="iconbox" aria-hidden="true">
                   <svg viewBox="0 0 24 24">
@@ -2149,8 +2568,7 @@
           </div>
         </div>
       </section>
-
-      <section class="stripe stripe--soft2" id="faq" aria-label="Perguntas frequentes">
+            <section class="stripe stripe--soft2" id="faq" aria-label="Perguntas frequentes">
         <div class="wrap">
           <div class="panel">
             <div class="head">
@@ -2661,8 +3079,7 @@
       </form>
     </div>
   </div>
-
-  <script type="module">
+    <script type="module">
     class Dom {
       byId(id) { return document.getElementById(id); }
       on(el, event, handler, options) { if (el) el.addEventListener(event, handler, options); }
@@ -2974,6 +3391,22 @@
         return (el.getAttribute("data-item") || el.textContent || "").trim().slice(0, 200);
       }
 
+      isValidLeadTrigger(fileId, item, placement) {
+        const contract = window.PUBCRM_CONTRACT || {};
+        const downloads = contract.downloads || {};
+        const leadItems = contract.leadItems || [];
+        const leadPlacements = contract.leadPlacements || [];
+
+        return (
+          !!fileId &&
+          !!item &&
+          !!placement &&
+          leadItems.includes(item) &&
+          leadPlacements.includes(placement) &&
+          downloads[fileId] === item
+        );
+      }
+
       openModal() {
         document.body.classList.add("modal-open");
         this.modal.style.display = "flex";
@@ -3153,7 +3586,14 @@
         const ctaSection = nearestSection?.id || placement || "";
         const ctaText = label || item || "";
 
-        if (!fileId || !item) return;
+        if (!this.isValidLeadTrigger(fileId, item, placement)) {
+          this.analytics.track("lead_trigger_invalid", {
+            file_id: fileId,
+            item,
+            placement
+          });
+          return;
+        }
 
         this.pending = {
           file_id: fileId,
@@ -3190,24 +3630,8 @@
         const uspRef = this.urlTools.getSearchParamsFromUrl(refUrl);
         const getUtm = (k) => uspSelf.get(k) || uspPage.get(k) || uspRef.get(k) || "";
 
-        const pageTitle = document.title || "";
-        const pagePath = location.pathname || "";
-        const pageHash = location.hash || "";
-        const language = navigator.language || document.documentElement.lang || "pt-BR";
-        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
-        const platform = navigator.platform || "";
-        const viewportWidth = String(window.innerWidth || 0);
-        const viewportHeight = String(window.innerHeight || 0);
-        const screenWidth = String((window.screen && window.screen.width) || 0);
-        const screenHeight = String((window.screen && window.screen.height) || 0);
-        const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? "true" : "false";
-
-        const previousLead = this.sessionStore.getLead();
-        const sessionHasPreviousLead = previousLead ? "true" : "false";
-
         return {
           request_id: this.urlTools.safeId("lead"),
-          event: "lead_submit",
           action: "capture_lead",
 
           item: this.pending.item,
@@ -3222,25 +3646,10 @@
 
           placement: this.pending.placement,
           label: this.pending.label,
-          cta_text: this.pending.cta_text || this.pending.label || "",
-          cta_section: this.pending.cta_section || this.pending.placement || "",
           file_id: this.pending.file_id,
 
           page_url: pageUrl,
-          page_title: pageTitle,
-          page_path: pagePath,
-          page_hash: pageHash,
           referrer: refUrl,
-
-          language,
-          timezone,
-          platform,
-          viewport_width: viewportWidth,
-          viewport_height: viewportHeight,
-          screen_width: screenWidth,
-          screen_height: screenHeight,
-          is_mobile: isMobile,
-          session_has_previous_lead: sessionHasPreviousLead,
 
           utm_source: getUtm("utm_source"),
           utm_medium: getUtm("utm_medium"),
@@ -3248,8 +3657,7 @@
           utm_content: getUtm("utm_content"),
           utm_term: getUtm("utm_term"),
 
-          user_agent: navigator.userAgent,
-          status: "client_submit"
+          user_agent: navigator.userAgent
         };
       }
 
@@ -3317,7 +3725,6 @@
           this.closeModalOnly();
           window.location.assign(redirectUrl);
           return;
-
         } catch (_) {
           this.setSubmittingUI(false);
           if (this.hint) {
@@ -3390,7 +3797,8 @@
           itemInterest: false
         };
       }
-            init() {
+
+      init() {
         if (!this.modal || !this.form || !this.btnOpenButtons.length) return;
 
         this.btnOpenButtons.forEach((btn) => {
@@ -3512,7 +3920,7 @@
       normalizePhone(value) {
         const raw = String(value || "").trim();
         if (!raw) return "";
-        return raw.replace(/[^\d+]/g, "");
+        return raw.replace(/[^\d]/g, "");
       }
 
       applyLeadPrefill() {
@@ -3552,6 +3960,7 @@
 
         this._prefilledFromLead = false;
 
+        document.body.classList.add("modal-open");
         this.modal.style.display = "flex";
         this.modal.setAttribute("aria-hidden", "false");
         this.modal.setAttribute("data-state", "open");
@@ -3596,6 +4005,18 @@
           this.messageInput.value = message;
         }
 
+        const scriptItems = [
+          "CAPA MASTER",
+          "MIOLO MASTER",
+          "MANCHA MASTER",
+          "VERTICAL MASTER",
+          "BASELINE MASTER"
+        ];
+
+        if (this.scriptNameInput && scriptItems.includes(item) && !String(this.scriptNameInput.value || "").trim()) {
+          this.scriptNameInput.value = item;
+        }
+
         this.syncSupportContext();
         this.goToStep(1, { silent: true });
         this.updateSubmitState();
@@ -3606,6 +4027,7 @@
       }
 
       closeModal() {
+        document.body.classList.remove("modal-open");
         this.modal.style.display = "none";
         this.modal.setAttribute("aria-hidden", "true");
         this.modal.removeAttribute("data-state");
@@ -3704,10 +4126,10 @@
 
           const prefersWhatsapp = String(this.contactPreferenceInput?.value || "") === "whatsapp";
           const hasWhatsapp = !!this.normalizePhone(this.whatsappInput?.value || "");
-          const needsConsent = prefersWhatsapp || hasWhatsapp || this.isTechHeavyContext();
+          const needsConsent = prefersWhatsapp;
 
           if (prefersWhatsapp && !hasWhatsapp) return this.whatsappInput?.focus();
-          if (needsConsent && hasWhatsapp && !this.whatsappConsentInput?.checked) return this.whatsappConsentInput?.focus();
+          if (needsConsent && !this.whatsappConsentInput?.checked) return this.whatsappConsentInput?.focus();
         }
       }
 
@@ -3733,9 +4155,9 @@
           const emailOk = this.emailInput?.value ? this.emailInput.checkValidity() : false;
           const whatsapp = this.normalizePhone(this.whatsappInput?.value || "");
           const prefersWhatsapp = String(this.contactPreferenceInput?.value || "") === "whatsapp";
-          const needsConsent = prefersWhatsapp || !!whatsapp || this.isTechHeavyContext();
+          const needsConsent = prefersWhatsapp;
           const whatsappOk = !prefersWhatsapp || !!whatsapp;
-          const consentOk = !needsConsent || !whatsapp || !!this.whatsappConsentInput?.checked;
+          const consentOk = !needsConsent || !!this.whatsappConsentInput?.checked;
 
           if (!nameOk || !emailOk) {
             if (this.hint) this.hint.textContent = "Preencha nome e e-mail válidos para continuar.";
@@ -3767,14 +4189,13 @@
         const isInstallation = this.isInstallationContext();
         const isTechHeavy = this.isTechHeavyContext();
         const prefersWhatsapp = String(this.contactPreferenceInput?.value || "") === "whatsapp";
-        const whatsapp = this.normalizePhone(this.whatsappInput?.value || "");
 
         if (this.guidanceBox) {
           this.guidanceBox.hidden = !isTechHeavy;
         }
 
         if (this.whatsappConsentWrap) {
-          this.whatsappConsentWrap.hidden = !(isTechHeavy || prefersWhatsapp || !!whatsapp);
+          this.whatsappConsentWrap.hidden = !prefersWhatsapp;
         }
 
         if (this.noteBox) {
@@ -3904,34 +4325,13 @@
         const uspRef = this.urlTools.getSearchParamsFromUrl(refUrl);
         const getUtm = (k) => uspSelf.get(k) || uspPage.get(k) || uspRef.get(k) || "";
 
-        const item = String(fd.get("item") || "").trim();
-        const subject = String(fd.get("subject") || "").trim();
-        const baseMessage = String(fd.get("message") || "").trim();
         const whatsapp = this.normalizePhone(fd.get("whatsapp") || "");
         const contactPreference = String(fd.get("contact_preference") || "email").trim() || "email";
         const whatsappConsent = !!fd.get("whatsapp_consent");
 
-        const pageTitle = document.title || "";
-        const pagePath = location.pathname || "";
-        const pageHash = location.hash || "";
-        const language = navigator.language || document.documentElement.lang || "pt-BR";
-        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
-        const platform = navigator.platform || "";
-        const viewportWidth = String(window.innerWidth || 0);
-        const viewportHeight = String(window.innerHeight || 0);
-        const screenWidth = String((window.screen && window.screen.width) || 0);
-        const screenHeight = String((window.screen && window.screen.height) || 0);
-        const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? "true" : "false";
-
         return {
           request_id: this.urlTools.safeId("ticket"),
           action: "create_ticket",
-          event: "support_ticket",
-
-          origin: this.openContext?.origin || "",
-          interest_type: this.openContext?.itemInterest ? "item_question" : "general_contact",
-          interest_stage: this.openContext?.itemInterest ? "pre_download" : "general",
-          prefilled_from_lead: this._prefilledFromLead ? "true" : "false",
 
           name: String(fd.get("name") || "").trim(),
           email: String(fd.get("email") || "").trim(),
@@ -3939,9 +4339,9 @@
           contact_preference: contactPreference,
           whatsapp_consent: whatsappConsent,
 
-          item,
-          subject,
-          message: baseMessage,
+          item: String(fd.get("item") || "").trim(),
+          subject: String(fd.get("subject") || "").trim(),
+          message: String(fd.get("message") || "").trim(),
 
           script_name: String(fd.get("script_name") || "").trim(),
           script_version: String(fd.get("script_version") || "").trim(),
@@ -3952,19 +4352,7 @@
           expected_behavior: String(fd.get("expected_behavior") || "").trim(),
 
           page_url: pageUrl,
-          page_title: pageTitle,
-          page_path: pagePath,
-          page_hash: pageHash,
           referrer: refUrl,
-
-          language,
-          timezone,
-          platform,
-          viewport_width: viewportWidth,
-          viewport_height: viewportHeight,
-          screen_width: screenWidth,
-          screen_height: screenHeight,
-          is_mobile: isMobile,
 
           utm_source: getUtm("utm_source"),
           utm_medium: getUtm("utm_medium"),
@@ -4000,8 +4388,7 @@
           script_name: payload.script_name || "",
           script_version: payload.script_version || "",
           contact_preference: payload.contact_preference || "email",
-          has_whatsapp: payload.whatsapp ? "yes" : "no",
-          interest_type: payload.interest_type || "general_contact"
+          has_whatsapp: payload.whatsapp ? "yes" : "no"
         });
 
         this.modal.setAttribute("data-state", "sending");
