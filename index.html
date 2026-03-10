@@ -4574,7 +4574,7 @@
         };
       }
 
-            async onSubmit(e) {
+  async onSubmit(e) {
   e.preventDefault();
   if (this._isSubmitting) return;
 
@@ -4692,9 +4692,11 @@
 
     this.updateSubmitState();
   }
-}
+} // fecha o método
 
-    function initVideoCarousel({ rootSelector = "#pub-rich" } = {}) {
+} // fecha a classe SupportCapture
+
+function initVideoCarousel({ rootSelector = "#pub-rich" } = {}) {
       const root = document.querySelector(rootSelector);
       if (!root) return;
 
@@ -4804,6 +4806,7 @@
   </script>
 </body>
 </html>
+
 
 
 
