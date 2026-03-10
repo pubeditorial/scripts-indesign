@@ -3409,13 +3409,14 @@
         return "";
       }
 
-      async postJSON(payload) {
+              async postJSON(payload) {
         if (!this.endpoint) throw new Error("Endpoint não configurado.");
 
         const response = await fetch(this.endpoint, {
           method: "POST",
           headers: {
-            "Content-Type": "text/plain;charset=utf-8"
+            "Content-Type": "text/plain;charset=utf-8",
+            "Accept": "application/json, text/plain, */*"
           },
           body: JSON.stringify(payload),
           redirect: "follow"
@@ -3441,7 +3442,13 @@
               }
             };
           } else {
-            data = { ok: false, raw: text };
+            data = {
+              ok: false,
+              error: text
+                ? String(text).trim().slice(0, 1000)
+                : "Resposta inválida do servidor.",
+              raw: text
+            };
           }
         }
 
@@ -3450,7 +3457,8 @@
           status: response.status,
           contentType,
           redirectUrl,
-          data
+          data,
+          rawText: text
         };
       }
     }
@@ -3755,142 +3763,175 @@
     this.openModal();
   }
 
-  buildPayload() {
-    const fd = new FormData(this.form);
-    const name = String(fd.get("name") || "").trim();
-    const email = String(fd.get("email") || "").trim();
-    const role = String(fd.get("role") || "").trim();
-    const company = String(fd.get("company") || "").trim();
-    const city = String(fd.get("city") || "").trim();
-    const state = String(fd.get("state") || "").trim().toUpperCase();
-    const optin = !!fd.get("optin");
+        buildPayload() {
+      const fd = new FormData(this.form);
+      const name = String(fd.get("name") || "").trim();
+      const email = String(fd.get("email") || "").trim();
+      const role = String(fd.get("role") || "").trim();
+      const company = String(fd.get("company") || "").trim();
+      const city = String(fd.get("city") || "").trim();
+      const state = String(fd.get("state") || "").trim().toUpperCase();
+      const optin = !!fd.get("optin");
 
-    const pageUrl = location.href;
-    const refUrl = document.referrer || "";
-    const uspSelf = new URLSearchParams(location.search);
-    const uspPage = this.urlTools.getSearchParamsFromUrl(pageUrl);
-    const uspRef = this.urlTools.getSearchParamsFromUrl(refUrl);
-    const getUtm = (k) => uspSelf.get(k) || uspPage.get(k) || uspRef.get(k) || "";
+      const pageUrl = location.href;
+      const rawRef = document.referrer || "";
+      const refUrl = /^https?:\/\//i.test(String(rawRef).trim()) ? String(rawRef).trim() : "";
+      const uspSelf = new URLSearchParams(location.search);
+      const uspPage = this.urlTools.getSearchParamsFromUrl(pageUrl);
+      const uspRef = this.urlTools.getSearchParamsFromUrl(refUrl);
+      const getUtm = (k) => uspSelf.get(k) || uspPage.get(k) || uspRef.get(k) || "";
 
-    return {
-      request_id: this.urlTools.safeId("lead"),
-      action: "capture_lead",
+      return {
+        request_id: this.urlTools.safeId("lead"),
+        action: "capture_lead",
 
-      item: this.pending.item,
-      name,
-      email,
-      role,
-      company,
-      city,
-      state,
-      country: "BR",
-      optin,
+        item: this.pending.item,
+        name,
+        email,
+        role,
+        company,
+        city,
+        state,
+        country: "BR",
+        optin,
 
-      placement: this.pending.placement,
-      label: this.pending.label,
-      file_id: this.pending.file_id,
+        placement: this.pending.placement,
+        label: this.pending.label,
+        file_id: this.pending.file_id,
 
-      page_url: pageUrl,
-      referrer: refUrl,
+        page_url: pageUrl,
+        referrer: refUrl,
 
-      utm_source: getUtm("utm_source"),
-      utm_medium: getUtm("utm_medium"),
-      utm_campaign: getUtm("utm_campaign"),
-      utm_content: getUtm("utm_content"),
-      utm_term: getUtm("utm_term"),
+        utm_source: getUtm("utm_source"),
+        utm_medium: getUtm("utm_medium"),
+        utm_campaign: getUtm("utm_campaign"),
+        utm_content: getUtm("utm_content"),
+        utm_term: getUtm("utm_term"),
 
-      user_agent: navigator.userAgent
-    };
-  }
+        user_agent: navigator.userAgent
+      };
+    }
 
-  async onSubmit(e) {
-    e.preventDefault();
-    if (this._isSubmitting || !this.pending?.file_id) return;
+    async onSubmit(e) {
+      e.preventDefault();
+      if (this._isSubmitting) return;
 
-    this.updateSubmitState();
-    if (this.submitBtn?.disabled) return;
-
-    const payload = this.buildPayload();
-
-    this.analytics.trackUserData({
-      email: payload.email,
-      full_name: payload.name,
-      city: payload.city,
-      region: payload.state,
-      country: "BR"
-    });
-
-    this.analytics.trackLead({
-      placement: payload.placement,
-      item: payload.item,
-      file_id: payload.file_id,
-      optin: payload.optin ? "yes" : "no",
-      role: payload.role || "(not set)"
-    });
-
-    this.setSubmittingUI(true, "Validando seus dados e liberando o download...");
-
-    try {
-      const res = await this.api.postJSON(payload);
-      const data = res?.data || {};
-      const ok = !!(res?.httpOk && data?.ok);
-      const appData = data?.data || {};
-
-      if (!ok) {
-        throw new Error("Falha ao registrar lead.");
+      this.updateSubmitState();
+      if (this.submitBtn?.disabled) return;
+      if (!this.pending?.file_id) {
+        this.updateSubmitState();
+        return;
       }
 
-      const redirectUrl = String(appData.redirect_url || "").trim();
-      if (!redirectUrl) {
-        throw new Error("URL de download não recebida.");
-      }
+      const payload = this.buildPayload();
 
-      this.sessionStore.saveLead({
-        name: payload.name,
+      this.analytics.trackUserData({
         email: payload.email,
-        role: payload.role,
-        company: payload.company,
+        full_name: payload.name,
         city: payload.city,
-        state: payload.state,
-        item: payload.item,
-        placement: payload.placement
+        region: payload.state,
+        country: payload.country
       });
 
-      this.analytics.trackDownload({
-        file_name: payload.item,
-        link_url: redirectUrl,
-        placement: payload.placement,
-        backend_status: appData.transport || "ok",
-        duplicate: appData.duplicate ? "yes" : "no"
-      });
+      this.setSubmittingUI(true, "Estamos liberando o download.");
 
-      this.closeModalOnly();
-      window.location.assign(redirectUrl);
-      return;
-    } catch (_) {
-      this.setSubmittingUI(false);
-      if (this.hint) {
-        this.hint.textContent = "Não foi possível liberar o download agora. Tente novamente em instantes.";
+      try {
+        const res = await this.api.postJSON(payload);
+        const data = res?.data || {};
+        const ok = !!(res?.httpOk && data?.ok);
+        const appData = data?.data || {};
+
+        if (!ok) {
+          const backendMessage = String(data?.error || "Não foi possível liberar o download agora.").trim();
+          const backendCode = String(data?.code || "").trim();
+          const statusCode = Number(res?.status || 0);
+
+          let finalMessage = backendMessage || "Não foi possível liberar o download agora.";
+
+          if (backendCode) {
+            finalMessage += ` (${backendCode})`;
+          }
+
+          if (statusCode && !res?.httpOk) {
+            finalMessage += ` [HTTP ${statusCode}]`;
+          }
+
+          throw new Error(finalMessage);
+        }
+
+        const redirectUrl = String(
+          appData.redirect_url ||
+          appData.download_url ||
+          appData.url ||
+          ""
+        ).trim() || `https://drive.google.com/uc?export=download&id=${encodeURIComponent(this.pending.file_id)}`;
+
+        this.sessionStore.saveLead({
+          name: payload.name,
+          email: payload.email,
+          role: payload.role,
+          company: payload.company,
+          city: payload.city,
+          state: payload.state,
+          item: payload.item,
+          placement: payload.placement
+        });
+
+        this.analytics.trackLead({
+          item: payload.item,
+          placement: payload.placement,
+          file_id: payload.file_id
+        });
+
+        this.analytics.trackDownload({
+          item: payload.item,
+          placement: payload.placement,
+          file_id: payload.file_id,
+          link_url: redirectUrl
+        });
+
+        this.setSubmittingUI(false);
+        this.closeModal();
+
+        try {
+          this.form?.reset();
+        } catch (_) {}
+
+        this.pending = null;
+
+        window.location.href = redirectUrl;
+      } catch (err) {
+        console.error("[PUB_FRONT] lead submit failed", err, payload);
+
+        this.analytics.track("lead_submit_error", {
+          item: payload.item,
+          placement: payload.placement,
+          file_id: payload.file_id
+        });
+
+        this.setSubmittingUI(
+          false,
+          String(err?.message || "Falha ao liberar o download. Tente novamente.")
+        );
       }
-      return;
     }
   }
-}
-    class SupportCapture {
-      constructor(dom, urlTools, analytics, api, sessionStore) {
-        this.dom = dom;
-        this.urlTools = urlTools;
-        this.analytics = analytics;
-        this.api = api;
-        this.sessionStore = sessionStore;
 
-        this.modal = this.dom.byId("support-modal");
-        this.form = this.dom.byId("support-form");
-        this.btnClose = this.dom.byId("support-close");
-        this.btnOpenButtons = [
-          this.dom.byId("open-support-modal"),
-          this.dom.byId("open-support-modal-install")
-        ].filter(Boolean);
+  class SupportCapture {
+    constructor(dom, urlTools, analytics, api, sessionStore) {
+      this.dom = dom;
+      this.urlTools = urlTools;
+      this.analytics = analytics;
+      this.api = api;
+      this.sessionStore = sessionStore;
+
+      this.modal = this.dom.byId("support-modal");
+      this.form = this.dom.byId("support-form");
+      this.btnClose = this.dom.byId("support-close");
+      this.btnOpenButtons = [
+        this.dom.byId("open-support-modal"),
+        this.dom.byId("open-support-modal-install")
+      ].filter(Boolean);
 
         this.hint = this.dom.byId("support-hint");
         this.submitBtn = this.dom.byId("support-submit");
@@ -4484,10 +4525,11 @@
   }
 }
 
-      buildPayload() {
+            buildPayload() {
         const fd = new FormData(this.form);
         const pageUrl = location.href;
-        const refUrl = document.referrer || "";
+        const rawRef = document.referrer || "";
+        const refUrl = /^https?:\/\//i.test(String(rawRef).trim()) ? String(rawRef).trim() : "";
         const uspSelf = new URLSearchParams(location.search);
         const uspPage = this.urlTools.getSearchParamsFromUrl(pageUrl);
         const uspRef = this.urlTools.getSearchParamsFromUrl(refUrl);
@@ -4532,7 +4574,7 @@
         };
       }
 
-      async onSubmit(e) {
+            async onSubmit(e) {
   e.preventDefault();
   if (this._isSubmitting) return;
 
@@ -4566,6 +4608,9 @@
     const res = await this.api.postJSON(payload);
     const data = res?.data || {};
     const ok = !!(res.httpOk && data.ok);
+
+    console.log("[PUB_FRONT] support payload", payload);
+    console.log("[PUB_FRONT] support response", res);
 
     if (ok) {
       const appData = data.data || {};
@@ -4603,31 +4648,51 @@
       return;
     }
 
+    const backendMessage = String(data?.error || "Não foi possível enviar agora.").trim();
+    const backendCode = String(data?.code || "").trim();
+    const statusCode = Number(res?.status || 0);
+
+    let finalMessage = backendMessage || "Não foi possível enviar agora.";
+
+    if (backendCode) {
+      finalMessage += ` (${backendCode})`;
+    }
+
+    if (statusCode && !res?.httpOk) {
+      finalMessage += ` [HTTP ${statusCode}]`;
+    }
+
     this.analytics.track("support_ticket_error", {
       item: payload.item,
-      status: res.status || 0
+      status: res.status || 0,
+      code: backendCode || ""
     });
-  } catch (_) {
+
+    throw new Error(finalMessage);
+  } catch (err) {
+    console.error("[PUB_FRONT] support submit failed", err, payload);
+
     this.analytics.track("support_ticket_fetch_error", {
       item: payload.item
     });
+
+    this._isSubmitting = false;
+    this.setSubmittingUI(false);
+    this.modal.setAttribute("data-state", "error");
+    this.setStatus(
+      "Erro",
+      String(err?.message || "Não foi possível enviar agora. Revise os dados e tente novamente em instantes.")
+    );
+
+    if (this.hint) {
+      this.hint.textContent = String(
+        err?.message || "Falha no envio no momento. Tente novamente."
+      );
+    }
+
+    this.updateSubmitState();
   }
-
-  this._isSubmitting = false;
-  this.setSubmittingUI(false);
-  this.modal.setAttribute("data-state", "error");
-  this.setStatus(
-    "Erro",
-    "Não foi possível enviar agora. Revise os dados e tente novamente em instantes."
-  );
-
-  if (this.hint) {
-    this.hint.textContent = "Falha no envio no momento. Tente novamente.";
-  }
-
-  this.updateSubmitState();
 }
-      }
 
     function initVideoCarousel({ rootSelector = "#pub-rich" } = {}) {
       const root = document.querySelector(rootSelector);
@@ -4739,6 +4804,7 @@
   </script>
 </body>
 </html>
+
 
 
 
