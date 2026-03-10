@@ -216,11 +216,12 @@
     });
   </script>
 
-  <script>
+   <script>
     window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxdfUn3FeBAXMWhZmNuf_pPOL0eM3iSNQPRSoDhEFnpuvzbhL4wySU3STaxMLZVYdaPxQ/exec";
     window.PUB_SESSION_KEY = "PUB_FRONT_SESSION_V2";
 
-    window.PUBCRM_CONTRACT = {
+    window.PUBCRM_CONTRACT_FALLBACK = {
+      app: "PUB CRM",
       version: "1.4",
       leadItems: [
         "PACOTE GRATUITO",
@@ -254,16 +255,36 @@
         "download_publico",
         "download_footer"
       ],
+      contactPreferences: [
+        "email",
+        "whatsapp"
+      ],
       downloads: {
-        "18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE": "PACOTE GRATUITO",
-        "1AHKC3hYZCo_qoZ5LnLmNrt1GmAThnomm": "CAPA MASTER",
-        "1CiKz2brCrVzXqwEvRVXZS9MKr9tuyFsL": "MIOLO MASTER",
-        "1ny87txfaUhN1mV0lB4WRC3KYWd9giVXJ": "MANCHA MASTER",
-        "1qmLtu_szJ_rgak3x0gHYYtlktQS3BXpi": "VERTICAL MASTER",
-        "16ttuf7bM8xC5YWkldqXLDdxWYdJ2u9qs": "BASELINE MASTER",
-        "11iAOd6cnB34jLMJt5FBZOd9ZhWRKzZSc": "GUIA DE USO"
+        "18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE": {
+          item: "PACOTE GRATUITO"
+        },
+        "1AHKC3hYZCo_qoZ5LnLmNrt1GmAThnomm": {
+          item: "CAPA MASTER"
+        },
+        "1CiKz2brCrVzXqwEvRVXZS9MKr9tuyFsL": {
+          item: "MIOLO MASTER"
+        },
+        "1ny87txfaUhN1mV0lB4WRC3KYWd9giVXJ": {
+          item: "MANCHA MASTER"
+        },
+        "1qmLtu_szJ_rgak3x0gHYYtlktQS3BXpi": {
+          item: "VERTICAL MASTER"
+        },
+        "16ttuf7bM8xC5YWkldqXLDdxWYdJ2u9qs": {
+          item: "BASELINE MASTER"
+        },
+        "11iAOd6cnB34jLMJt5FBZOd9ZhWRKzZSc": {
+          item: "GUIA DE USO"
+        }
       }
     };
+
+    window.PUBCRM_CONTRACT = window.PUBCRM_CONTRACT_FALLBACK;
   </script>
 
   <style>
@@ -3262,10 +3283,113 @@
       }
     }
 
-    class PubApi {
+        class PubApi {
       constructor(endpoint) {
         this.endpoint = endpoint || "";
       }
+
+      buildContractUrl() {
+        if (!this.endpoint) return "";
+        const separator = this.endpoint.includes("?") ? "&" : "?";
+        return `${this.endpoint}${separator}mode=contract`;
+      }
+
+      normalizeContract(contract) {
+        const fallback = window.PUBCRM_CONTRACT_FALLBACK || {};
+        const input = contract && typeof contract === "object" ? contract : {};
+
+        const downloadsInput = input.downloads && typeof input.downloads === "object"
+          ? input.downloads
+          : {};
+
+        const normalizedDownloads = {};
+        const fileIds = Object.keys(downloadsInput);
+
+        for (const fileId of fileIds) {
+          const entry = downloadsInput[fileId];
+          if (!entry || typeof entry !== "object") continue;
+
+          const item = String(entry.item || "").trim();
+          if (!item) continue;
+
+          normalizedDownloads[String(fileId).trim()] = { item };
+        }
+
+        return {
+          app: String(input.app || fallback.app || "PUB CRM"),
+          version: String(input.version || fallback.version || "1.4"),
+          leadItems: Array.isArray(input.leadItems) ? input.leadItems.slice() : (fallback.leadItems || []).slice(),
+          ticketItems: Array.isArray(input.ticketItems) ? input.ticketItems.slice() : (fallback.ticketItems || []).slice(),
+          leadPlacements: Array.isArray(input.leadPlacements) ? input.leadPlacements.slice() : (fallback.leadPlacements || []).slice(),
+          contactPreferences: Array.isArray(input.contactPreferences) ? input.contactPreferences.slice() : (fallback.contactPreferences || []).slice(),
+          downloads: Object.keys(normalizedDownloads).length ? normalizedDownloads : (fallback.downloads || {}),
+          integration: input.integration && typeof input.integration === "object" ? input.integration : (fallback.integration || {}),
+          now: String(input.now || "")
+        };
+      }
+
+  async loadContract() {
+  const fallback = this.normalizeContract(window.PUBCRM_CONTRACT_FALLBACK || {});
+  const url = this.buildContractUrl();
+
+  if (!url) {
+    console.warn("[PUB_FRONT] Contract fallback: endpoint ausente.");
+    window.PUBCRM_CONTRACT = fallback;
+    return fallback;
+  }
+
+  const controller = new AbortController();
+  const timeoutMs = 8000;
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Accept": "application/json"
+      },
+      redirect: "follow",
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    const text = await response.text();
+    let parsed = null;
+
+    try {
+      parsed = JSON.parse(text);
+    } catch (_) {
+      parsed = null;
+    }
+
+    const payload = parsed && typeof parsed === "object" ? parsed : {};
+    const remoteContract = payload && payload.ok && payload.data ? payload.data : null;
+
+    if (!response.ok) {
+      console.warn("[PUB_FRONT] Contract fallback: resposta HTTP inválida.", {
+        status: response.status
+      });
+      window.PUBCRM_CONTRACT = fallback;
+      return fallback;
+    }
+
+    if (!remoteContract) {
+      console.warn("[PUB_FRONT] Contract fallback: payload sem contrato válido.");
+      window.PUBCRM_CONTRACT = fallback;
+      return fallback;
+    }
+
+    const normalized = this.normalizeContract(remoteContract);
+    window.PUBCRM_CONTRACT = normalized;
+    return normalized;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    console.warn("[PUB_FRONT] Contract fallback: erro de rede, timeout ou execução.", error);
+    window.PUBCRM_CONTRACT = fallback;
+    return fallback;
+  }
+}
 
       extractRedirectUrlFromHtml(text) {
         const source = String(text || "");
@@ -3332,409 +3456,426 @@
     }
 
     class LeadCapture {
-      constructor(dom, urlTools, analytics, api, sessionStore) {
-        this.dom = dom;
-        this.urlTools = urlTools;
-        this.analytics = analytics;
-        this.api = api;
-        this.sessionStore = sessionStore;
+  constructor(dom, urlTools, analytics, api, sessionStore) {
+    this.dom = dom;
+    this.urlTools = urlTools;
+    this.analytics = analytics;
+    this.api = api;
+    this.sessionStore = sessionStore;
 
-        this.modal = this.dom.byId("lead-modal");
-        this.form = this.dom.byId("lead-form");
-        this.btnClose = this.dom.byId("lead-close");
-        this.hint = this.dom.byId("lead-hint");
-        this.submitBtn = this.dom.byId("lead-submit");
-        this.nameInput = this.form?.querySelector("input[name='name']") || null;
-        this.emailInput = this.form?.querySelector("input[name='email']") || null;
-        this.root = this.dom.byId("pub-rich");
+    this.modal = this.dom.byId("lead-modal");
+    this.form = this.dom.byId("lead-form");
+    this.btnClose = this.dom.byId("lead-close");
+    this.hint = this.dom.byId("lead-hint");
+    this.submitBtn = this.dom.byId("lead-submit");
+    this.nameInput = this.form?.querySelector("input[name='name']") || null;
+    this.emailInput = this.form?.querySelector("input[name='email']") || null;
+    this.root = this.dom.byId("pub-rich");
 
-        this.pending = null;
-        this._hashScrolling = false;
-        this._isSubmitting = false;
+    this.pending = null;
+    this._hashScrolling = false;
+    this._isSubmitting = false;
+  }
+
+  init() {
+    if (!this.root || !this.modal || !this.form) return;
+
+    this.dom.on(this.root, "click", (e) => this.onRootClick(e), { capture: true });
+
+    this.dom.on(this.modal, "click", (e) => {
+      if (e.target === this.modal && !this._isSubmitting) this.closeModalOnly();
+    });
+
+    this.dom.on(this.btnClose, "click", () => {
+      if (!this._isSubmitting) this.closeModalOnly();
+    });
+
+    this.dom.on(this.form, "submit", (e) => this.onSubmit(e));
+
+    const update = () => this.updateSubmitState();
+    this.dom.on(this.nameInput, "input", update);
+    this.dom.on(this.emailInput, "input", update);
+
+    this.dom.on(window, "keydown", (e) => {
+      if ((e.key || "").toLowerCase() === "escape" && this.isOpen() && !this._isSubmitting) {
+        this.closeModalOnly();
       }
+    });
 
-      init() {
-        if (!this.root || !this.modal || !this.form) return;
+    this.scrollFromHash({ behavior: "auto" });
+    this.dom.on(window, "hashchange", () => this.scrollFromHash({ behavior: "smooth" }));
+    this.initActiveNav();
+  }
 
-        this.dom.on(this.root, "click", (e) => this.onRootClick(e), { capture: true });
+  isOpen() {
+    return this.modal && this.modal.style.display === "flex";
+  }
 
-        this.dom.on(this.modal, "click", (e) => {
-          if (e.target === this.modal && !this._isSubmitting) this.closeModalOnly();
-        });
+  normalizeItem(el) {
+    return (el.getAttribute("data-item") || el.textContent || "").trim().slice(0, 200);
+  }
 
-        this.dom.on(this.btnClose, "click", () => {
-          if (!this._isSubmitting) this.closeModalOnly();
-        });
+  isValidLeadTrigger(fileId, item, placement) {
+    const contract = window.PUBCRM_CONTRACT || {};
+    const downloads = contract.downloads || {};
+    const leadItems = contract.leadItems || [];
+    const leadPlacements = contract.leadPlacements || [];
+    const entry = downloads[fileId] && typeof downloads[fileId] === "object"
+      ? downloads[fileId]
+      : null;
 
-        this.dom.on(this.form, "submit", (e) => this.onSubmit(e));
+    return (
+      !!fileId &&
+      !!item &&
+      !!placement &&
+      leadItems.includes(item) &&
+      leadPlacements.includes(placement) &&
+      !!entry &&
+      String(entry.item || "").trim() === item
+    );
+  }
 
-        const update = () => this.updateSubmitState();
-        this.dom.on(this.nameInput, "input", update);
-        this.dom.on(this.emailInput, "input", update);
+  openModal() {
+    document.body.classList.add("modal-open");
+    this.modal.style.display = "flex";
+    this.modal.setAttribute("aria-hidden", "false");
+    this.modal.setAttribute("data-state", "open");
+    if (this.hint) {
+      this.hint.textContent = "Preencha nome e e-mail para liberar o download.";
+    }
+    this.updateSubmitState();
+    try { this.nameInput?.focus(); } catch (_) {}
+  }
 
-        this.dom.on(window, "keydown", (e) => {
-          if ((e.key || "").toLowerCase() === "escape" && this.isOpen() && !this._isSubmitting) {
-            this.closeModalOnly();
-          }
-        });
+  closeModal() {
+    document.body.classList.remove("modal-open");
+    this.modal.style.display = "none";
+    this.modal.setAttribute("aria-hidden", "true");
+    this.modal.removeAttribute("data-state");
+  }
 
-        this.scrollFromHash({ behavior: "auto" });
-        this.dom.on(window, "hashchange", () => this.scrollFromHash({ behavior: "smooth" }));
-        this.initActiveNav();
+  closeModalOnly() {
+  this.closeModal();
+  this.pending = null;
+
+  try { this.form?.reset(); } catch (_) {}
+
+  this._isSubmitting = false;
+
+  if (this.submitBtn) {
+    this.submitBtn.disabled = true;
+    this.submitBtn.textContent = "Continuar e baixar";
+    this.submitBtn.style.opacity = ".55";
+    this.submitBtn.style.cursor = "not-allowed";
+  }
+
+  if (this.btnClose) {
+    this.btnClose.disabled = false;
+  }
+
+  if (this.hint) {
+    this.hint.textContent = "Preencha nome e e-mail para liberar o download.";
+  }
+}
+
+  setSubmittingUI(isSubmitting, message = "") {
+    this._isSubmitting = !!isSubmitting;
+
+    if (this.submitBtn) {
+      this.submitBtn.textContent = isSubmitting ? "Enviando..." : "Continuar e baixar";
+      this.submitBtn.style.opacity = isSubmitting ? ".75" : "1";
+    }
+
+    if (this.btnClose) this.btnClose.disabled = isSubmitting;
+
+    if (!isSubmitting) {
+      this.updateSubmitState();
+    } else if (this.submitBtn) {
+      this.submitBtn.disabled = true;
+    }
+
+    if (this.hint && message) {
+      this.hint.textContent = message;
+    }
+  }
+
+  updateSubmitState() {
+    if (!this.submitBtn || !this.nameInput || !this.emailInput) return;
+    if (this._isSubmitting) return;
+
+    const nameOk = String(this.nameInput.value || "").trim().length > 1;
+    const emailOk = this.emailInput.value ? this.emailInput.checkValidity() : false;
+    const can = nameOk && emailOk && !!this.pending?.file_id;
+
+    this.submitBtn.disabled = !can;
+    this.submitBtn.style.opacity = can ? "1" : ".55";
+    this.submitBtn.style.cursor = can ? "pointer" : "not-allowed";
+
+    if (this.hint) {
+      if (!this.pending?.file_id) this.hint.textContent = "Selecione um arquivo para iniciar o download.";
+      else if (!nameOk && !emailOk) this.hint.textContent = "Preencha nome e e-mail para liberar o download.";
+      else if (!nameOk) this.hint.textContent = "Preencha seu nome para liberar o download.";
+      else if (!emailOk) this.hint.textContent = "Digite um e-mail válido para liberar o download.";
+      else this.hint.textContent = "";
+    }
+  }
+
+  scrollToId(id, { behavior = "smooth", updateHash = true } = {}) {
+    if (!id) return false;
+    const target = document.getElementById(id);
+    if (!target) return false;
+
+    try { target.scrollIntoView({ behavior, block: "start" }); }
+    catch (_) { try { target.scrollIntoView(true); } catch (_) {} }
+
+    if (updateHash) {
+      this._hashScrolling = true;
+      try { history.pushState(null, "", `#${encodeURIComponent(id)}`); } catch (_) {}
+      setTimeout(() => { this._hashScrolling = false; }, 50);
+    }
+    return true;
+  }
+
+  scrollFromHash({ behavior = "auto" } = {}) {
+    if (this._hashScrolling) return;
+    const hash = (location.hash || "").trim();
+    if (!hash) return;
+    const id = this.urlTools.decodeHash(hash);
+    this.scrollToId(id, { behavior, updateHash: false });
+  }
+
+  initActiveNav() {
+    const links = Array.from(document.querySelectorAll('.actions .navlink[href^="#"]'));
+    if (!links.length || !("IntersectionObserver" in window)) return;
+
+    const items = links.map(a => {
+      const id = this.urlTools.decodeHash(a.getAttribute("href") || "");
+      const el = id ? document.getElementById(id) : null;
+      return { a, id, el };
+    }).filter(x => x.el);
+
+    if (!items.length) return;
+
+    const setCurrent = (id) => {
+      for (const it of items) {
+        if (it.id === id) it.a.setAttribute("aria-current", "page");
+        else it.a.removeAttribute("aria-current");
       }
+    };
 
-      isOpen() {
-        return this.modal && this.modal.style.display === "flex";
-      }
+    for (const it of items) {
+      this.dom.on(it.a, "click", () => setCurrent(it.id));
+    }
 
-      normalizeItem(el) {
-        return (el.getAttribute("data-item") || el.textContent || "").trim().slice(0, 200);
-      }
+    const io = new IntersectionObserver((entries) => {
+      const vis = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (vis?.target?.id) setCurrent(vis.target.id);
+    }, {
+      root: null,
+      threshold: [0.25, 0.45, 0.6]
+    });
 
-      isValidLeadTrigger(fileId, item, placement) {
-        const contract = window.PUBCRM_CONTRACT || {};
-        const downloads = contract.downloads || {};
-        const leadItems = contract.leadItems || [];
-        const leadPlacements = contract.leadPlacements || [];
+    for (const it of items) io.observe(it.el);
 
-        return (
-          !!fileId &&
-          !!item &&
-          !!placement &&
-          leadItems.includes(item) &&
-          leadPlacements.includes(placement) &&
-          downloads[fileId] === item
-        );
-      }
+    if (location.hash) {
+      const id = this.urlTools.decodeHash(location.hash);
+      setCurrent(id);
+    }
+  }
 
-      openModal() {
-        document.body.classList.add("modal-open");
-        this.modal.style.display = "flex";
-        this.modal.setAttribute("aria-hidden", "false");
-        this.modal.setAttribute("data-state", "open");
-        if (this.hint) {
-          this.hint.textContent = "Preencha nome e e-mail para liberar o download.";
-        }
-        this.updateSubmitState();
-        try { this.nameInput?.focus(); } catch (_) {}
-      }
+  onRootClick(e) {
+    const anchor = e.target.closest("a[href]");
+    if (anchor) {
+      const hrefAttr = (anchor.getAttribute("href") || "").trim();
 
-      closeModal() {
-        document.body.classList.remove("modal-open");
-        this.modal.style.display = "none";
-        this.modal.setAttribute("aria-hidden", "true");
-        this.modal.removeAttribute("data-state");
-      }
-
-      closeModalOnly() {
-        this.closeModal();
-        this.pending = null;
-        if (this.hint) {
-          this.hint.textContent = "Preencha nome e e-mail para liberar o download.";
-        }
-        try { this.form?.reset(); } catch (_) {}
-        this._isSubmitting = false;
-        this.setSubmittingUI(false);
-        this.updateSubmitState();
-      }
-
-      setSubmittingUI(isSubmitting, message = "") {
-        this._isSubmitting = !!isSubmitting;
-
-        if (this.submitBtn) {
-          this.submitBtn.textContent = isSubmitting ? "Enviando..." : "Continuar e baixar";
-          this.submitBtn.style.opacity = isSubmitting ? ".75" : "1";
-        }
-
-        if (this.btnClose) this.btnClose.disabled = isSubmitting;
-
-        if (!isSubmitting) {
-          this.updateSubmitState();
-        } else if (this.submitBtn) {
-          this.submitBtn.disabled = true;
-        }
-
-        if (this.hint && message) {
-          this.hint.textContent = message;
-        }
-      }
-
-      updateSubmitState() {
-        if (!this.submitBtn || !this.nameInput || !this.emailInput) return;
-        if (this._isSubmitting) return;
-
-        const nameOk = String(this.nameInput.value || "").trim().length > 1;
-        const emailOk = this.emailInput.value ? this.emailInput.checkValidity() : false;
-        const can = nameOk && emailOk && !!this.pending?.file_id;
-
-        this.submitBtn.disabled = !can;
-        this.submitBtn.style.opacity = can ? "1" : ".55";
-        this.submitBtn.style.cursor = can ? "pointer" : "not-allowed";
-
-        if (this.hint) {
-          if (!this.pending?.file_id) this.hint.textContent = "Selecione um arquivo para iniciar o download.";
-          else if (!nameOk && !emailOk) this.hint.textContent = "Preencha nome e e-mail para liberar o download.";
-          else if (!nameOk) this.hint.textContent = "Preencha seu nome para liberar o download.";
-          else if (!emailOk) this.hint.textContent = "Digite um e-mail válido para liberar o download.";
-          else this.hint.textContent = "";
-        }
-      }
-
-      scrollToId(id, { behavior = "smooth", updateHash = true } = {}) {
-        if (!id) return false;
-        const target = document.getElementById(id);
-        if (!target) return false;
-
-        try { target.scrollIntoView({ behavior, block: "start" }); }
-        catch (_) { try { target.scrollIntoView(true); } catch (_) {} }
-
-        if (updateHash) {
-          this._hashScrolling = true;
-          try { history.pushState(null, "", `#${encodeURIComponent(id)}`); } catch (_) {}
-          setTimeout(() => { this._hashScrolling = false; }, 50);
-        }
-        return true;
-      }
-
-      scrollFromHash({ behavior = "auto" } = {}) {
-        if (this._hashScrolling) return;
-        const hash = (location.hash || "").trim();
-        if (!hash) return;
-        const id = this.urlTools.decodeHash(hash);
-        this.scrollToId(id, { behavior, updateHash: false });
-      }
-
-      initActiveNav() {
-        const links = Array.from(document.querySelectorAll('.actions .navlink[href^="#"]'));
-        if (!links.length || !("IntersectionObserver" in window)) return;
-
-        const items = links.map(a => {
-          const id = this.urlTools.decodeHash(a.getAttribute("href") || "");
-          const el = id ? document.getElementById(id) : null;
-          return { a, id, el };
-        }).filter(x => x.el);
-
-        if (!items.length) return;
-
-        const setCurrent = (id) => {
-          for (const it of items) {
-            if (it.id === id) it.a.setAttribute("aria-current", "page");
-            else it.a.removeAttribute("aria-current");
-          }
-        };
-
-        for (const it of items) {
-          this.dom.on(it.a, "click", () => setCurrent(it.id));
-        }
-
-        const io = new IntersectionObserver((entries) => {
-          const vis = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-          if (vis?.target?.id) setCurrent(vis.target.id);
-        }, {
-          root: null,
-          threshold: [0.25, 0.45, 0.6]
-        });
-
-        for (const it of items) io.observe(it.el);
-
-        if (location.hash) {
-          const id = this.urlTools.decodeHash(location.hash);
-          setCurrent(id);
-        }
-      }
-
-      onRootClick(e) {
-        const anchor = e.target.closest("a[href]");
-        if (anchor) {
-          const hrefAttr = (anchor.getAttribute("href") || "").trim();
-
-          if (hrefAttr.startsWith("#")) {
-            e.preventDefault();
-            const id = this.urlTools.decodeHash(hrefAttr);
-            const ok = this.scrollToId(id, { behavior: "smooth", updateHash: true });
-
-            this.analytics.track("anchor_click", {
-              anchor: hrefAttr,
-              ok: ok ? "yes" : "no",
-              label: (anchor.textContent || "").trim().slice(0, 120)
-            });
-            return;
-          }
-
-          const isExternalAction = anchor.getAttribute("data-track") === "instagram";
-          if (isExternalAction) {
-            this.analytics.trackCTA("external_link_click", {
-              placement: anchor.getAttribute("data-track"),
-              label: (anchor.textContent || "").trim().slice(0, 120),
-              link_url: anchor.href || ""
-            });
-            return;
-          }
-        }
-
-        const trigger = e.target.closest("[data-file-id][data-item][data-track]");
-        if (!trigger) return;
-
+      if (hrefAttr.startsWith("#")) {
         e.preventDefault();
+        const id = this.urlTools.decodeHash(hrefAttr);
+        const ok = this.scrollToId(id, { behavior: "smooth", updateHash: true });
 
-        const fileId = String(trigger.getAttribute("data-file-id") || "").trim();
-        const item = this.normalizeItem(trigger);
-        const placement = trigger.getAttribute("data-track") || "download";
-        const label = (trigger.textContent || "").trim().slice(0, 200);
-
-        const nearestSection = trigger.closest("section[id]");
-        const ctaSection = nearestSection?.id || placement || "";
-        const ctaText = label || item || "";
-
-        if (!this.isValidLeadTrigger(fileId, item, placement)) {
-          this.analytics.track("lead_trigger_invalid", {
-            file_id: fileId,
-            item,
-            placement
-          });
-          return;
-        }
-
-        this.pending = {
-          file_id: fileId,
-          item,
-          placement,
-          label,
-          cta_text: ctaText,
-          cta_section: ctaSection
-        };
-
-        this.analytics.trackCTA("open_download_modal", {
-          placement,
-          item,
-          file_id: fileId
+        this.analytics.track("anchor_click", {
+          anchor: hrefAttr,
+          ok: ok ? "yes" : "no",
+          label: (anchor.textContent || "").trim().slice(0, 120)
         });
-
-        this.openModal();
+        return;
       }
 
-      buildPayload() {
-        const fd = new FormData(this.form);
-        const name = String(fd.get("name") || "").trim();
-        const email = String(fd.get("email") || "").trim();
-        const role = String(fd.get("role") || "").trim();
-        const company = String(fd.get("company") || "").trim();
-        const city = String(fd.get("city") || "").trim();
-        const state = String(fd.get("state") || "").trim().toUpperCase();
-        const optin = !!fd.get("optin");
-
-        const pageUrl = location.href;
-        const refUrl = document.referrer || "";
-        const uspSelf = new URLSearchParams(location.search);
-        const uspPage = this.urlTools.getSearchParamsFromUrl(pageUrl);
-        const uspRef = this.urlTools.getSearchParamsFromUrl(refUrl);
-        const getUtm = (k) => uspSelf.get(k) || uspPage.get(k) || uspRef.get(k) || "";
-
-        return {
-          request_id: this.urlTools.safeId("lead"),
-          action: "capture_lead",
-
-          item: this.pending.item,
-          name,
-          email,
-          role,
-          company,
-          city,
-          state,
-          country: "BR",
-          optin,
-
-          placement: this.pending.placement,
-          label: this.pending.label,
-          file_id: this.pending.file_id,
-
-          page_url: pageUrl,
-          referrer: refUrl,
-
-          utm_source: getUtm("utm_source"),
-          utm_medium: getUtm("utm_medium"),
-          utm_campaign: getUtm("utm_campaign"),
-          utm_content: getUtm("utm_content"),
-          utm_term: getUtm("utm_term"),
-
-          user_agent: navigator.userAgent
-        };
-      }
-
-      async onSubmit(e) {
-        e.preventDefault();
-        if (this._isSubmitting || !this.pending?.file_id) return;
-
-        this.updateSubmitState();
-        if (this.submitBtn?.disabled) return;
-
-        const payload = this.buildPayload();
-
-        this.analytics.trackUserData({
-          email: payload.email,
-          full_name: payload.name,
-          city: payload.city,
-          region: payload.state,
-          country: "BR"
+      const isExternalAction = anchor.getAttribute("data-track") === "instagram";
+      if (isExternalAction) {
+        this.analytics.trackCTA("external_link_click", {
+          placement: anchor.getAttribute("data-track"),
+          label: (anchor.textContent || "").trim().slice(0, 120),
+          link_url: anchor.href || ""
         });
-
-        this.analytics.trackLead({
-          placement: payload.placement,
-          item: payload.item,
-          file_id: payload.file_id,
-          optin: payload.optin ? "yes" : "no",
-          role: payload.role || "(not set)"
-        });
-
-        this.setSubmittingUI(true, "Validando seus dados e liberando o download...");
-
-        try {
-          const res = await this.api.postJSON(payload);
-          const data = res?.data || {};
-          const ok = !!(res?.httpOk && data?.ok);
-          const appData = data?.data || {};
-
-          if (!ok) {
-            throw new Error("Falha ao registrar lead.");
-          }
-
-          const redirectUrl = String(appData.redirect_url || "").trim();
-          if (!redirectUrl) {
-            throw new Error("URL de download não recebida.");
-          }
-
-          this.sessionStore.saveLead({
-            name: payload.name,
-            email: payload.email,
-            role: payload.role,
-            company: payload.company,
-            city: payload.city,
-            state: payload.state,
-            item: payload.item,
-            placement: payload.placement
-          });
-
-          this.analytics.trackDownload({
-            file_name: payload.item,
-            link_url: redirectUrl,
-            placement: payload.placement,
-            backend_status: appData.transport || "ok",
-            duplicate: appData.duplicate ? "yes" : "no"
-          });
-
-          this.closeModalOnly();
-          window.location.assign(redirectUrl);
-          return;
-        } catch (_) {
-          this.setSubmittingUI(false);
-          if (this.hint) {
-            this.hint.textContent = "Não foi possível liberar o download agora. Tente novamente em instantes.";
-          }
-          return;
-        }
+        return;
       }
     }
 
+    const trigger = e.target.closest("[data-file-id][data-item][data-track]");
+    if (!trigger) return;
+
+    e.preventDefault();
+
+    const fileId = String(trigger.getAttribute("data-file-id") || "").trim();
+    const item = this.normalizeItem(trigger);
+    const placement = trigger.getAttribute("data-track") || "download";
+    const label = (trigger.textContent || "").trim().slice(0, 200);
+
+    const nearestSection = trigger.closest("section[id]");
+    const ctaSection = nearestSection?.id || placement || "";
+    const ctaText = label || item || "";
+
+    if (!this.isValidLeadTrigger(fileId, item, placement)) {
+      this.analytics.track("lead_trigger_invalid", {
+        file_id: fileId,
+        item,
+        placement
+      });
+      return;
+    }
+
+    this.pending = {
+      file_id: fileId,
+      item,
+      placement,
+      label,
+      cta_text: ctaText,
+      cta_section: ctaSection
+    };
+
+    this.analytics.trackCTA("open_download_modal", {
+      placement,
+      item,
+      file_id: fileId
+    });
+
+    this.openModal();
+  }
+
+  buildPayload() {
+    const fd = new FormData(this.form);
+    const name = String(fd.get("name") || "").trim();
+    const email = String(fd.get("email") || "").trim();
+    const role = String(fd.get("role") || "").trim();
+    const company = String(fd.get("company") || "").trim();
+    const city = String(fd.get("city") || "").trim();
+    const state = String(fd.get("state") || "").trim().toUpperCase();
+    const optin = !!fd.get("optin");
+
+    const pageUrl = location.href;
+    const refUrl = document.referrer || "";
+    const uspSelf = new URLSearchParams(location.search);
+    const uspPage = this.urlTools.getSearchParamsFromUrl(pageUrl);
+    const uspRef = this.urlTools.getSearchParamsFromUrl(refUrl);
+    const getUtm = (k) => uspSelf.get(k) || uspPage.get(k) || uspRef.get(k) || "";
+
+    return {
+      request_id: this.urlTools.safeId("lead"),
+      action: "capture_lead",
+
+      item: this.pending.item,
+      name,
+      email,
+      role,
+      company,
+      city,
+      state,
+      country: "BR",
+      optin,
+
+      placement: this.pending.placement,
+      label: this.pending.label,
+      file_id: this.pending.file_id,
+
+      page_url: pageUrl,
+      referrer: refUrl,
+
+      utm_source: getUtm("utm_source"),
+      utm_medium: getUtm("utm_medium"),
+      utm_campaign: getUtm("utm_campaign"),
+      utm_content: getUtm("utm_content"),
+      utm_term: getUtm("utm_term"),
+
+      user_agent: navigator.userAgent
+    };
+  }
+
+  async onSubmit(e) {
+    e.preventDefault();
+    if (this._isSubmitting || !this.pending?.file_id) return;
+
+    this.updateSubmitState();
+    if (this.submitBtn?.disabled) return;
+
+    const payload = this.buildPayload();
+
+    this.analytics.trackUserData({
+      email: payload.email,
+      full_name: payload.name,
+      city: payload.city,
+      region: payload.state,
+      country: "BR"
+    });
+
+    this.analytics.trackLead({
+      placement: payload.placement,
+      item: payload.item,
+      file_id: payload.file_id,
+      optin: payload.optin ? "yes" : "no",
+      role: payload.role || "(not set)"
+    });
+
+    this.setSubmittingUI(true, "Validando seus dados e liberando o download...");
+
+    try {
+      const res = await this.api.postJSON(payload);
+      const data = res?.data || {};
+      const ok = !!(res?.httpOk && data?.ok);
+      const appData = data?.data || {};
+
+      if (!ok) {
+        throw new Error("Falha ao registrar lead.");
+      }
+
+      const redirectUrl = String(appData.redirect_url || "").trim();
+      if (!redirectUrl) {
+        throw new Error("URL de download não recebida.");
+      }
+
+      this.sessionStore.saveLead({
+        name: payload.name,
+        email: payload.email,
+        role: payload.role,
+        company: payload.company,
+        city: payload.city,
+        state: payload.state,
+        item: payload.item,
+        placement: payload.placement
+      });
+
+      this.analytics.trackDownload({
+        file_name: payload.item,
+        link_url: redirectUrl,
+        placement: payload.placement,
+        backend_status: appData.transport || "ok",
+        duplicate: appData.duplicate ? "yes" : "no"
+      });
+
+      this.closeModalOnly();
+      window.location.assign(redirectUrl);
+      return;
+    } catch (_) {
+      this.setSubmittingUI(false);
+      if (this.hint) {
+        this.hint.textContent = "Não foi possível liberar o download agora. Tente novamente em instantes.";
+      }
+      return;
+    }
+  }
+}
     class SupportCapture {
       constructor(dom, urlTools, analytics, api, sessionStore) {
         this.dom = dom;
@@ -3952,40 +4093,49 @@
         }
       }
 
-      openModal(origin = "") {
-        this.openContext = {
-          origin,
-          itemInterest: false
-        };
+        openModal(origin = "") {
+  this.openContext = {
+    origin,
+    itemInterest: false
+  };
 
-        this._prefilledFromLead = false;
+  this._prefilledFromLead = false;
 
-        document.body.classList.add("modal-open");
-        this.modal.style.display = "flex";
-        this.modal.setAttribute("aria-hidden", "false");
-        this.modal.setAttribute("data-state", "open");
+  document.body.classList.add("modal-open");
+  this.modal.style.display = "flex";
+  this.modal.setAttribute("aria-hidden", "false");
+  this.modal.setAttribute("data-state", "open");
 
-        if (origin === "support_open_install" && this.itemInput && !this.itemInput.value) {
-          this.itemInput.value = "INSTALACAO";
-        }
+  if (origin === "support_open_install" && this.itemInput && !this.itemInput.value) {
+    this.itemInput.value = "INSTALACAO";
+  }
 
-        this.applyLeadPrefill();
+  this.applyLeadPrefill();
 
-        if (this.hint) this.hint.textContent = "";
-        this.setStatus(
-          "Contato",
-          "Sua mensagem será enviada para análise. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente."
-        );
+  if (this.hint) this.hint.textContent = "";
 
-        this.syncSupportContext();
-        this.goToStep(1, { silent: true });
-        this.updateSubmitState();
+  const contractApp = String(window.PUBCRM_CONTRACT?.app || "").trim();
+  const contractVersion = String(window.PUBCRM_CONTRACT?.version || "").trim();
 
-        try {
-          const focusTarget = this.itemInput || this.nameInput;
-          focusTarget?.focus();
-        } catch (_) {}
-      }
+  let statusText = "Sua mensagem será enviada para análise. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.";
+
+  if (contractApp && contractVersion) {
+    statusText = `Sua mensagem será enviada para análise. Integração ativa com ${contractApp} ${contractVersion}. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.`;
+  } else if (contractVersion) {
+    statusText = `Sua mensagem será enviada para análise. Integração ativa com o contrato ${contractVersion}. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.`;
+  }
+
+  this.setStatus("Contato", statusText);
+
+  this.syncSupportContext();
+  this.goToStep(1, { silent: true });
+  this.updateSubmitState();
+
+  try {
+    const focusTarget = this.itemInput || this.nameInput;
+    focusTarget?.focus();
+  } catch (_) {}
+}
 
       openModalWithPrefill(prefill = {}, origin = "support_item_interest") {
         this.openModal(origin);
@@ -4034,22 +4184,35 @@
       }
 
       closeModalOnly() {
-        this.closeModal();
-        if (this.hint) this.hint.textContent = "";
-        try { this.form?.reset(); } catch (_) {}
-        this._isSubmitting = false;
-        this._prefilledFromLead = false;
-        this.openContext = {
-          origin: "",
-          itemInterest: false
-        };
-        this.setSubmittingUI(false);
-        this.setStatus("Contato", "Sua mensagem será enviada para análise. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.");
-        if (this.prefillNote) this.prefillNote.hidden = true;
-        this.syncSupportContext();
-        this.goToStep(1, { silent: true });
-        this.updateSubmitState();
-      }
+  this.closeModal();
+  if (this.hint) this.hint.textContent = "";
+  try { this.form?.reset(); } catch (_) {}
+  this._isSubmitting = false;
+  this._prefilledFromLead = false;
+  this.openContext = {
+    origin: "",
+    itemInterest: false
+  };
+  this.setSubmittingUI(false);
+
+  const contractApp = String(window.PUBCRM_CONTRACT?.app || "").trim();
+  const contractVersion = String(window.PUBCRM_CONTRACT?.version || "").trim();
+
+  let statusText = "Sua mensagem será enviada para análise. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.";
+
+  if (contractApp && contractVersion) {
+    statusText = `Sua mensagem será enviada para análise. Integração ativa com ${contractApp} ${contractVersion}. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.`;
+  } else if (contractVersion) {
+    statusText = `Sua mensagem será enviada para análise. Integração ativa com o contrato ${contractVersion}. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.`;
+  }
+
+  this.setStatus("Contato", statusText);
+
+  if (this.prefillNote) this.prefillNote.hidden = true;
+  this.syncSupportContext();
+  this.goToStep(1, { silent: true });
+  this.updateSubmitState();
+}
 
       setStatus(label, text) {
         if (!this.statusBox) return;
@@ -4062,28 +4225,33 @@
       }
 
       setSubmittingUI(isSubmitting, message = "") {
-        this._isSubmitting = !!isSubmitting;
+  this._isSubmitting = !!isSubmitting;
 
-        if (this.submitBtn) {
-          this.submitBtn.disabled = isSubmitting || this.submitBtn.disabled;
-          this.submitBtn.textContent = isSubmitting ? "Enviando mensagem..." : "Enviar mensagem";
-          this.submitBtn.style.opacity = isSubmitting ? ".75" : "1";
-        }
+  if (this.submitBtn) {
+    this.submitBtn.disabled = !!isSubmitting;
+    this.submitBtn.textContent = isSubmitting ? "Enviando mensagem..." : "Enviar mensagem";
+    this.submitBtn.style.opacity = isSubmitting ? ".75" : "1";
+    this.submitBtn.style.cursor = isSubmitting ? "not-allowed" : "pointer";
+  }
 
-        if (this.btnClose) this.btnClose.disabled = isSubmitting;
-        if (this.cancelBtn) this.cancelBtn.disabled = isSubmitting;
-        if (this.next1Btn) this.next1Btn.disabled = isSubmitting;
-        if (this.next2Btn) this.next2Btn.disabled = isSubmitting;
-        if (this.back2Btn) this.back2Btn.disabled = isSubmitting;
-        if (this.back3Btn) this.back3Btn.disabled = isSubmitting;
+  if (this.btnClose) this.btnClose.disabled = isSubmitting;
+  if (this.cancelBtn) this.cancelBtn.disabled = isSubmitting;
+  if (this.next1Btn) this.next1Btn.disabled = isSubmitting;
+  if (this.next2Btn) this.next2Btn.disabled = isSubmitting;
+  if (this.back2Btn) this.back2Btn.disabled = isSubmitting;
+  if (this.back3Btn) this.back3Btn.disabled = isSubmitting;
 
-        if (message) {
-          this.setStatus(
-            isSubmitting ? "Enviando" : "Contato",
-            message
-          );
-        }
-      }
+  if (!isSubmitting) {
+    this.updateSubmitState();
+  }
+
+  if (message) {
+    this.setStatus(
+      isSubmitting ? "Enviando" : "Contato",
+      message
+    );
+  }
+}
 
       goToStep(step, options = {}) {
         const target = Math.max(1, Math.min(3, Number(step || 1)));
@@ -4244,77 +4412,77 @@
       }
 
       updateSubmitState() {
-        if (!this.submitBtn) return;
-        if (this._isSubmitting) return;
+  if (!this.submitBtn) return;
+  if (this._isSubmitting) return;
 
-        const step1Ok = this.validateStep(1);
-        const step2Ok = this.validateStep(2);
+  const step1Ok = this.validateStep(1);
+  const step2Ok = this.validateStep(2);
 
-        const isTechnical = this.isTechnicalContext();
-        const isInstallation = this.isInstallationContext();
+  const isTechnical = this.isTechnicalContext();
+  const isInstallation = this.isInstallationContext();
 
-        const scriptName = String(this.scriptNameInput?.value || "").trim();
-        const scriptVersion = String(this.scriptVersionInput?.value || "").trim();
-        const scriptId = String(this.scriptIdInput?.value || "").trim();
-        const indesignVersion = String(this.indesignVersionInput?.value || "").trim();
+  const scriptName = String(this.scriptNameInput?.value || "").trim();
+  const scriptVersion = String(this.scriptVersionInput?.value || "").trim();
+  const scriptId = String(this.scriptIdInput?.value || "").trim();
+  const indesignVersion = String(this.indesignVersionInput?.value || "").trim();
 
-        let techHint = "";
+  let techHint = "";
 
-        if (isTechnical) {
-          const hasAnyTechnicalData = !!(scriptName || scriptVersion || scriptId || indesignVersion);
-          if (hasAnyTechnicalData) {
-            if (!scriptName) techHint = "Para análise técnica, informe também o nome do script.";
-            else if (!scriptVersion) techHint = "Para análise técnica, informe também a versão do script.";
-            else if (!scriptId) techHint = "Para análise técnica, informe também o ID do script na janela Planos do script.";
-            else if (!indesignVersion) techHint = "Para análise técnica, informe também a versão do Adobe InDesign.";
-          }
-        }
+  if (isTechnical) {
+    const hasAnyTechnicalData = !!(scriptName || scriptVersion || scriptId || indesignVersion);
+    if (hasAnyTechnicalData) {
+      if (!scriptName) techHint = "Sugestão: informe também o nome do script para facilitar a análise técnica.";
+      else if (!scriptVersion) techHint = "Sugestão: informe também a versão do script para facilitar a análise técnica.";
+      else if (!scriptId) techHint = "Sugestão: informe também o ID do script na janela Planos do script para facilitar a análise técnica.";
+      else if (!indesignVersion) techHint = "Sugestão: informe também a versão do Adobe InDesign para facilitar a análise técnica.";
+    }
+  }
 
-        if (isInstallation) {
-          const hasAnyInstallationTechData = !!(scriptName || scriptVersion || scriptId);
-          if (hasAnyInstallationTechData) {
-            if (!scriptName) techHint = "Se já instalou o script, informe também o nome do script.";
-            else if (!scriptVersion) techHint = "Se já instalou o script, informe também a versão.";
-            else if (!scriptId) techHint = "Se já instalou o script, informe também o ID na janela Planos do script.";
-          }
-        }
+  if (isInstallation) {
+    const hasAnyInstallationTechData = !!(scriptName || scriptVersion || scriptId);
+    if (hasAnyInstallationTechData) {
+      if (!scriptName) techHint = "Sugestão: se já instalou o script, informe também o nome do script.";
+      else if (!scriptVersion) techHint = "Sugestão: se já instalou o script, informe também a versão.";
+      else if (!scriptId) techHint = "Sugestão: se já instalou o script, informe também o ID na janela Planos do script.";
+    }
+  }
 
-        const canSubmit = step1Ok && step2Ok && !techHint;
+  const canSubmit = step1Ok && step2Ok;
 
-        if (this.next1Btn) {
-          this.next1Btn.disabled = !step1Ok;
-          this.next1Btn.style.opacity = step1Ok ? "1" : ".55";
-          this.next1Btn.style.cursor = step1Ok ? "pointer" : "not-allowed";
-        }
+  if (this.next1Btn) {
+    this.next1Btn.disabled = !step1Ok;
+    this.next1Btn.style.opacity = step1Ok ? "1" : ".55";
+    this.next1Btn.style.cursor = step1Ok ? "pointer" : "not-allowed";
+  }
 
-        if (this.next2Btn) {
-          this.next2Btn.disabled = !step2Ok;
-          this.next2Btn.style.opacity = step2Ok ? "1" : ".55";
-          this.next2Btn.style.cursor = step2Ok ? "pointer" : "not-allowed";
-        }
+  if (this.next2Btn) {
+    this.next2Btn.disabled = !step2Ok;
+    this.next2Btn.style.opacity = step2Ok ? "1" : ".55";
+    this.next2Btn.style.cursor = step2Ok ? "pointer" : "not-allowed";
+  }
 
-        this.submitBtn.disabled = !canSubmit;
-        this.submitBtn.style.opacity = canSubmit ? "1" : ".55";
-        this.submitBtn.style.cursor = canSubmit ? "pointer" : "not-allowed";
+  this.submitBtn.disabled = !canSubmit;
+  this.submitBtn.style.opacity = canSubmit ? "1" : ".55";
+  this.submitBtn.style.cursor = canSubmit ? "pointer" : "not-allowed";
 
-        if (this.hint) {
-          if (this.currentStep === 1 && !step1Ok) {
-            this.hint.textContent = "Preencha assunto principal, título e mensagem para continuar.";
-          } else if (this.currentStep === 2 && !step2Ok) {
-            const whatsapp = this.normalizePhone(this.whatsappInput?.value || "");
-            const prefersWhatsapp = String(this.contactPreferenceInput?.value || "") === "whatsapp";
-            if (prefersWhatsapp && !whatsapp) {
-              this.hint.textContent = "Se a preferência for WhatsApp, preencha também o número.";
-            } else {
-              this.hint.textContent = "Preencha nome, e-mail e autorizações necessárias para continuar.";
-            }
-          } else if (techHint) {
-            this.hint.textContent = techHint;
-          } else {
-            this.hint.textContent = "";
-          }
-        }
+  if (this.hint) {
+    if (this.currentStep === 1 && !step1Ok) {
+      this.hint.textContent = "Preencha assunto principal, título e mensagem para continuar.";
+    } else if (this.currentStep === 2 && !step2Ok) {
+      const whatsapp = this.normalizePhone(this.whatsappInput?.value || "");
+      const prefersWhatsapp = String(this.contactPreferenceInput?.value || "") === "whatsapp";
+      if (prefersWhatsapp && !whatsapp) {
+        this.hint.textContent = "Se a preferência for WhatsApp, preencha também o número.";
+      } else {
+        this.hint.textContent = "Preencha nome, e-mail e autorizações necessárias para continuar.";
       }
+    } else if (techHint) {
+      this.hint.textContent = techHint;
+    } else {
+      this.hint.textContent = "";
+    }
+  }
+}
 
       buildPayload() {
         const fd = new FormData(this.form);
@@ -4365,99 +4533,101 @@
       }
 
       async onSubmit(e) {
-        e.preventDefault();
-        if (this._isSubmitting) return;
+  e.preventDefault();
+  if (this._isSubmitting) return;
 
-        this.syncSupportContext();
-        this.updateSubmitState();
-        if (this.submitBtn?.disabled) return;
+  this.syncSupportContext();
+  this.updateSubmitState();
+  if (this.submitBtn?.disabled) return;
 
-        const payload = this.buildPayload();
+  const payload = this.buildPayload();
 
-        this.analytics.trackUserData({
-          email: payload.email,
-          phone: payload.whatsapp,
-          full_name: payload.name,
-          country: "BR"
-        });
+  this.analytics.trackUserData({
+    email: payload.email,
+    phone: payload.whatsapp,
+    full_name: payload.name,
+    country: "BR"
+  });
 
-        this.analytics.trackSupportTicket({
-          item: payload.item,
-          subject: payload.subject,
-          placement: "support_modal",
-          script_name: payload.script_name || "",
-          script_version: payload.script_version || "",
-          contact_preference: payload.contact_preference || "email",
-          has_whatsapp: payload.whatsapp ? "yes" : "no"
-        });
+  this.analytics.trackSupportTicket({
+    item: payload.item,
+    subject: payload.subject,
+    placement: "support_modal",
+    script_name: payload.script_name || "",
+    script_version: payload.script_version || "",
+    contact_preference: payload.contact_preference || "email",
+    has_whatsapp: payload.whatsapp ? "yes" : "no"
+  });
 
-        this.modal.setAttribute("data-state", "sending");
-        this.setSubmittingUI(true, "Estamos registrando sua mensagem.");
+  this.modal.setAttribute("data-state", "sending");
+  this.setSubmittingUI(true, "Estamos registrando sua mensagem.");
 
-        try {
-          const res = await this.api.postJSON(payload);
-          const data = res?.data || {};
-          const ok = !!(res.httpOk && data.ok);
+  try {
+    const res = await this.api.postJSON(payload);
+    const data = res?.data || {};
+    const ok = !!(res.httpOk && data.ok);
 
-          if (ok) {
-            const appData = data.data || {};
-            const isDuplicate = !!appData.duplicate;
+    if (ok) {
+      const appData = data.data || {};
+      const isDuplicate = !!appData.duplicate;
 
-            this.analytics.track("support_ticket_success", {
-              ticket_id: appData.ticket_id || "",
-              item: payload.item,
-              duplicate: isDuplicate ? "yes" : "no"
-            });
+      this.analytics.track("support_ticket_success", {
+        ticket_id: appData.ticket_id || "",
+        item: payload.item,
+        duplicate: isDuplicate ? "yes" : "no"
+      });
 
-            this._isSubmitting = false;
-            this.setSubmittingUI(false);
-            this.modal.setAttribute("data-state", "success");
+      this._isSubmitting = false;
+      this.setSubmittingUI(false);
+      this.modal.setAttribute("data-state", "success");
 
-            this.setStatus(
-              isDuplicate ? "Reaproveitado" : "Enviado",
-              isDuplicate
-                ? `Sua mensagem já havia sido registrada.${appData.ticket_id ? ` Protocolo: ${appData.ticket_id}.` : ""} Reaproveitamos o atendimento existente.`
-                : `Mensagem enviada com sucesso.${appData.ticket_id ? ` Protocolo: ${appData.ticket_id}.` : ""} Se necessário, o atendimento continuará pelo canal informado.`
-            );
+      this.setStatus(
+        isDuplicate ? "Reaproveitado" : "Enviado",
+        isDuplicate
+          ? `Sua mensagem já havia sido registrada.${appData.ticket_id ? ` Protocolo: ${appData.ticket_id}.` : ""} Reaproveitamos o atendimento existente.`
+          : `Mensagem enviada com sucesso.${appData.ticket_id ? ` Protocolo: ${appData.ticket_id}.` : ""} Se necessário, o atendimento continuará pelo canal informado.`
+      );
 
-            if (this.hint) {
-              this.hint.textContent = isDuplicate
-                ? "Encontramos um atendimento recente equivalente. Você já pode fechar esta janela."
-                : "Recebemos sua mensagem. Você já pode fechar esta janela.";
-            }
-
-            if (this.submitBtn) {
-              this.submitBtn.disabled = true;
-              this.submitBtn.textContent = isDuplicate ? "Mensagem reaproveitada" : "Mensagem enviada";
-              this.submitBtn.style.opacity = "1";
-            }
-
-            return;
-          }
-
-          this.analytics.track("support_ticket_error", {
-            item: payload.item,
-            status: res.status || 0
-          });
-        } catch (_) {
-          this.analytics.track("support_ticket_fetch_error", {
-            item: payload.item
-          });
-        }
-
-        this._isSubmitting = false;
-        this.setSubmittingUI(false);
-        this.modal.setAttribute("data-state", "error");
-        this.setStatus(
-          "Erro",
-          "Não foi possível enviar agora. Revise os dados e tente novamente em instantes."
-        );
-
-        if (this.hint) {
-          this.hint.textContent = "Falha no envio no momento. Tente novamente.";
-        }
+      if (this.hint) {
+        this.hint.textContent = isDuplicate
+          ? "Encontramos um atendimento recente equivalente. Você já pode fechar esta janela."
+          : "Recebemos sua mensagem. Você já pode fechar esta janela.";
       }
+
+      if (this.submitBtn) {
+        this.submitBtn.disabled = true;
+        this.submitBtn.textContent = isDuplicate ? "Mensagem reaproveitada" : "Mensagem enviada";
+        this.submitBtn.style.opacity = "1";
+      }
+
+      return;
     }
+
+    this.analytics.track("support_ticket_error", {
+      item: payload.item,
+      status: res.status || 0
+    });
+  } catch (_) {
+    this.analytics.track("support_ticket_fetch_error", {
+      item: payload.item
+    });
+  }
+
+  this._isSubmitting = false;
+  this.setSubmittingUI(false);
+  this.modal.setAttribute("data-state", "error");
+  this.setStatus(
+    "Erro",
+    "Não foi possível enviar agora. Revise os dados e tente novamente em instantes."
+  );
+
+  if (this.hint) {
+    this.hint.textContent = "Falha no envio no momento. Tente novamente.";
+  }
+
+  this.updateSubmitState();
+}
+      }
 
     function initVideoCarousel({ rootSelector = "#pub-rich" } = {}) {
       const root = document.querySelector(rootSelector);
@@ -4555,11 +4725,13 @@
       }
     }
 
-    const dom = new Dom();
+        const dom = new Dom();
     const urlTools = new UrlTools();
     const sessionStore = new SessionStore(window.PUB_SESSION_KEY || "PUB_FRONT_SESSION_V2");
     const analytics = new Analytics();
     const api = new PubApi(window.PUB_LEADS_ENDPOINT);
+
+    await api.loadContract();
 
     new LeadCapture(dom, urlTools, analytics, api, sessionStore).init();
     new SupportCapture(dom, urlTools, analytics, api, sessionStore).init();
@@ -4567,6 +4739,7 @@
   </script>
 </body>
 </html>
+
 
 
 
