@@ -217,7 +217,7 @@
   </script>
 
    <script>
-    window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwP_GAda5F4MJYjjGSrSTIVBxymyZzXy9b6IzbIVYR3J0YljDG_-2CMn5Tkzict42RUxg/exec";
+    window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxUy8BsKdnBB7sFKmRMVxAG-QVHKU1Pt6-8GbauH1-SKKqQ14BGsWZUYHCHDFCpqzZEHg/exec";
     window.PUB_SESSION_KEY = "PUB_FRONT_SESSION_V2";
 
     window.PUBCRM_CONTRACT_FALLBACK = {
@@ -3452,22 +3452,57 @@ class PubApi {
     };
   }
 
-  async loadRuntime() {
-    const contract = await this.loadContract();
-    const status = await this.loadStatus();
+ async loadRuntime() {
+  var contract = null;
+  var status = null;
 
-    return {
-      contract,
-      status,
-      canDownload: !!(
-        status &&
-        status.endpoint_present &&
-        status.http_ok &&
-        status.status_ok &&
-        status.system_ready
-      )
+  try {
+    contract = await this.loadContract();
+  } catch (_) {
+    contract = this.normalizeContract(window.PUBCRM_CONTRACT_FALLBACK || {});
+    window.PUBCRM_CONTRACT = contract;
+  }
+
+  try {
+    status = await this.loadStatus();
+  } catch (_) {
+    status = {
+      endpoint_present: !!this.endpoint,
+      http_ok: false,
+      status_ok: false,
+      system_ready: false,
+      error_code: "STATUS_FETCH_FAILED",
+      error_message: "Não foi possível consultar o status do backend.",
+      payload: null
     };
   }
+
+  var hasUsableContract = !!(
+    contract &&
+    contract.downloads &&
+    typeof contract.downloads === "object" &&
+    Object.keys(contract.downloads).length
+  );
+
+  var strictReady = !!(
+    status &&
+    status.endpoint_present &&
+    status.http_ok &&
+    status.status_ok &&
+    status.system_ready
+  );
+
+  return {
+    contract: contract,
+    status: status,
+    hasUsableContract: hasUsableContract,
+    strictReady: strictReady,
+    runtime_mode: strictReady
+      ? "strict"
+      : (hasUsableContract ? "degraded_contract_only" : "blocked"),
+    canDownload: !!(strictReady || hasUsableContract)
+  };
+}
 
   extractRedirectUrlFromHtml(text) {
     const source = String(text || "");
@@ -4889,35 +4924,49 @@ function initVideoCarousel({ rootSelector = "#pub-rich" } = {}) {
 function applyBackendRuntimeToUi(runtime) {
   const state = runtime && typeof runtime === "object" ? runtime : {};
   const canDownload = !!state.canDownload;
+  const strictReady = !!state.strictReady;
+  const runtimeMode = String(state.runtime_mode || "").trim();
   const status = state.status && typeof state.status === "object" ? state.status : {};
 
   const triggers = Array.from(document.querySelectorAll("[data-file-id][data-item][data-track]"));
 
   for (const el of triggers) {
-    if (canDownload) {
-      el.removeAttribute("disabled");
-      el.removeAttribute("aria-disabled");
-      el.removeAttribute("title");
-      el.style.opacity = "";
-      el.style.cursor = "";
+    el.removeAttribute("disabled");
+    el.removeAttribute("aria-disabled");
+    el.style.opacity = "";
+    el.style.cursor = "";
+    el.removeAttribute("title");
+    el.setAttribute("data-runtime-mode", runtimeMode || (canDownload ? "strict" : "blocked"));
+
+    if (!canDownload) {
+      el.setAttribute("disabled", "disabled");
+      el.setAttribute("aria-disabled", "true");
+      el.setAttribute(
+        "title",
+        status.error_message
+          ? `Download temporariamente indisponível: ${status.error_message}`
+          : "Download temporariamente indisponível."
+      );
+      el.style.opacity = ".55";
+      el.style.cursor = "not-allowed";
       continue;
     }
 
-    el.setAttribute("disabled", "disabled");
-    el.setAttribute("aria-disabled", "true");
-    el.setAttribute(
-      "title",
-      status.error_message
-        ? `Download temporariamente indisponível: ${status.error_message}`
-        : "Download temporariamente indisponível."
-    );
-    el.style.opacity = ".55";
-    el.style.cursor = "not-allowed";
+    if (!strictReady) {
+      el.setAttribute(
+        "title",
+        status.error_message
+          ? `Modo degradado: o download será tentado mesmo sem confirmação completa do status. Detalhe: ${status.error_message}`
+          : "Modo degradado: o download será tentado mesmo sem confirmação completa do status."
+      );
+    }
   }
 
   if (!canDownload) {
-    console.warn("[PUB_FRONT] Download bloqueado por backend não pronto.", {
+    console.warn("[PUB_FRONT] Download bloqueado por runtime sem contrato utilizável.", {
+      runtime_mode: runtimeMode,
       canDownload,
+      strictReady,
       endpoint_present: !!status.endpoint_present,
       http_ok: !!status.http_ok,
       status_ok: !!status.status_ok,
@@ -4925,9 +4974,25 @@ function applyBackendRuntimeToUi(runtime) {
       error_code: String(status.error_code || ""),
       error_message: String(status.error_message || "")
     });
-  } else {
-    console.info("[PUB_FRONT] Download liberado para os gatilhos da página.");
+    return;
   }
+
+  if (!strictReady) {
+    console.warn("[PUB_FRONT] Runtime em modo degradado. Contrato utilizável; status não confirmado integralmente.", {
+      runtime_mode: runtimeMode,
+      canDownload,
+      strictReady,
+      endpoint_present: !!status.endpoint_present,
+      http_ok: !!status.http_ok,
+      status_ok: !!status.status_ok,
+      system_ready: !!status.system_ready,
+      error_code: String(status.error_code || ""),
+      error_message: String(status.error_message || "")
+    });
+    return;
+  }
+
+  console.info("[PUB_FRONT] Download liberado para os gatilhos da página.");
 }
 const dom = new Dom();
 const urlTools = new UrlTools();
@@ -4962,3 +5027,4 @@ initVideoCarousel();
   </script>
 </body>
 </html>
+
