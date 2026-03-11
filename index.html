@@ -1499,6 +1499,7 @@
       font-size:13px;
       line-height:1.55;
       color:#64748b;
+      white-space:pre-line;
     }
 
     .lead-btn{
@@ -1917,7 +1918,7 @@
               </article>
             </div>
 
-              <div class="grid" style="margin-top:var(--s5);">
+            <div class="grid" style="margin-top:var(--s5);">
               <button class="btn btn--primary js-download"
                  type="button"
                  data-item="PACOTE GRATUITO"
@@ -2194,6 +2195,7 @@
         <input type="hidden" id="lead-mode" name="mode" value="download">
         <input type="hidden" id="lead-item" name="item">
         <input type="hidden" id="lead-file-id" name="file_id">
+        <input type="hidden" id="lead-ticket-id" name="ticket_id">
 
         <div class="lead-field">
           <label class="lead-label" for="lead-name">Nome</label>
@@ -2231,6 +2233,7 @@
     const inputMode = document.getElementById("lead-mode");
     const inputItem = document.getElementById("lead-item");
     const inputFileId = document.getElementById("lead-file-id");
+    const inputTicketId = document.getElementById("lead-ticket-id");
     const inputMessage = document.getElementById("lead-message");
     const messageWrap = document.getElementById("lead-message-wrap");
 
@@ -2253,36 +2256,45 @@
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
     }
 
-    function buildWhatsappUrl({ name, email, item, message }) {
-      const textLines = [
-        "Olá, PUB Editorial.",
-        "",
-        "Quero abrir um ticket para o item abaixo:",
-        `Item: ${item}`,
-        `Nome: ${name}`,
-        `E-mail: ${email}`
-      ];
+    function slugifyTicketItem(value) {
+      return String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^\w\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-")
+        .toUpperCase();
+    }
 
-      if (message) {
-        textLines.push(`Mensagem: ${message}`);
-      }
+    function buildTicketId(item) {
+      const now = new Date();
+      const yyyy = String(now.getFullYear());
+      const mm = String(now.getMonth() + 1).padStart(2, "0");
+      const dd = String(now.getDate()).padStart(2, "0");
+      const hh = String(now.getHours()).padStart(2, "0");
+      const mi = String(now.getMinutes()).padStart(2, "0");
+      const ss = String(now.getSeconds()).padStart(2, "0");
+      const itemCode = slugifyTicketItem(item || "ITEM");
+      const random = Math.random().toString(36).slice(2, 6).toUpperCase();
 
-      textLines.push("", `Página: ${location.href}`);
-
-      const text = textLines.join("\n");
-      return `https://wa.me/${encodeURIComponent(window.PUB_CONTACT_WHATSAPP || "5551996581275")}?text=${encodeURIComponent(text)}`;
+      return `TCK-${itemCode}-${yyyy}${mm}${dd}-${hh}${mi}${ss}-${random}`;
     }
 
     function openModal({ mode = "download", item = "", fileId = "" } = {}) {
       inputMode.value = mode;
       inputItem.value = item;
       inputFileId.value = fileId;
+      inputTicketId.value = "";
       inputMessage.value = "";
 
       if (mode === "ticket") {
+        const ticketId = buildTicketId(item);
+        inputTicketId.value = ticketId;
+
         modalTitle.textContent = "Abrir ticket";
-        submitBtn.textContent = "Continuar atendimento";
-        hint.textContent = "Preencha seus dados para continuar o atendimento deste item.";
+        submitBtn.textContent = "Enviar ticket";
+        hint.textContent = `Preencha seus dados para registrar o ticket deste item.\nID: ${ticketId}`;
         messageWrap.classList.remove("is-hidden");
         modal.setAttribute("aria-label", "Formulário de ticket");
       } else {
@@ -2310,6 +2322,7 @@
       inputMode.value = "download";
       inputItem.value = "";
       inputFileId.value = "";
+      inputTicketId.value = "";
       inputMessage.value = "";
 
       messageWrap.classList.add("is-hidden");
@@ -2427,6 +2440,7 @@
       const mode = inputMode.value.trim() || "download";
       const item = inputItem.value.trim();
       const fileId = inputFileId.value.trim();
+      const ticketId = inputTicketId.value.trim();
       const message = inputMessage.value.trim();
 
       if (!name || !validEmail(email) || !item) {
@@ -2438,26 +2452,68 @@
       submitBtn.style.opacity = ".8";
 
       if (mode === "ticket") {
-        submitBtn.textContent = "Encaminhando...";
-        hint.textContent = "Estamos preparando seu atendimento.";
+        submitBtn.textContent = "Enviando ticket...";
+        hint.textContent = "Estamos registrando seu ticket.";
 
-        const whatsappUrl = buildWhatsappUrl({ name, email, item, message });
+        const finalTicketId = ticketId || buildTicketId(item);
+        inputTicketId.value = finalTicketId;
 
-        track("generate_lead", {
-          currency: "BRL",
-          value: 1,
+        const payload = {
+          action: "capture_ticket",
+          ticket_id: finalTicketId,
+          name,
+          email,
           item,
-          lead_type: "ticket"
-        });
+          message,
+          page_url: location.href,
+          referrer: document.referrer || "",
+          user_agent: navigator.userAgent
+        };
 
-        track("contact", {
-          method: "whatsapp",
-          item,
-          lead_type: "ticket"
-        });
+        try {
+          const data = await submitLead(payload);
 
-        closeModal();
-        window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+          const returnedTicketId =
+            data.ticket_id ||
+            (data.data && data.data.ticket_id) ||
+            finalTicketId;
+
+          track("generate_lead", {
+            currency: "BRL",
+            value: 1,
+            item,
+            ticket_id: returnedTicketId,
+            lead_type: "ticket"
+          });
+
+          track("contact", {
+            method: "backend",
+            item,
+            ticket_id: returnedTicketId,
+            lead_type: "ticket"
+          });
+
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "1";
+          submitBtn.textContent = "Enviar ticket";
+          hint.textContent = `Ticket registrado com sucesso.\nProtocolo: ${returnedTicketId}`;
+
+          setTimeout(() => {
+            closeModal();
+            alert(`Ticket registrado com sucesso.\nProtocolo: ${returnedTicketId}`);
+          }, 250);
+        } catch (error) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Enviar ticket";
+          submitBtn.style.opacity = "1";
+          hint.textContent = String(error && error.message ? error.message : "Falha ao registrar o ticket.");
+
+          track("exception", {
+            description: String(error && error.message ? error.message : "capture_ticket_error"),
+            fatal: false
+          });
+        }
+
         return;
       }
 
@@ -2521,4 +2577,3 @@
   </script>
 </body>
 </html>
-
