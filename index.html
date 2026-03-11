@@ -200,6 +200,17 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZS7FSCH0R"></script>
   <script>
     window.GA_MEASUREMENT_ID = "G-TZS7FSCH0R";
+    window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxUy8BsKdnBB7sFKmRMVxAG-QVHKU1Pt6-8GbauH1-SKKqQ14BGsWZUYHCHDFCpqzZEHg/exec";
+
+    window.PUB_DOWNLOADS = {
+      "PACOTE GRATUITO": "18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE",
+      "CAPA MASTER": "1AHKC3hYZCo_qoZ5LnLmNrt1GmAThnomm",
+      "MIOLO MASTER": "1CiKz2brCrVzXqwEvRVXZS9MKr9tuyFsL",
+      "MANCHA MASTER": "1ny87txfaUhN1mV0lB4WRC3KYWd9giVXJ",
+      "VERTICAL MASTER": "1qmLtu_szJ_rgak3x0gHYYtlktQS3BXpi",
+      "BASELINE MASTER": "16ttuf7bM8xC5YWkldqXLDdxWYdJ2u9qs",
+      "GUIA DE USO": "11iAOd6cnB34jLMJt5FBZOd9ZhWRKzZSc"
+    };
 
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
@@ -214,77 +225,6 @@
       page_path: location.pathname + location.search + location.hash,
       language: document.documentElement.lang || "pt-BR"
     });
-  </script>
-
-   <script>
-    window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxUy8BsKdnBB7sFKmRMVxAG-QVHKU1Pt6-8GbauH1-SKKqQ14BGsWZUYHCHDFCpqzZEHg/exec";
-    window.PUB_SESSION_KEY = "PUB_FRONT_SESSION_V2";
-
-    window.PUBCRM_CONTRACT_FALLBACK = {
-      app: "PUB CRM",
-      version: "1.4",
-      leadItems: [
-        "PACOTE GRATUITO",
-        "CAPA MASTER",
-        "MIOLO MASTER",
-        "MANCHA MASTER",
-        "VERTICAL MASTER",
-        "BASELINE MASTER",
-        "GUIA DE USO"
-      ],
-      ticketItems: [
-        "DUVIDA GERAL",
-        "COMENTARIO",
-        "SUGESTAO",
-        "INSTALACAO",
-        "USO DOS SCRIPTS",
-        "PROBLEMA TECNICO",
-        "PACOTE GRATUITO",
-        "CAPA MASTER",
-        "MIOLO MASTER",
-        "MANCHA MASTER",
-        "VERTICAL MASTER",
-        "BASELINE MASTER",
-        "GUIA DE USO"
-      ],
-      leadPlacements: [
-        "download_primary",
-        "download_results",
-        "download_pill",
-        "download_primary_pacote",
-        "download_publico",
-        "download_footer"
-      ],
-      contactPreferences: [
-        "email",
-        "whatsapp"
-      ],
-      downloads: {
-        "18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE": {
-          item: "PACOTE GRATUITO"
-        },
-        "1AHKC3hYZCo_qoZ5LnLmNrt1GmAThnomm": {
-          item: "CAPA MASTER"
-        },
-        "1CiKz2brCrVzXqwEvRVXZS9MKr9tuyFsL": {
-          item: "MIOLO MASTER"
-        },
-        "1ny87txfaUhN1mV0lB4WRC3KYWd9giVXJ": {
-          item: "MANCHA MASTER"
-        },
-        "1qmLtu_szJ_rgak3x0gHYYtlktQS3BXpi": {
-          item: "VERTICAL MASTER"
-        },
-        "16ttuf7bM8xC5YWkldqXLDdxWYdJ2u9qs": {
-          item: "BASELINE MASTER"
-        },
-        "11iAOd6cnB34jLMJt5FBZOd9ZhWRKzZSc": {
-          item: "GUIA DE USO"
-        }
-      }
-    };
-
-    window.PUBCRM_CONTRACT = window.PUBCRM_CONTRACT_FALLBACK;
   </script>
 
   <style>
@@ -635,11 +575,6 @@
       border-color:rgba(255,255,255,.16);
     }
 
-    #pub-rich .navlink[aria-current="page"]{
-      border-color:rgba(96,165,250,.45);
-      background:rgba(96,165,250,.14);
-    }
-
     #pub-rich .hero-body{
       margin-top:clamp(22px, 2.6vw, 34px);
       display:grid;
@@ -839,7 +774,6 @@
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.75),
         0 8px 20px rgba(15,23,42,.05);
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
 
     #pub-rich .card-ic svg,
@@ -853,15 +787,6 @@
       stroke-linecap:round;
       stroke-linejoin:round;
       vector-effect:non-scaling-stroke;
-    }
-
-    #pub-rich .toolitem:hover .iconbox,
-    #pub-rich .card:hover .card-ic{
-      transform:translateY(-1px);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.8),
-        0 12px 26px rgba(37,99,235,.10);
-      border-color:rgba(37,99,235,.16);
     }
 
     #pub-rich .card-title,
@@ -1366,38 +1291,23 @@
       flex:0 0 auto;
     }
 
-    #pub-rich .video-carousel{
-      position:relative;
-      margin-top:var(--s5);
-    }
-
-    #pub-rich .video-track{
+    #pub-rich .video-strip{
       display:grid;
       grid-auto-flow:column;
-      grid-auto-columns:clamp(300px, 38vw, 520px);
+      grid-auto-columns:minmax(300px, 520px);
       gap:var(--s4);
       overflow-x:auto;
-      overflow-y:visible;
-      scroll-snap-type:x mandatory;
-      scroll-padding-left:2px;
+      overflow-y:hidden;
+      padding:2px 2px 12px;
+      scroll-snap-type:x proximity;
       -webkit-overflow-scrolling:touch;
-      padding:2px 2px 10px;
-      border-radius:var(--radius-card);
-      scrollbar-color:rgba(2,6,23,.22) rgba(2,6,23,.06);
       scrollbar-width:thin;
+      scrollbar-color:rgba(2,6,23,.22) rgba(2,6,23,.06);
     }
 
-    #pub-rich .video-track::-webkit-scrollbar{ height:10px; }
-
-    #pub-rich .video-track::-webkit-scrollbar-track{
-      background:rgba(2,6,23,.06);
-      border-radius:999px;
-    }
-
-    #pub-rich .video-track::-webkit-scrollbar-thumb{
-      background:rgba(2,6,23,.18);
-      border-radius:999px;
-    }
+    #pub-rich .video-strip::-webkit-scrollbar{ height:10px; }
+    #pub-rich .video-strip::-webkit-scrollbar-track{ background:rgba(2,6,23,.06); border-radius:999px; }
+    #pub-rich .video-strip::-webkit-scrollbar-thumb{ background:rgba(2,6,23,.18); border-radius:999px; }
 
     #pub-rich .video-card{
       position:relative;
@@ -1441,67 +1351,11 @@
       text-align:left;
     }
 
-    #pub-rich .vbtn{
-      position:absolute;
-      top:calc(50% - 24px);
-      width:48px;
-      height:48px;
-      border-radius:999px;
-      border:1px solid rgba(2,6,23,.12);
-      background:#fff;
-      box-shadow:var(--shadow-pop);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-      z-index:3;
-      font:inherit;
-    }
-
-    #pub-rich .vbtn span{
-      font-size:28px;
-      line-height:1;
-      transform:translateY(-1px);
-      color:#0f172a;
-    }
-
-    #pub-rich .vbtn[disabled]{
-      opacity:.35;
-      cursor:not-allowed;
-      box-shadow:none;
-    }
-
-    #pub-rich .vbtn--prev{ left:-12px; }
-    #pub-rich .vbtn--next{ right:-12px; }
-
     @media (max-width:760px){
-      #pub-rich .vbtn{ display:none; }
-      #pub-rich .video-track{ grid-auto-columns:minmax(82vw, 1fr); }
+      #pub-rich .video-strip{ grid-auto-columns:minmax(82vw, 1fr); }
     }
 
-    #pub-rich .vdots{
-      display:flex;
-      gap:8px;
-      justify-content:center;
-      margin-top:12px;
-    }
-
-    #pub-rich .vdot{
-      width:10px;
-      height:10px;
-      border-radius:999px;
-      border:1px solid rgba(2,6,23,.18);
-      background:rgba(2,6,23,.06);
-      cursor:pointer;
-    }
-
-    #pub-rich .vdot[aria-current="true"]{
-      background:linear-gradient(135deg, rgba(37,99,235,.90), rgba(124,58,237,.85));
-      border-color:rgba(37,99,235,.30);
-    }
-
-    #lead-modal,
-    #support-modal{
+    #lead-modal{
       display:none;
       position:fixed;
       inset:0;
@@ -1514,15 +1368,13 @@
       justify-content:center;
     }
 
-    #lead-modal[data-state="open"],
-    #support-modal[data-state="open"]{
+    #lead-modal[data-state="open"]{
       display:flex;
     }
 
-    .lead-dialog,
-    .support-dialog{
+    .lead-dialog{
       position:relative;
-      width:min(760px, 100%);
+      width:min(560px, 100%);
       max-height:min(88vh, 940px);
       overflow:auto;
       border-radius:28px;
@@ -1539,12 +1391,7 @@
       scrollbar-color:rgba(15,23,42,.18) rgba(15,23,42,.05);
     }
 
-    .support-dialog{
-      width:min(860px, 100%);
-    }
-
-    .lead-dialog::before,
-    .support-dialog::before{
+    .lead-dialog::before{
       content:"";
       position:absolute;
       inset:0;
@@ -1553,26 +1400,7 @@
       background:linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,0));
     }
 
-    .lead-dialog::-webkit-scrollbar,
-    .support-dialog::-webkit-scrollbar{
-      width:10px;
-      height:10px;
-    }
-
-    .lead-dialog::-webkit-scrollbar-track,
-    .support-dialog::-webkit-scrollbar-track{
-      background:rgba(15,23,42,.05);
-      border-radius:999px;
-    }
-
-    .lead-dialog::-webkit-scrollbar-thumb,
-    .support-dialog::-webkit-scrollbar-thumb{
-      background:rgba(15,23,42,.18);
-      border-radius:999px;
-    }
-
-    .lead-header,
-    .support-header{
+    .lead-header{
       position:sticky;
       top:0;
       z-index:3;
@@ -1586,8 +1414,7 @@
       backdrop-filter:blur(10px);
     }
 
-    .lead-header::after,
-    .support-header::after{
+    .lead-header::after{
       content:"";
       position:absolute;
       left:22px;
@@ -1603,42 +1430,10 @@
       font-weight:980;
       letter-spacing:-.03em;
       color:#0f172a;
-      max-width:26ch;
-    }
-
-    .support-headcopy{
-      display:grid;
-      gap:8px;
-      min-width:0;
-    }
-
-    .support-kicker{
-      font-size:11px;
-      font-weight:900;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:#2563eb;
-    }
-
-    .support-title{
-      font-size:clamp(24px,2.3vw,30px);
-      line-height:1.08;
-      font-weight:980;
-      letter-spacing:-.03em;
-      color:#0f172a;
       max-width:24ch;
     }
 
-    .support-subtitle{
-      margin:0;
-      max-width:64ch;
-      color:#475569;
-      font-size:14.5px;
-      line-height:1.72;
-    }
-
-    .lead-body,
-    .support-body{
+    .lead-body{
       position:relative;
       z-index:1;
       padding:20px 22px 22px;
@@ -1646,58 +1441,39 @@
       gap:16px;
     }
 
-    .lead-field,
-    .support-field{
-      display:grid;
-      gap:7px;
-    }
+    .lead-field{ display:grid; gap:7px; }
 
-    .lead-label,
-    .support-label{
+    .lead-label{
       font-size:12.5px;
       font-weight:950;
       letter-spacing:.01em;
       color:#0f172a;
     }
 
-    .lead-input,
-    .support-input,
-    .support-select,
-    .support-textarea{
+    .lead-input{
       width:100%;
       min-height:50px;
       padding:13px 14px;
       border-radius:16px;
       border:1px solid rgba(15,23,42,.12);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.94), rgba(248,250,252,.96));
+      background:linear-gradient(180deg, rgba(255,255,255,.94), rgba(248,250,252,.96));
       color:#0f172a;
       font:inherit;
       line-height:1.4;
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.75),
         0 1px 2px rgba(15,23,42,.03);
-      transition:border-color .18s ease, box-shadow .18s ease, background .18s ease, transform .18s ease;
+      transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
     }
 
-    .lead-input::placeholder,
-    .support-input::placeholder,
-    .support-textarea::placeholder{
-      color:#94a3b8;
-    }
+    .lead-input::placeholder{ color:#94a3b8; }
 
-    .lead-input:hover,
-    .support-input:hover,
-    .support-select:hover,
-    .support-textarea:hover{
+    .lead-input:hover{
       border-color:rgba(37,99,235,.18);
       background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,250,252,.98));
     }
 
-    .lead-input:focus,
-    .support-input:focus,
-    .support-select:focus,
-    .support-textarea:focus{
+    .lead-input:focus{
       outline:none;
       border-color:rgba(37,99,235,.34);
       box-shadow:
@@ -1706,63 +1482,20 @@
       background:#fff;
     }
 
-    .support-textarea{
-      min-height:132px;
-      resize:vertical;
-    }
-
-    .support-textarea--sm{
-      min-height:96px;
-    }
-
-    .lead-grid-2,
-    .support-grid-2{
-      display:grid;
-      gap:14px;
-    }
-
-    @media (min-width:720px){
-      .lead-grid-2,
-      .support-grid-2{
-        grid-template-columns:1fr 1fr;
-      }
-    }
-
-    .lead-optin,
-    .support-check{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid rgba(15,23,42,.08);
-      background:rgba(248,250,252,.78);
-      font-size:13px;
-      line-height:1.6;
-      color:#334155;
-    }
-
-    .lead-optin input,
-    .support-check input{
-      margin-top:3px;
-    }
-
     .lead-actions{
       display:flex;
       justify-content:flex-end;
       margin-top:4px;
     }
 
-    .lead-hint,
-    .support-hint{
+    .lead-hint{
       min-height:18px;
       font-size:13px;
       line-height:1.55;
       color:#64748b;
     }
 
-    .lead-btn,
-    .support-btn{
+    .lead-btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -1783,19 +1516,14 @@
       transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease, opacity .18s ease;
     }
 
-    .lead-btn:hover,
-    .support-btn:hover{
+    .lead-btn:hover{
       transform:translateY(-1px);
       border-color:rgba(37,99,235,.18);
     }
 
-    .lead-btn:active,
-    .support-btn:active{
-      transform:translateY(0);
-    }
+    .lead-btn:active{ transform:translateY(0); }
 
-    .lead-btn--primary,
-    .support-btn--primary{
+    .lead-btn--primary{
       background:linear-gradient(135deg, #2563eb 0%, #3b82f6 56%, #60a5fa 100%);
       border-color:transparent;
       color:#fff;
@@ -1804,270 +1532,21 @@
         inset 0 1px 0 rgba(255,255,255,.18);
     }
 
-    .lead-btn--primary:hover,
-    .support-btn--primary:hover{
-      filter:brightness(1.02);
-      box-shadow:
-        0 20px 40px rgba(37,99,235,.28),
-        inset 0 1px 0 rgba(255,255,255,.2);
-    }
-
-    .lead-btn--secondary,
-    .support-btn--secondary{
+    .lead-btn--secondary{
       background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(241,245,249,.96));
       color:#334155;
     }
 
-    .support-stepper{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:2px 2px 10px;
-    }
-
-    .support-step{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.01em;
-      color:#64748b;
-      transition:color .18s ease;
-    }
-
-    .support-step--active{
-      color:#0f172a;
-    }
-
-    .support-step--done{
-      color:#1d4ed8;
-    }
-
-    .support-step-num{
-      width:28px;
-      height:28px;
-      border-radius:999px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex:0 0 auto;
-      border:1px solid rgba(15,23,42,.12);
-      background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(241,245,249,.94));
-      color:#475569;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.75),
-        0 6px 14px rgba(15,23,42,.05);
-    }
-
-    .support-step--active .support-step-num{
-      border-color:rgba(37,99,235,.30);
-      background:linear-gradient(135deg, rgba(37,99,235,.96), rgba(124,58,237,.86));
-      color:#fff;
-      box-shadow:0 12px 24px rgba(37,99,235,.22);
-    }
-
-    .support-step--done .support-step-num{
-      border-color:rgba(37,99,235,.18);
-      background:rgba(37,99,235,.08);
-      color:#1d4ed8;
-    }
-
-    .support-step-line{
-      flex:1 1 auto;
-      min-width:18px;
-      height:2px;
-      border-radius:999px;
-      background:linear-gradient(90deg, rgba(15,23,42,.10), rgba(15,23,42,.06));
-    }
-
-    .support-block{
-      border:1px solid rgba(15,23,42,.08);
-      border-radius:22px;
-      padding:16px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.96), rgba(248,250,252,.90));
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.75),
-        0 10px 28px rgba(15,23,42,.04);
-    }
-
-    .support-step-panel--active{
-      animation:modalPanelIn .18s ease;
-    }
-
-    @keyframes modalPanelIn{
-      from{
-        opacity:0;
-        transform:translateY(4px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
-    }
-
-    .support-block-title{
-      margin:0 0 12px;
-      font-size:15px;
-      line-height:1.3;
-      font-weight:950;
-      letter-spacing:-.02em;
-      color:#0f172a;
-    }
-
-    .support-note,
-    .support-guidance,
-    .support-prefill-note,
-    .support-field-tip,
-    .support-postsend-note{
-      font-size:13px;
-      line-height:1.65;
-      color:#64748b;
-    }
-
-    .support-note,
-    .support-guidance,
-    .support-prefill-note{
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid rgba(15,23,42,.07);
-      background:rgba(248,250,252,.82);
-    }
-
-    .support-note--soft{
-      background:linear-gradient(180deg, rgba(248,250,252,.88), rgba(255,255,255,.92));
-    }
-
-    .support-guidance strong{
-      color:#0f172a;
-    }
-
-    .support-guidance ul{
-      margin:8px 0 0;
-      padding-left:18px;
-    }
-
-    .support-status{
-      display:grid;
-      gap:8px;
-      padding:14px 15px;
-      border-radius:18px;
-      border:1px solid rgba(37,99,235,.12);
-      background:
-        radial-gradient(520px 180px at 0% 0%, rgba(37,99,235,.08), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,250,252,.95));
-    }
-
-    .support-status-badge{
-      display:inline-flex;
-      align-items:center;
-      width:max-content;
-      padding:6px 10px;
-      border-radius:999px;
-      background:rgba(37,99,235,.08);
-      color:#1d4ed8;
-      font-size:11px;
-      font-weight:950;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-    }
-
-    .support-status-text{
-      color:#475569;
-      font-size:13.5px;
-      line-height:1.65;
-    }
-
-    .support-footer{
-      display:grid;
-      gap:14px;
-      margin-top:6px;
-    }
-
-    .support-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .support-step-actions{
-      display:flex;
-      justify-content:flex-end;
-      gap:10px;
-      margin-top:4px;
-    }
-
-    .support-step-actions--split{
-      justify-content:space-between;
-    }
-
-    body.modal-open{
-      overflow:hidden;
-    }
+    body.modal-open{ overflow:hidden; }
 
     @media (max-width:760px){
-      #lead-modal,
-      #support-modal{
-        padding:12px;
-      }
-
-      .lead-dialog,
-      .support-dialog{
-        width:100%;
-        max-height:92vh;
-        border-radius:24px;
-      }
-
-      .lead-header,
-      .support-header{
-        padding:18px 16px 14px;
-      }
-
-      .lead-header::after,
-      .support-header::after{
-        left:16px;
-        right:16px;
-      }
-
-      .lead-body,
-      .support-body{
-        padding:16px;
-      }
-
-      .support-stepper{
-        gap:8px;
-      }
-
-      .support-step-text{
-        display:none;
-      }
-
-      .support-step-line{
-        min-width:10px;
-      }
-
-      .support-block{
-        border-radius:18px;
-        padding:14px;
-      }
-
-      .support-actions,
-      .support-step-actions,
-      .lead-actions{
-        grid-template-columns:1fr;
-      }
-
-      .support-actions,
-      .lead-actions{
-        display:grid;
-      }
-
-      .lead-btn,
-      .support-btn{
-        width:100%;
-      }
+      #lead-modal{ padding:12px; }
+      .lead-dialog{ width:100%; max-height:92vh; border-radius:24px; }
+      .lead-header{ padding:18px 16px 14px; }
+      .lead-header::after{ left:16px; right:16px; }
+      .lead-body{ padding:16px; }
+      .lead-actions{ display:grid; }
+      .lead-btn{ width:100%; }
     }
   </style>
 </head>
@@ -2122,9 +1601,8 @@
                 <p class="cta-title">Experimente agora</p>
 
                 <div class="cta-actions" aria-label="Ações">
-                  <button class="btn btn--primary w-full"
+                  <button class="btn btn--primary w-full js-download"
                      type="button"
-                     data-track="download_primary"
                      data-item="PACOTE GRATUITO"
                      data-file-id="18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE">
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
@@ -2138,7 +1616,6 @@
                   <div class="cta-secondary" aria-label="Ações secundárias">
                     <a class="btn btn--secondary w-full"
                        href="#pacote"
-                       data-track="anchor_pacote"
                        style="background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.22); color:rgba(255,255,255,.96);">
                       <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
                         <path d="M5 12h14"/>
@@ -2148,7 +1625,6 @@
                     </a>
 
                     <a class="btn btn--quiet w-full"
-                       data-track="instagram"
                        href="https://instagram.com/pubeditorial"
                        target="_blank" rel="noopener noreferrer">
                       <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
@@ -2159,17 +1635,16 @@
                       PUB Editorial no Instagram
                     </a>
 
-                    <button class="btn btn--quiet w-full"
-                            type="button"
-                            id="open-support-modal"
-                            data-track="support_open">
+                    <a class="btn btn--quiet w-full"
+                       href="https://wa.me/5551996581275"
+                       target="_blank" rel="noopener noreferrer">
                       <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
                         <path d="M8 10h8"/>
                         <path d="M8 14h5"/>
                         <path d="M6 5h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 3v-3H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
                       </svg>
                       Falar com a PUB Editorial
-                    </button>
+                    </a>
                   </div>
                 </div>
 
@@ -2179,7 +1654,7 @@
                 </ul>
 
                 <div class="cta-meta">
-                  Preencha o formulário para liberar o download do arquivo correspondente.
+                  Preencha nome e e-mail para liberar o download do arquivo correspondente.
                 </div>
               </aside>
             </div>
@@ -2212,9 +1687,8 @@
             </div>
 
             <div class="grid" style="margin-top:var(--s5);">
-              <button class="btn btn--primary"
+              <button class="btn btn--primary js-download"
                  type="button"
-                 data-track="download_results"
                  data-item="PACOTE GRATUITO"
                  data-file-id="18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE">
                 <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
@@ -2329,16 +1803,7 @@
                     <div class="when">Use ao iniciar a capa para garantir medidas corretas, dobras precisas e guias de segurança desde o começo.</div>
                   </div>
                   <div class="toolactions">
-                    <button
-                      type="button"
-                      class="btn btn--micro"
-                      data-support-open="item"
-                      data-support-item="CAPA MASTER"
-                      data-support-subject="Quero saber mais sobre CAPA MASTER"
-                      data-support-message="Olá. Gostaria de saber mais sobre o CAPA MASTER, especialmente sobre em que casos ele é mais útil no fluxo editorial e como funciona na prática."
-                      data-track="support_item_interest">
-                      Tirar dúvida
-                    </button>
+                    <button class="btn btn--micro js-download" type="button" data-item="CAPA MASTER" data-file-id="1AHKC3hYZCo_qoZ5LnLmNrt1GmAThnomm">Baixar item</button>
                   </div>
                 </div>
               </article>
@@ -2357,16 +1822,7 @@
                     <div class="when">Ideal para padronizar o miolo desde a primeira página e manter conformidade no fechamento.</div>
                   </div>
                   <div class="toolactions">
-                    <button
-                      type="button"
-                      class="btn btn--micro"
-                      data-support-open="item"
-                      data-support-item="MIOLO MASTER"
-                      data-support-subject="Quero saber mais sobre MIOLO MASTER"
-                      data-support-message="Olá. Gostaria de saber mais sobre o MIOLO MASTER, especialmente sobre criação de documento, margens, sangria e uso no fluxo editorial."
-                      data-track="support_item_interest">
-                      Tirar dúvida
-                    </button>
+                    <button class="btn btn--micro js-download" type="button" data-item="MIOLO MASTER" data-file-id="1CiKz2brCrVzXqwEvRVXZS9MKr9tuyFsL">Baixar item</button>
                   </div>
                 </div>
               </article>
@@ -2385,16 +1841,7 @@
                     <div class="when">Permite reenquadrar quadros na área útil definida pelas margens, evitando ajustes manuais página por página.</div>
                   </div>
                   <div class="toolactions">
-                    <button
-                      type="button"
-                      class="btn btn--micro"
-                      data-support-open="item"
-                      data-support-item="MANCHA MASTER"
-                      data-support-subject="Quero saber mais sobre MANCHA MASTER"
-                      data-support-message="Olá. Gostaria de saber mais sobre o MANCHA MASTER, especialmente sobre ajuste de quadros de texto, escopo por páginas e aplicação em lote."
-                      data-track="support_item_interest">
-                      Tirar dúvida
-                    </button>
+                    <button class="btn btn--micro js-download" type="button" data-item="MANCHA MASTER" data-file-id="1ny87txfaUhN1mV0lB4WRC3KYWd9giVXJ">Baixar item</button>
                   </div>
                 </div>
               </article>
@@ -2415,16 +1862,7 @@
                     <div class="when">Reorganiza o alinhamento vertical em todas as páginas com rapidez e precisão.</div>
                   </div>
                   <div class="toolactions">
-                    <button
-                      type="button"
-                      class="btn btn--micro"
-                      data-support-open="item"
-                      data-support-item="VERTICAL MASTER"
-                      data-support-subject="Quero saber mais sobre VERTICAL MASTER"
-                      data-support-message="Olá. Gostaria de saber mais sobre o VERTICAL MASTER, especialmente sobre alinhamento vertical em lote e situações em que ele traz mais ganho."
-                      data-track="support_item_interest">
-                      Tirar dúvida
-                    </button>
+                    <button class="btn btn--micro js-download" type="button" data-item="VERTICAL MASTER" data-file-id="1qmLtu_szJ_rgak3x0gHYYtlktQS3BXpi">Baixar item</button>
                   </div>
                 </div>
               </article>
@@ -2443,16 +1881,7 @@
                     <div class="when">Ideal para implantar ou ajustar a baseline grid e padronizar a aderência dos estilos.</div>
                   </div>
                   <div class="toolactions">
-                    <button
-                      type="button"
-                      class="btn btn--micro"
-                      data-support-open="item"
-                      data-support-item="BASELINE MASTER"
-                      data-support-subject="Quero saber mais sobre BASELINE MASTER"
-                      data-support-message="Olá. Gostaria de saber mais sobre o BASELINE MASTER, especialmente sobre configuração de baseline grid e aplicação nos estilos de parágrafo."
-                      data-track="support_item_interest">
-                      Tirar dúvida
-                    </button>
+                    <button class="btn btn--micro js-download" type="button" data-item="BASELINE MASTER" data-file-id="16ttuf7bM8xC5YWkldqXLDdxWYdJ2u9qs">Baixar item</button>
                   </div>
                 </div>
               </article>
@@ -2472,16 +1901,7 @@
                     <div class="when">Recomendado antes de instalar e executar, para entender escopo, filtros e compatibilidade.</div>
                   </div>
                   <div class="toolactions">
-                    <button
-                      type="button"
-                      class="btn btn--micro"
-                      data-support-open="item"
-                      data-support-item="GUIA DE USO"
-                      data-support-subject="Quero saber mais sobre o GUIA DE USO"
-                      data-support-message="Olá. Gostaria de saber mais sobre o GUIA DE USO, especialmente sobre instalação, compatibilidade e boas práticas para começar a usar os scripts."
-                      data-track="support_item_interest">
-                      Tirar dúvida
-                    </button>
+                    <button class="btn btn--micro js-download" type="button" data-item="GUIA DE USO" data-file-id="11iAOd6cnB34jLMJt5FBZOd9ZhWRKzZSc">Baixar item</button>
                   </div>
                 </div>
               </article>
@@ -2500,19 +1920,18 @@
               </div>
 
               <ul class="pillgrid" role="list" aria-label="Lista de downloads individuais">
-                <li><button class="pill" type="button" data-track="download_pill" data-item="CAPA MASTER" data-file-id="1AHKC3hYZCo_qoZ5LnLmNrt1GmAThnomm">CAPA MASTER</button></li>
-                <li><button class="pill" type="button" data-track="download_pill" data-item="MIOLO MASTER" data-file-id="1CiKz2brCrVzXqwEvRVXZS9MKr9tuyFsL">MIOLO MASTER</button></li>
-                <li><button class="pill" type="button" data-track="download_pill" data-item="MANCHA MASTER" data-file-id="1ny87txfaUhN1mV0lB4WRC3KYWd9giVXJ">MANCHA MASTER</button></li>
-                <li><button class="pill" type="button" data-track="download_pill" data-item="VERTICAL MASTER" data-file-id="1qmLtu_szJ_rgak3x0gHYYtlktQS3BXpi">VERTICAL MASTER</button></li>
-                <li><button class="pill" type="button" data-track="download_pill" data-item="BASELINE MASTER" data-file-id="16ttuf7bM8xC5YWkldqXLDdxWYdJ2u9qs">BASELINE MASTER</button></li>
-                <li><button class="pill" type="button" data-track="download_pill" data-item="GUIA DE USO" data-file-id="11iAOd6cnB34jLMJt5FBZOd9ZhWRKzZSc">GUIA DE USO</button></li>
+                <li><button class="pill js-download" type="button" data-item="CAPA MASTER" data-file-id="1AHKC3hYZCo_qoZ5LnLmNrt1GmAThnomm">CAPA MASTER</button></li>
+                <li><button class="pill js-download" type="button" data-item="MIOLO MASTER" data-file-id="1CiKz2brCrVzXqwEvRVXZS9MKr9tuyFsL">MIOLO MASTER</button></li>
+                <li><button class="pill js-download" type="button" data-item="MANCHA MASTER" data-file-id="1ny87txfaUhN1mV0lB4WRC3KYWd9giVXJ">MANCHA MASTER</button></li>
+                <li><button class="pill js-download" type="button" data-item="VERTICAL MASTER" data-file-id="1qmLtu_szJ_rgak3x0gHYYtlktQS3BXpi">VERTICAL MASTER</button></li>
+                <li><button class="pill js-download" type="button" data-item="BASELINE MASTER" data-file-id="16ttuf7bM8xC5YWkldqXLDdxWYdJ2u9qs">BASELINE MASTER</button></li>
+                <li><button class="pill js-download" type="button" data-item="GUIA DE USO" data-file-id="11iAOd6cnB34jLMJt5FBZOd9ZhWRKzZSc">GUIA DE USO</button></li>
               </ul>
             </details>
 
             <div class="grid" style="margin-top:var(--s5);">
-              <button class="btn btn--primary"
+              <button class="btn btn--primary js-download"
                  type="button"
-                 data-track="download_primary_pacote"
                  data-item="PACOTE GRATUITO"
                  data-file-id="18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE">
                 <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
@@ -2549,47 +1968,41 @@
                 </div>
                 <div class="videos-note-card">
                   <strong>Biblioteca em expansão</strong>
-                  <span>Novos tutoriais poderão ser adicionados ao carrossel para cobrir as demais automações do pacote.</span>
+                  <span>Novos tutoriais poderão ser adicionados sem necessidade de carrossel em JavaScript.</span>
                 </div>
               </div>
             </div>
 
-            <div class="video-carousel" data-carousel="videos">
-              <button class="vbtn vbtn--prev" type="button" aria-label="Vídeo anterior" data-prev><span aria-hidden="true">‹</span></button>
+            <div class="video-strip" aria-label="Lista horizontal de vídeos">
+              <article class="video-card">
+                <div class="video-frame">
+                  <iframe src="https://www.youtube-nocookie.com/embed/V4WoT7v7f1s?rel=0&modestbranding=1" title="Baixar e instalar os scripts PUB Editorial" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                </div>
+                <p class="video-caption">Baixar e instalar os scripts PUB Editorial</p>
+                <p class="video-note">Tutorial rápido para instalar os arquivos JSX no painel Scripts do Adobe InDesign.</p>
+              </article>
 
-              <div class="video-track" tabindex="0" aria-label="Carrossel de vídeos" data-track>
-                <article class="video-card" data-slide>
-                  <div class="video-frame">
-                    <iframe src="https://www.youtube-nocookie.com/embed/V4WoT7v7f1s?rel=0&modestbranding=1" title="Baixar e instalar os scripts PUB Editorial" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-                  </div>
-                  <p class="video-caption">Baixar e instalar os scripts PUB Editorial</p>
-                  <p class="video-note">Tutorial rápido para instalar os arquivos JSX no painel Scripts do Adobe InDesign.</p>
-                </article>
+              <article class="video-card">
+                <div class="video-frame">
+                  <iframe src="https://www.youtube-nocookie.com/embed/K0kM5cEKGWc?rel=0&modestbranding=1" title="Como usar o CAPA MASTER | PUB Editorial Scripts (InDesign)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                </div>
+                <p class="video-caption">Como usar o CAPA MASTER | PUB Editorial Scripts (InDesign)</p>
+                <p class="video-note">Demonstração prática da criação de capa aberta com lombada, dobras, guias e sangria.</p>
+              </article>
 
-                <article class="video-card" data-slide>
-                  <div class="video-frame">
-                    <iframe src="https://www.youtube-nocookie.com/embed/K0kM5cEKGWc?rel=0&modestbranding=1" title="Como usar o CAPA MASTER | PUB Editorial Scripts (InDesign)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-                  </div>
-                  <p class="video-caption">Como usar o CAPA MASTER | PUB Editorial Scripts (InDesign)</p>
-                  <p class="video-note">Demonstração prática da criação de capa aberta com lombada, dobras, guias e sangria.</p>
-                </article>
-
-                <article class="video-card" data-slide>
-                  <div class="video-frame">
-                    <iframe src="https://www.youtube-nocookie.com/embed/t6QHOl6996U?rel=0&modestbranding=1" title="Como usar o VERTICAL MASTER | PUB Editorial Scripts (InDesign)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-                  </div>
-                  <p class="video-caption">Como usar o VERTICAL MASTER | PUB Editorial Scripts (InDesign)</p>
-                  <p class="video-note">Exemplo de aplicação de alinhamento vertical em lote para manter consistência de páginas.</p>
-                </article>
-              </div>
-
-              <button class="vbtn vbtn--next" type="button" aria-label="Próximo vídeo" data-next><span aria-hidden="true">›</span></button>
-              <div class="vdots" aria-label="Navegação do carrossel" data-dots></div>
+              <article class="video-card">
+                <div class="video-frame">
+                  <iframe src="https://www.youtube-nocookie.com/embed/t6QHOl6996U?rel=0&modestbranding=1" title="Como usar o VERTICAL MASTER | PUB Editorial Scripts (InDesign)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                </div>
+                <p class="video-caption">Como usar o VERTICAL MASTER | PUB Editorial Scripts (InDesign)</p>
+                <p class="video-note">Exemplo de aplicação de alinhamento vertical em lote para manter consistência de páginas.</p>
+              </article>
             </div>
           </div>
         </div>
       </section>
-            <section class="stripe stripe--soft2" id="faq" aria-label="Perguntas frequentes">
+
+      <section class="stripe stripe--soft2" id="faq" aria-label="Perguntas frequentes">
         <div class="wrap">
           <div class="panel">
             <div class="head">
@@ -2695,9 +2108,8 @@
                 </ul>
 
                 <div class="card-foot">
-                  <button class="btn btn--primary w-full"
+                  <button class="btn btn--primary w-full js-download"
                     type="button"
-                    data-track="download_publico"
                     data-item="PACOTE GRATUITO"
                     data-file-id="18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE">
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
@@ -2736,17 +2148,17 @@
                 </ol>
 
                 <div class="card-foot">
-                  <button class="btn btn--secondary w-full"
-                          type="button"
-                          id="open-support-modal-install"
-                          data-track="support_open_install">
+                  <a class="btn btn--secondary w-full"
+                     href="https://wa.me/5551996581275"
+                     target="_blank"
+                     rel="noopener noreferrer">
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
                       <path d="M8 10h8"/>
                       <path d="M8 14h5"/>
                       <path d="M6 5h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4l-4 3v-3H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
                     </svg>
                     Falar com a PUB Editorial
-                  </button>
+                  </a>
                 </div>
               </article>
             </div>
@@ -2772,9 +2184,9 @@
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="#publico">Instalação</a></li>
                 <li><span class="footsep" aria-hidden="true"></span></li>
-                <li><button type="button" data-track="download_footer" data-item="PACOTE GRATUITO" data-file-id="18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE">Download</button></li>
-                <li><a data-track="instagram" href="https://instagram.com/pubeditorial" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-                <li><a data-track="whatsapp" href="https://wa.me/5551996581275" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+                <li><button type="button" class="js-download" data-item="PACOTE GRATUITO" data-file-id="18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE">Download</button></li>
+                <li><a href="https://instagram.com/pubeditorial" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                <li><a href="https://wa.me/5551996581275" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
               </ul>
             </div>
           </footer>
@@ -2783,2248 +2195,222 @@
     </main>
   </div>
 
-  <div id="lead-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Formulário de pré-download">
+  <div id="lead-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Formulário de download">
     <div class="lead-dialog" role="document">
       <div class="lead-header">
         <div class="lead-title">Preencha para liberar o download</div>
-        <button type="button" id="lead-close" class="lead-btn lead-btn--secondary lead-close">Fechar</button>
+        <button type="button" id="lead-close" class="lead-btn lead-btn--secondary">Fechar</button>
       </div>
 
       <form id="lead-form" class="lead-body" novalidate>
+        <input type="hidden" id="lead-item" name="item">
+        <input type="hidden" id="lead-file-id" name="file_id">
+
         <div class="lead-field">
           <label class="lead-label" for="lead-name">Nome</label>
-          <input id="lead-name" class="lead-input" name="name" required autocomplete="name">
+          <input id="lead-name" class="lead-input" name="name" required autocomplete="name" placeholder="Seu nome">
         </div>
 
         <div class="lead-field">
           <label class="lead-label" for="lead-email">E-mail</label>
-          <input id="lead-email" class="lead-input" name="email" type="email" required autocomplete="email" inputmode="email">
+          <input id="lead-email" class="lead-input" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="voce@exemplo.com">
         </div>
-
-        <div class="lead-grid-2">
-          <div class="lead-field">
-            <label class="lead-label" for="lead-role">Ocupação editorial</label>
-            <input id="lead-role" class="lead-input" name="role" placeholder="ex.: diagramador, editor, produção..." autocomplete="organization-title">
-          </div>
-
-          <div class="lead-field">
-            <label class="lead-label" for="lead-company">Empresa (opcional)</label>
-            <input id="lead-company" class="lead-input" name="company" autocomplete="organization">
-          </div>
-        </div>
-
-        <div class="lead-grid-2">
-          <div class="lead-field">
-            <label class="lead-label" for="lead-city">Cidade</label>
-            <input id="lead-city" class="lead-input" name="city" autocomplete="address-level2">
-          </div>
-          <div class="lead-field">
-            <label class="lead-label" for="lead-state">Estado (UF)</label>
-            <input id="lead-state" class="lead-input" name="state" maxlength="2" placeholder="UF" autocomplete="address-level1" style="text-transform:uppercase;">
-          </div>
-        </div>
-
-        <label class="lead-optin">
-          <input type="checkbox" name="optin" checked style="margin-top:3px;">
-          Aceito receber atualizações sobre scripts e melhorias.
-        </label>
 
         <div class="lead-actions">
-          <button type="submit" id="lead-submit" class="lead-btn lead-btn--primary" disabled style="opacity:.55;">Continuar e baixar</button>
+          <button type="submit" id="lead-submit" class="lead-btn lead-btn--primary">Continuar e baixar</button>
         </div>
 
-        <div id="lead-hint" class="lead-hint">Preencha nome e e-mail para liberar o download.</div>
+        <div id="lead-hint" class="lead-hint">Preencha nome e e-mail para continuar.</div>
       </form>
     </div>
   </div>
 
-  <div id="support-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Enviar mensagem">
-    <div class="support-dialog" role="document">
-      <div class="support-header">
-        <div class="support-headcopy">
-          <div class="support-kicker">Contato</div>
-          <div class="support-title">Fale com a PUB Editorial</div>
-          <p class="support-subtitle">
-            Envie uma dúvida, comentário, sugestão ou relato de uso. Em questões técnicas, você pode informar também dados do script para agilizar a análise.
-          </p>
-        </div>
-        <button type="button" id="support-close" class="support-btn support-btn--secondary support-close">Fechar</button>
-      </div>
+  <script type="module">
+    const modal = document.getElementById("lead-modal");
+    const form = document.getElementById("lead-form");
+    const closeBtn = document.getElementById("lead-close");
+    const submitBtn = document.getElementById("lead-submit");
+    const hint = document.getElementById("lead-hint");
 
-      <form id="support-form" class="support-body" novalidate>
-        <div class="support-stepper" aria-label="Etapas do formulário">
-          <div class="support-step support-step--active" data-step-indicator="1">
-            <span class="support-step-num">1</span>
-            <span class="support-step-text">Tipo</span>
-          </div>
-          <div class="support-step-line" aria-hidden="true"></div>
-          <div class="support-step" data-step-indicator="2">
-            <span class="support-step-num">2</span>
-            <span class="support-step-text">Contato</span>
-          </div>
-          <div class="support-step-line" aria-hidden="true"></div>
-          <div class="support-step" data-step-indicator="3">
-            <span class="support-step-num">3</span>
-            <span class="support-step-text">Detalhes</span>
-          </div>
-        </div>
+    const inputName = document.getElementById("lead-name");
+    const inputEmail = document.getElementById("lead-email");
+    const inputItem = document.getElementById("lead-item");
+    const inputFileId = document.getElementById("lead-file-id");
 
-        <section class="support-block support-step-panel support-step-panel--active" data-step-panel="1" aria-label="Tipo da solicitação">
-          <div class="support-block-title">Etapa 1 · Tipo da solicitação</div>
-
-          <div class="support-note" id="support-note">
-            Selecione o assunto principal da sua mensagem. O formulário adapta os campos para facilitar o envio de informações mais úteis em casos de instalação ou problema técnico.
-          </div>
-
-          <div class="support-guidance" id="support-guidance" hidden>
-            <strong>Para agilizar a análise:</strong>
-            <ul>
-              <li>descreva a etapa em que ocorreu o problema</li>
-              <li>informe o nome do script</li>
-              <li>inclua a versão do script e o ID em “Planos do script”, se disponível</li>
-              <li>informe a versão do Adobe InDesign e o sistema operacional</li>
-            </ul>
-          </div>
-
-          <div class="support-grid-2">
-            <div class="support-field">
-              <label class="support-label" for="support-item">Assunto principal</label>
-              <select id="support-item" class="support-select" name="item" required>
-                <option value="">Selecione</option>
-                <option value="DUVIDA GERAL">Dúvida geral</option>
-                <option value="COMENTARIO">Comentário</option>
-                <option value="SUGESTAO">Sugestão</option>
-                <option value="INSTALACAO">Instalação</option>
-                <option value="USO DOS SCRIPTS">Uso dos scripts</option>
-                <option value="PROBLEMA TECNICO">Problema técnico</option>
-                <option value="PACOTE GRATUITO">Pacote gratuito</option>
-                <option value="CAPA MASTER">CAPA MASTER</option>
-                <option value="MIOLO MASTER">MIOLO MASTER</option>
-                <option value="MANCHA MASTER">MANCHA MASTER</option>
-                <option value="VERTICAL MASTER">VERTICAL MASTER</option>
-                <option value="BASELINE MASTER">BASELINE MASTER</option>
-                <option value="GUIA DE USO">GUIA DE USO</option>
-              </select>
-            </div>
-
-            <div class="support-field">
-              <label class="support-label" for="support-subject">Título</label>
-              <input id="support-subject" class="support-input" name="subject" required placeholder="Ex.: dúvida sobre instalação, problema ao executar o script">
-            </div>
-          </div>
-
-          <div class="support-field">
-            <label class="support-label" for="support-message">Mensagem</label>
-            <textarea
-              id="support-message"
-              class="support-textarea"
-              name="message"
-              required
-              placeholder="Escreva sua mensagem com o máximo de contexto que achar útil. Em caso técnico, descreva também o que aconteceu e em que etapa ocorreu."
-            ></textarea>
-            <div class="support-field-tip" id="support-message-tip">
-              Você pode enviar dúvidas gerais, comentários sobre a página, sugestões de novos recursos ou questões técnicas.
-            </div>
-          </div>
-
-          <div class="support-step-actions">
-            <button type="button" class="support-btn support-btn--primary" id="support-next-1">Continuar</button>
-          </div>
-        </section>
-
-        <section class="support-block support-step-panel" data-step-panel="2" aria-label="Dados de contato" hidden>
-          <div class="support-block-title">Etapa 2 · Seus dados</div>
-
-          <div class="support-prefill-note" id="support-prefill-note" hidden>
-            Preenchemos alguns dados com base no seu envio de download nesta sessão. Revise antes de continuar.
-          </div>
-
-          <div class="support-grid-2">
-            <div class="support-field">
-              <label class="support-label" for="support-name">Nome</label>
-              <input id="support-name" class="support-input" name="name" required autocomplete="name" placeholder="Seu nome">
-            </div>
-
-            <div class="support-field">
-              <label class="support-label" for="support-email">E-mail</label>
-              <input id="support-email" class="support-input" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="voce@exemplo.com">
-            </div>
-          </div>
-
-          <div class="support-grid-2">
-            <div class="support-field">
-              <label class="support-label" for="support-whatsapp">WhatsApp (opcional)</label>
-              <input
-                id="support-whatsapp"
-                class="support-input"
-                name="whatsapp"
-                type="tel"
-                inputmode="tel"
-                autocomplete="tel"
-                placeholder="Ex.: 51996581275"
-              >
-              <div class="support-field-tip" id="support-whatsapp-tip">
-                Opcional. Útil para facilitar retorno sobre instalação ou suporte técnico.
-              </div>
-            </div>
-
-            <div class="support-field">
-              <label class="support-label" for="support-contact-preference">Preferência de contato</label>
-              <select id="support-contact-preference" class="support-select" name="contact_preference">
-                <option value="email">E-mail</option>
-                <option value="whatsapp">WhatsApp</option>
-              </select>
-              <div class="support-field-tip">
-                Se escolher WhatsApp, o ideal é preencher o número acima.
-              </div>
-            </div>
-          </div>
-
-          <label class="support-check" id="support-whatsapp-consent-wrap" hidden>
-            <input type="checkbox" name="whatsapp_consent" id="support-whatsapp-consent">
-            <span>Autorizo contato por WhatsApp sobre este atendimento.</span>
-          </label>
-
-          <div class="support-step-actions support-step-actions--split">
-            <button type="button" class="support-btn support-btn--secondary" id="support-back-2">Voltar</button>
-            <button type="button" class="support-btn support-btn--primary" id="support-next-2">Continuar</button>
-          </div>
-        </section>
-
-        <section class="support-block support-step-panel" data-step-panel="3" aria-label="Dados complementares" hidden>
-          <div class="support-block-title">Etapa 3 · Dados complementares</div>
-
-          <div class="support-note support-note--soft">
-            Preencha os dados abaixo quando quiser facilitar a análise técnica. Em dúvidas gerais, você pode deixar em branco.
-          </div>
-
-          <div class="support-grid-2">
-            <div class="support-field">
-              <label class="support-label" for="support-script-name">Nome do script</label>
-              <input
-                id="support-script-name"
-                class="support-input"
-                name="script_name"
-                placeholder="Ex.: CAPA MASTER"
-              >
-            </div>
-
-            <div class="support-field">
-              <label class="support-label" for="support-script-version">Versão do script</label>
-              <input
-                id="support-script-version"
-                class="support-input"
-                name="script_version"
-                placeholder="Ex.: 3.1"
-              >
-            </div>
-          </div>
-
-          <div class="support-grid-2">
-            <div class="support-field">
-              <label class="support-label" for="support-script-id">ID do script</label>
-              <input
-                id="support-script-id"
-                class="support-input"
-                name="script_id"
-                placeholder="Disponível na janela Planos do script"
-              >
-            </div>
-
-            <div class="support-field">
-              <label class="support-label" for="support-indesign-version">Versão do Adobe InDesign</label>
-              <input
-                id="support-indesign-version"
-                class="support-input"
-                name="indesign_version"
-                placeholder="Ex.: InDesign 20.0"
-              >
-            </div>
-          </div>
-
-          <div class="support-field">
-            <label class="support-label" for="support-os-name">Sistema operacional</label>
-            <input
-              id="support-os-name"
-              class="support-input"
-              name="os_name"
-              placeholder="Ex.: Windows 11 / macOS Sonoma"
-            >
-            <div class="support-field-tip">
-              Para problemas técnicos, tente informar também em que etapa ocorreu o problema e qual comportamento você esperava.
-            </div>
-          </div>
-
-          <div class="support-field">
-            <label class="support-label" for="support-stage">Etapa em que ocorreu o problema (opcional)</label>
-            <input
-              id="support-stage"
-              class="support-input"
-              name="problem_stage"
-              placeholder="Ex.: instalação, abertura do diálogo, processamento, exportação"
-            >
-          </div>
-
-          <div class="support-field">
-            <label class="support-label" for="support-expected">O que você esperava que acontecesse? (opcional)</label>
-            <textarea
-              id="support-expected"
-              class="support-textarea support-textarea--sm"
-              name="expected_behavior"
-              placeholder="Descreva o comportamento esperado."
-            ></textarea>
-          </div>
-
-          <div class="support-footer">
-            <div class="support-status" id="support-status" aria-live="polite">
-              <div class="support-status-badge">Contato</div>
-              <div class="support-status-text">Sua mensagem será enviada para análise. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.</div>
-            </div>
-
-            <div class="support-actions">
-              <button type="submit" id="support-submit" class="support-btn support-btn--primary" disabled style="opacity:.55;">Enviar mensagem</button>
-              <button type="button" id="support-cancel" class="support-btn support-btn--secondary">Cancelar</button>
-            </div>
-
-            <div id="support-hint" class="support-hint"></div>
-
-            <div class="support-postsend-note">
-              Ao enviar, você verá a confirmação na tela. Em seguida, o atendimento continua pelo canal informado.
-            </div>
-          </div>
-
-          <div class="support-step-actions support-step-actions--split">
-            <button type="button" class="support-btn support-btn--secondary" id="support-back-3">Voltar</button>
-          </div>
-        </section>
-      </form>
-    </div>
-  </div>
-    <script type="module">
-    class Dom {
-      byId(id) { return document.getElementById(id); }
-      on(el, event, handler, options) { if (el) el.addEventListener(event, handler, options); }
-    }
-
-    class UrlTools {
-      getDriveFileId(url) {
-        try {
-          const u = new URL(url);
-          const id = u.searchParams.get("id");
-          if (id) return id;
-          const m = u.pathname.match(/\/d\/([^/]+)/);
-          if (m && m[1]) return m[1];
-        } catch (_) {}
-        return "";
-      }
-
-      safeId(prefix = "req") {
-        const r = Math.random().toString(16).slice(2);
-        return `${prefix}_${Date.now().toString(16)}_${r}`;
-      }
-
-      decodeHash(hash) {
-        try { return decodeURIComponent((hash || "").replace(/^#/, "")); }
-        catch (_) { return (hash || "").replace(/^#/, ""); }
-      }
-
-      getSearchParamsFromUrl(url) {
-        try { return new URL(String(url || "")).searchParams; }
-        catch (_) { return new URLSearchParams(""); }
-      }
-    }
-
-    class SessionStore {
-      constructor(key) {
-        this.key = key || "PUB_FRONT_SESSION_V2";
-      }
-
-      read() {
-        try {
-          const raw = sessionStorage.getItem(this.key);
-          const parsed = raw ? JSON.parse(raw) : {};
-          return parsed && typeof parsed === "object" ? parsed : {};
-        } catch (_) {
-          return {};
+    function track(eventName, params = {}) {
+      try {
+        if (typeof window.gtag === "function" && window.GA_MEASUREMENT_ID) {
+          window.gtag("event", eventName, {
+            send_to: window.GA_MEASUREMENT_ID,
+            page_title: document.title,
+            page_location: location.href,
+            ...params
+          });
         }
-      }
-
-      write(data) {
-        try {
-          sessionStorage.setItem(this.key, JSON.stringify(data || {}));
-        } catch (_) {}
-      }
-
-      merge(patch) {
-        const current = this.read();
-        const next = { ...current, ...(patch || {}) };
-        this.write(next);
-        return next;
-      }
-
-      saveLead(lead) {
-        return this.merge({
-          lead: {
-            name: String(lead?.name || "").trim(),
-            email: String(lead?.email || "").trim(),
-            role: String(lead?.role || "").trim(),
-            company: String(lead?.company || "").trim(),
-            city: String(lead?.city || "").trim(),
-            state: String(lead?.state || "").trim().toUpperCase(),
-            item: String(lead?.item || "").trim(),
-            placement: String(lead?.placement || "").trim(),
-            at: new Date().toISOString()
-          }
-        });
-      }
-
-      getLead() {
-        return this.read().lead || null;
-      }
+      } catch (_) {}
     }
 
-    class Analytics {
-      track(name, params = {}) {
-        try {
-          if (typeof window.gtag === "function" && window.GA_MEASUREMENT_ID) {
-            window.gtag("event", name, {
-              send_to: window.GA_MEASUREMENT_ID,
-              page_title: document.title,
-              page_location: location.href,
-              ...params
-            });
-          }
-        } catch (_) {}
-      }
-
-      trackCTA(action, params = {}) {
-        this.track("select_content", {
-          content_type: "cta",
-          action,
-          ...params
-        });
-      }
-
-      trackLead(params = {}) {
-        this.track("generate_lead", {
-          currency: "BRL",
-          value: 1,
-          ...params
-        });
-      }
-
-      trackDownload(params = {}) {
-        this.track("file_download", {
-          ...params
-        });
-      }
-
-      trackSupportTicket(params = {}) {
-        this.track("support_ticket_submit", {
-          ...params
-        });
-      }
-
-      trackUserData(params = {}) {
-        try {
-          if (typeof window.gtag !== "function") return;
-
-          const normalizeEmail = (v) => String(v || "").trim().toLowerCase();
-          const normalizePhone = (v) => String(v || "").replace(/[^\d+]/g, "");
-          const splitName = (fullName) => {
-            const cleaned = String(fullName || "").trim().replace(/\s+/g, " ");
-            if (!cleaned) return { first_name: "", last_name: "" };
-            const parts = cleaned.split(" ");
-            return {
-              first_name: parts[0] || "",
-              last_name: parts.slice(1).join(" ") || ""
-            };
-          };
-
-          const {
-            email = "",
-            phone = "",
-            full_name = "",
-            city = "",
-            region = "",
-            postal_code = "",
-            country = "BR"
-          } = params;
-
-          const nameParts = splitName(full_name);
-          const user_data = {};
-
-          if (email) user_data.email = normalizeEmail(email);
-          if (phone) user_data.phone_number = normalizePhone(phone);
-
-          const hasAddressData =
-            nameParts.first_name ||
-            nameParts.last_name ||
-            city ||
-            region ||
-            postal_code ||
-            country;
-
-          if (hasAddressData) {
-            user_data.address = {
-              first_name: nameParts.first_name,
-              last_name: nameParts.last_name,
-              city: String(city || "").trim(),
-              region: String(region || "").trim().toUpperCase(),
-              postal_code: String(postal_code || "").trim(),
-              country: String(country || "BR").trim().toUpperCase()
-            };
-          }
-
-          if (!Object.keys(user_data).length) return;
-
-          window.gtag("set", "user_data", user_data);
-        } catch (_) {}
-      }
+    function validEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
     }
 
-class PubApi {
-  constructor(endpoint) {
-    this.endpoint = endpoint || "";
-  }
-
-  buildContractUrl() {
-    if (!this.endpoint) return "";
-    const separator = this.endpoint.includes("?") ? "&" : "?";
-    return `${this.endpoint}${separator}mode=contract`;
-  }
-
-  buildStatusUrl() {
-    if (!this.endpoint) return "";
-    const separator = this.endpoint.includes("?") ? "&" : "?";
-    return `${this.endpoint}${separator}mode=status`;
-  }
-
-  normalizeContract(contract) {
-    const fallback = window.PUBCRM_CONTRACT_FALLBACK || {};
-    const input = contract && typeof contract === "object" ? contract : {};
-
-    const downloadsInput = input.downloads && typeof input.downloads === "object"
-      ? input.downloads
-      : {};
-
-    const normalizedDownloads = {};
-    const fileIds = Object.keys(downloadsInput);
-
-    for (const fileId of fileIds) {
-      const entry = downloadsInput[fileId];
-      if (!entry || typeof entry !== "object") continue;
-
-      const item = String(entry.item || "").trim();
-      if (!item) continue;
-
-      normalizedDownloads[String(fileId).trim()] = { item };
+    function openModal(item, fileId) {
+      inputItem.value = item || "";
+      inputFileId.value = fileId || "";
+      modal.style.display = "flex";
+      modal.setAttribute("aria-hidden", "false");
+      modal.setAttribute("data-state", "open");
+      document.body.classList.add("modal-open");
+      hint.textContent = "Preencha nome e e-mail para continuar.";
+      setTimeout(() => inputName.focus(), 50);
     }
 
-    return {
-      app: String(input.app || fallback.app || "PUB CRM"),
-      version: String(input.version || fallback.version || "1.4"),
-      leadItems: Array.isArray(input.leadItems) ? input.leadItems.slice() : (fallback.leadItems || []).slice(),
-      ticketItems: Array.isArray(input.ticketItems) ? input.ticketItems.slice() : (fallback.ticketItems || []).slice(),
-      leadPlacements: Array.isArray(input.leadPlacements) ? input.leadPlacements.slice() : (fallback.leadPlacements || []).slice(),
-      contactPreferences: Array.isArray(input.contactPreferences) ? input.contactPreferences.slice() : (fallback.contactPreferences || []).slice(),
-      downloads: Object.keys(normalizedDownloads).length ? normalizedDownloads : (fallback.downloads || {}),
-      integration: input.integration && typeof input.integration === "object" ? input.integration : (fallback.integration || {}),
-      now: String(input.now || "")
-    };
-  }
-
-  async fetchJson(url, timeoutMs = 8000) {
-    if (!url) {
-      return {
-        ok: false,
-        status: 0,
-        payload: null,
-        error: "URL ausente."
-      };
+    function closeModal() {
+      modal.style.display = "none";
+      modal.setAttribute("aria-hidden", "true");
+      modal.removeAttribute("data-state");
+      document.body.classList.remove("modal-open");
+      form.reset();
+      inputItem.value = "";
+      inputFileId.value = "";
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Continuar e baixar";
+      submitBtn.style.opacity = "1";
     }
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-
-    try {
-      const response = await fetch(url, {
-        method: "GET",
+    async function submitLead(payload) {
+      const response = await fetch(window.PUB_LEADS_ENDPOINT, {
+        method: "POST",
         headers: {
-          "Accept": "application/json"
+          "Content-Type": "text/plain;charset=utf-8",
+          "Accept": "application/json, text/plain, */*"
         },
-        redirect: "follow",
-        signal: controller.signal
+        body: JSON.stringify(payload),
+        redirect: "follow"
       });
-
-      clearTimeout(timeoutId);
 
       const text = await response.text();
-      let payload = null;
+      let data = null;
 
       try {
-        payload = JSON.parse(text);
+        data = JSON.parse(text);
       } catch (_) {
-        payload = null;
+        data = null;
       }
 
-      return {
-        ok: response.ok,
-        status: response.status,
-        payload: payload,
-        rawText: text,
-        error: ""
-      };
-    } catch (error) {
-      clearTimeout(timeoutId);
-      return {
-        ok: false,
-        status: 0,
-        payload: null,
-        rawText: "",
-        error: String(error?.message || error || "Falha de rede.")
-      };
-    }
-  }
-
-  async loadContract() {
-    const fallback = this.normalizeContract(window.PUBCRM_CONTRACT_FALLBACK || {});
-    const url = this.buildContractUrl();
-
-    if (!url) {
-      console.warn("[PUB_FRONT] Contract fallback: endpoint ausente.");
-      window.PUBCRM_CONTRACT = fallback;
-      return fallback;
-    }
-
-    const result = await this.fetchJson(url, 8000);
-    const payload = result && result.payload && typeof result.payload === "object" ? result.payload : {};
-    const remoteContract = payload && payload.ok && payload.data ? payload.data : null;
-
-    if (!result.ok) {
-      console.warn("[PUB_FRONT] Contract fallback: resposta HTTP inválida.", {
-        status: result.status,
-        error: result.error || ""
-      });
-      window.PUBCRM_CONTRACT = fallback;
-      return fallback;
-    }
-
-    if (!remoteContract) {
-      console.warn("[PUB_FRONT] Contract fallback: payload sem contrato válido.");
-      window.PUBCRM_CONTRACT = fallback;
-      return fallback;
-    }
-
-    const normalized = this.normalizeContract(remoteContract);
-    window.PUBCRM_CONTRACT = normalized;
-    return normalized;
-  }
-
-  async loadStatus() {
-    const url = this.buildStatusUrl();
-
-    if (!url) {
-      return {
-        endpoint_present: false,
-        http_ok: false,
-        status_ok: false,
-        system_ready: false,
-        error_code: "ENDPOINT_MISSING",
-        error_message: "Endpoint ausente.",
-        payload: null
-      };
-    }
-
-    const result = await this.fetchJson(url, 8000);
-    const payload = result && result.payload && typeof result.payload === "object" ? result.payload : {};
-    const statusData = payload && payload.ok && payload.data ? payload.data : {};
-    const readiness = statusData && typeof statusData.readiness === "object" ? statusData.readiness : {};
-
-    return {
-      endpoint_present: true,
-      http_ok: !!result.ok,
-      status_ok: !!(payload && payload.ok),
-      system_ready: !!readiness.system_ready,
-      error_code: String(readiness.error_code || ""),
-      error_message: String(readiness.error_message || result.error || ""),
-      payload: payload
-    };
-  }
-
- async loadRuntime() {
-  var contract = null;
-  var status = null;
-
-  try {
-    contract = await this.loadContract();
-  } catch (_) {
-    contract = this.normalizeContract(window.PUBCRM_CONTRACT_FALLBACK || {});
-    window.PUBCRM_CONTRACT = contract;
-  }
-
-  try {
-    status = await this.loadStatus();
-  } catch (_) {
-    status = {
-      endpoint_present: !!this.endpoint,
-      http_ok: false,
-      status_ok: false,
-      system_ready: false,
-      error_code: "STATUS_FETCH_FAILED",
-      error_message: "Não foi possível consultar o status do backend.",
-      payload: null
-    };
-  }
-
-  var hasUsableContract = !!(
-    contract &&
-    contract.downloads &&
-    typeof contract.downloads === "object" &&
-    Object.keys(contract.downloads).length
-  );
-
-  var strictReady = !!(
-    status &&
-    status.endpoint_present &&
-    status.http_ok &&
-    status.status_ok &&
-    status.system_ready
-  );
-
-  return {
-    contract: contract,
-    status: status,
-    hasUsableContract: hasUsableContract,
-    strictReady: strictReady,
-    runtime_mode: strictReady
-      ? "strict"
-      : (hasUsableContract ? "degraded_contract_only" : "blocked"),
-    canDownload: !!(strictReady || hasUsableContract)
-  };
-}
-
-  extractRedirectUrlFromHtml(text) {
-    const source = String(text || "");
-
-    const patterns = [
-      /location\.replace\((['"])(.*?)\1\)/i,
-      /location\.href\s*=\s*(['"])(.*?)\1/i,
-      /window\.location\.href\s*=\s*(['"])(.*?)\1/i,
-      /window\.location\.replace\((['"])(.*?)\1\)/i
-    ];
-
-    for (const re of patterns) {
-      const match = source.match(re);
-      if (match && match[2]) return match[2];
-    }
-
-    return "";
-  }
-
-  async postJSON(payload) {
-    if (!this.endpoint) throw new Error("Endpoint não configurado.");
-
-    const response = await fetch(this.endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8",
-        "Accept": "application/json, text/plain, */*"
-      },
-      body: JSON.stringify(payload),
-      redirect: "follow"
-    });
-
-    const text = await response.text();
-    const contentType = String(response.headers.get("content-type") || "").toLowerCase();
-
-    let data = null;
-    let redirectUrl = "";
-
-    try {
-      data = JSON.parse(text);
-    } catch (_) {
-      redirectUrl = this.extractRedirectUrlFromHtml(text);
-
-      if (redirectUrl) {
-        data = {
-          ok: true,
-          data: {
-            redirect_url: redirectUrl,
-            transport: "html_redirect"
-          }
-        };
-      } else {
-        data = {
-          ok: false,
-          error: text
-            ? String(text).trim().slice(0, 1000)
-            : "Resposta inválida do servidor.",
-          raw: text
-        };
+      if (!response.ok) {
+        throw new Error((data && data.error) || "Não foi possível liberar o download.");
       }
-    }
 
-    return {
-      httpOk: response.ok,
-      status: response.status,
-      contentType,
-      redirectUrl,
-      data,
-      rawText: text
-    };
-  }
-}
-
-       
-    class LeadCapture {
-  constructor(dom, urlTools, analytics, api, sessionStore) {
-    this.dom = dom;
-    this.urlTools = urlTools;
-    this.analytics = analytics;
-    this.api = api;
-    this.sessionStore = sessionStore;
-
-    this.modal = this.dom.byId("lead-modal");
-    this.form = this.dom.byId("lead-form");
-    this.btnClose = this.dom.byId("lead-close");
-    this.hint = this.dom.byId("lead-hint");
-    this.submitBtn = this.dom.byId("lead-submit");
-    this.nameInput = this.form?.querySelector("input[name='name']") || null;
-    this.emailInput = this.form?.querySelector("input[name='email']") || null;
-    this.root = this.dom.byId("pub-rich");
-
-    this.pending = null;
-    this._hashScrolling = false;
-    this._isSubmitting = false;
-  }
-
-  init() {
-    if (!this.root || !this.modal || !this.form) return;
-
-    this.dom.on(this.root, "click", (e) => this.onRootClick(e), { capture: true });
-
-    this.dom.on(this.modal, "click", (e) => {
-      if (e.target === this.modal && !this._isSubmitting) this.closeModalOnly();
-    });
-
-    this.dom.on(this.btnClose, "click", () => {
-      if (!this._isSubmitting) this.closeModalOnly();
-    });
-
-    this.dom.on(this.form, "submit", (e) => this.onSubmit(e));
-
-    const update = () => this.updateSubmitState();
-    this.dom.on(this.nameInput, "input", update);
-    this.dom.on(this.emailInput, "input", update);
-
-    this.dom.on(window, "keydown", (e) => {
-      if ((e.key || "").toLowerCase() === "escape" && this.isOpen() && !this._isSubmitting) {
-        this.closeModalOnly();
+      if (!data || !data.ok) {
+        throw new Error((data && data.error) || "Não foi possível liberar o download.");
       }
-    });
 
-    this.scrollFromHash({ behavior: "auto" });
-    this.dom.on(window, "hashchange", () => this.scrollFromHash({ behavior: "smooth" }));
-    this.initActiveNav();
-  }
-
-  isOpen() {
-    return this.modal && this.modal.style.display === "flex";
-  }
-
-  normalizeItem(el) {
-    return (el.getAttribute("data-item") || el.textContent || "").trim().slice(0, 200);
-  }
-
-  isValidLeadTrigger(fileId, item, placement) {
-    const contract = window.PUBCRM_CONTRACT || {};
-    const downloads = contract.downloads || {};
-    const leadItems = contract.leadItems || [];
-    const leadPlacements = contract.leadPlacements || [];
-    const entry = downloads[fileId] && typeof downloads[fileId] === "object"
-      ? downloads[fileId]
-      : null;
-
-    return (
-      !!fileId &&
-      !!item &&
-      !!placement &&
-      leadItems.includes(item) &&
-      leadPlacements.includes(placement) &&
-      !!entry &&
-      String(entry.item || "").trim() === item
-    );
-  }
-
-  openModal() {
-    document.body.classList.add("modal-open");
-    this.modal.style.display = "flex";
-    this.modal.setAttribute("aria-hidden", "false");
-    this.modal.setAttribute("data-state", "open");
-    if (this.hint) {
-      this.hint.textContent = "Preencha nome e e-mail para liberar o download.";
-    }
-    this.updateSubmitState();
-    try { this.nameInput?.focus(); } catch (_) {}
-  }
-
-  closeModal() {
-    document.body.classList.remove("modal-open");
-    this.modal.style.display = "none";
-    this.modal.setAttribute("aria-hidden", "true");
-    this.modal.removeAttribute("data-state");
-  }
-
-  closeModalOnly() {
-  this.closeModal();
-  this.pending = null;
-
-  try { this.form?.reset(); } catch (_) {}
-
-  this._isSubmitting = false;
-
-  if (this.submitBtn) {
-    this.submitBtn.disabled = true;
-    this.submitBtn.textContent = "Continuar e baixar";
-    this.submitBtn.style.opacity = ".55";
-    this.submitBtn.style.cursor = "not-allowed";
-  }
-
-  if (this.btnClose) {
-    this.btnClose.disabled = false;
-  }
-
-  if (this.hint) {
-    this.hint.textContent = "Preencha nome e e-mail para liberar o download.";
-  }
-}
-
-  setSubmittingUI(isSubmitting, message = "") {
-    this._isSubmitting = !!isSubmitting;
-
-    if (this.submitBtn) {
-      this.submitBtn.textContent = isSubmitting ? "Enviando..." : "Continuar e baixar";
-      this.submitBtn.style.opacity = isSubmitting ? ".75" : "1";
+      return data;
     }
 
-    if (this.btnClose) this.btnClose.disabled = isSubmitting;
-
-    if (!isSubmitting) {
-      this.updateSubmitState();
-    } else if (this.submitBtn) {
-      this.submitBtn.disabled = true;
-    }
-
-    if (this.hint && message) {
-      this.hint.textContent = message;
-    }
-  }
-
-  updateSubmitState() {
-    if (!this.submitBtn || !this.nameInput || !this.emailInput) return;
-    if (this._isSubmitting) return;
-
-    const nameOk = String(this.nameInput.value || "").trim().length > 1;
-    const emailOk = this.emailInput.value ? this.emailInput.checkValidity() : false;
-    const can = nameOk && emailOk && !!this.pending?.file_id;
-
-    this.submitBtn.disabled = !can;
-    this.submitBtn.style.opacity = can ? "1" : ".55";
-    this.submitBtn.style.cursor = can ? "pointer" : "not-allowed";
-
-    if (this.hint) {
-      if (!this.pending?.file_id) this.hint.textContent = "Selecione um arquivo para iniciar o download.";
-      else if (!nameOk && !emailOk) this.hint.textContent = "Preencha nome e e-mail para liberar o download.";
-      else if (!nameOk) this.hint.textContent = "Preencha seu nome para liberar o download.";
-      else if (!emailOk) this.hint.textContent = "Digite um e-mail válido para liberar o download.";
-      else this.hint.textContent = "";
-    }
-  }
-
-  scrollToId(id, { behavior = "smooth", updateHash = true } = {}) {
-    if (!id) return false;
-    const target = document.getElementById(id);
-    if (!target) return false;
-
-    try { target.scrollIntoView({ behavior, block: "start" }); }
-    catch (_) { try { target.scrollIntoView(true); } catch (_) {} }
-
-    if (updateHash) {
-      this._hashScrolling = true;
-      try { history.pushState(null, "", `#${encodeURIComponent(id)}`); } catch (_) {}
-      setTimeout(() => { this._hashScrolling = false; }, 50);
-    }
-    return true;
-  }
-
-  scrollFromHash({ behavior = "auto" } = {}) {
-    if (this._hashScrolling) return;
-    const hash = (location.hash || "").trim();
-    if (!hash) return;
-    const id = this.urlTools.decodeHash(hash);
-    this.scrollToId(id, { behavior, updateHash: false });
-  }
-
-  initActiveNav() {
-    const links = Array.from(document.querySelectorAll('.actions .navlink[href^="#"]'));
-    if (!links.length || !("IntersectionObserver" in window)) return;
-
-    const items = links.map(a => {
-      const id = this.urlTools.decodeHash(a.getAttribute("href") || "");
-      const el = id ? document.getElementById(id) : null;
-      return { a, id, el };
-    }).filter(x => x.el);
-
-    if (!items.length) return;
-
-    const setCurrent = (id) => {
-      for (const it of items) {
-        if (it.id === id) it.a.setAttribute("aria-current", "page");
-        else it.a.removeAttribute("aria-current");
-      }
-    };
-
-    for (const it of items) {
-      this.dom.on(it.a, "click", () => setCurrent(it.id));
-    }
-
-    const io = new IntersectionObserver((entries) => {
-      const vis = entries
-        .filter(e => e.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (vis?.target?.id) setCurrent(vis.target.id);
-    }, {
-      root: null,
-      threshold: [0.25, 0.45, 0.6]
-    });
-
-    for (const it of items) io.observe(it.el);
-
-    if (location.hash) {
-      const id = this.urlTools.decodeHash(location.hash);
-      setCurrent(id);
-    }
-  }
-
-  onRootClick(e) {
-    const anchor = e.target.closest("a[href]");
-    if (anchor) {
-      const hrefAttr = (anchor.getAttribute("href") || "").trim();
-
-      if (hrefAttr.startsWith("#")) {
-        e.preventDefault();
-        const id = this.urlTools.decodeHash(hrefAttr);
-        const ok = this.scrollToId(id, { behavior: "smooth", updateHash: true });
-
-        this.analytics.track("anchor_click", {
-          anchor: hrefAttr,
-          ok: ok ? "yes" : "no",
-          label: (anchor.textContent || "").trim().slice(0, 120)
-        });
+    document.addEventListener("click", (event) => {
+      const anchor = event.target.closest('a[href^="#"]');
+      if (anchor) {
+        event.preventDefault();
+        const id = decodeURIComponent((anchor.getAttribute("href") || "").replace(/^#/, ""));
+        const target = document.getElementById(id);
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
         return;
       }
 
-      const isExternalAction = anchor.getAttribute("data-track") === "instagram";
-      if (isExternalAction) {
-        this.analytics.trackCTA("external_link_click", {
-          placement: anchor.getAttribute("data-track"),
-          label: (anchor.textContent || "").trim().slice(0, 120),
-          link_url: anchor.href || ""
-        });
-        return;
-      }
-    }
+      const btn = event.target.closest(".js-download");
+      if (!btn) return;
 
-    const trigger = e.target.closest("[data-file-id][data-item][data-track]");
-if (!trigger) return;
+      event.preventDefault();
+      const item = String(btn.getAttribute("data-item") || "").trim();
+      const fileId = String(btn.getAttribute("data-file-id") || "").trim();
 
-if (trigger.hasAttribute("disabled") || trigger.getAttribute("aria-disabled") === "true") {
-  e.preventDefault();
-  return;
-}
+      if (!item || !fileId) return;
 
-e.preventDefault();
-
-const fileId = String(trigger.getAttribute("data-file-id") || "").trim();
-const item = this.normalizeItem(trigger);
-const placement = trigger.getAttribute("data-track") || "download";
-const label = (trigger.textContent || "").trim().slice(0, 200);
-
-    const nearestSection = trigger.closest("section[id]");
-    const ctaSection = nearestSection?.id || placement || "";
-    const ctaText = label || item || "";
-
-    if (!this.isValidLeadTrigger(fileId, item, placement)) {
-      this.analytics.track("lead_trigger_invalid", {
-        file_id: fileId,
+      track("select_content", {
+        content_type: "download_cta",
         item,
-        placement
+        file_id: fileId
       });
-      return;
-    }
 
-    this.pending = {
-      file_id: fileId,
-      item,
-      placement,
-      label,
-      cta_text: ctaText,
-      cta_section: ctaSection
-    };
-
-    this.analytics.trackCTA("open_download_modal", {
-      placement,
-      item,
-      file_id: fileId
+      openModal(item, fileId);
     });
 
-    this.openModal();
-  }
+    closeBtn.addEventListener("click", closeModal);
 
-        buildPayload() {
-      const fd = new FormData(this.form);
-      const name = String(fd.get("name") || "").trim();
-      const email = String(fd.get("email") || "").trim();
-      const role = String(fd.get("role") || "").trim();
-      const company = String(fd.get("company") || "").trim();
-      const city = String(fd.get("city") || "").trim();
-      const state = String(fd.get("state") || "").trim().toUpperCase();
-      const optin = !!fd.get("optin");
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeModal();
+    });
 
-      const pageUrl = location.href;
-      const rawRef = document.referrer || "";
-      const refUrl = /^https?:\/\//i.test(String(rawRef).trim()) ? String(rawRef).trim() : "";
-      const uspSelf = new URLSearchParams(location.search);
-      const uspPage = this.urlTools.getSearchParamsFromUrl(pageUrl);
-      const uspRef = this.urlTools.getSearchParamsFromUrl(refUrl);
-      const getUtm = (k) => uspSelf.get(k) || uspPage.get(k) || uspRef.get(k) || "";
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && modal.getAttribute("data-state") === "open") {
+        closeModal();
+      }
+    });
 
-      return {
-        request_id: this.urlTools.safeId("lead"),
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const name = inputName.value.trim();
+      const email = inputEmail.value.trim();
+      const item = inputItem.value.trim();
+      const fileId = inputFileId.value.trim();
+
+      if (!name || !validEmail(email) || !item || !fileId) {
+        hint.textContent = "Revise nome, e-mail e item do download.";
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Liberando download...";
+      submitBtn.style.opacity = ".8";
+      hint.textContent = "Estamos processando seu download.";
+
+      const payload = {
         action: "capture_lead",
-
-        item: this.pending.item,
         name,
         email,
-        role,
-        company,
-        city,
-        state,
-        country: "BR",
-        optin,
-
-        placement: this.pending.placement,
-        label: this.pending.label,
-        file_id: this.pending.file_id,
-
-        page_url: pageUrl,
-        referrer: refUrl,
-
-        utm_source: getUtm("utm_source"),
-        utm_medium: getUtm("utm_medium"),
-        utm_campaign: getUtm("utm_campaign"),
-        utm_content: getUtm("utm_content"),
-        utm_term: getUtm("utm_term"),
-
+        item,
+        file_id: fileId,
+        page_url: location.href,
+        referrer: document.referrer || "",
         user_agent: navigator.userAgent
       };
-    }
-
-    async onSubmit(e) {
-      e.preventDefault();
-      if (this._isSubmitting) return;
-
-      this.updateSubmitState();
-      if (this.submitBtn?.disabled) return;
-      if (!this.pending?.file_id) {
-        this.updateSubmitState();
-        return;
-      }
-
-      const payload = this.buildPayload();
-
-      this.analytics.trackUserData({
-        email: payload.email,
-        full_name: payload.name,
-        city: payload.city,
-        region: payload.state,
-        country: payload.country
-      });
-
-      this.setSubmittingUI(true, "Estamos liberando o download.");
 
       try {
-                const res = await this.api.postJSON(payload);
-        const data = res?.data || {};
-        const ok = !!(res?.httpOk && data?.ok);
-        const appData = data?.data || {};
+        const data = await submitLead(payload);
+        const redirectUrl =
+          data.redirect_url ||
+          (data.data && data.data.redirect_url) ||
+          `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}`;
 
-        console.log("[PUB_FRONT] lead payload", payload);
-        console.log("[PUB_FRONT] lead response", res);
-
-        if (!ok) {
-          const backendMessage = String(data?.error || "Não foi possível liberar o download agora.").trim();
-          const backendCode = String(data?.code || "").trim();
-          const statusCode = Number(res?.status || 0);
-
-          let finalMessage = backendMessage || "Não foi possível liberar o download agora.";
-
-          if (backendCode) {
-            finalMessage += ` (${backendCode})`;
-          }
-
-          if (statusCode && !res?.httpOk) {
-            finalMessage += ` [HTTP ${statusCode}]`;
-          }
-
-          throw new Error(finalMessage);
-        }
-
-        const redirectUrl = String(
-          appData.redirect_url ||
-          appData.download_url ||
-          appData.url ||
-          ""
-        ).trim() || `https://drive.google.com/uc?export=download&id=${encodeURIComponent(this.pending.file_id)}`;
-
-        this.sessionStore.saveLead({
-          name: payload.name,
-          email: payload.email,
-          role: payload.role,
-          company: payload.company,
-          city: payload.city,
-          state: payload.state,
-          item: payload.item,
-          placement: payload.placement
+        track("generate_lead", {
+          currency: "BRL",
+          value: 1,
+          item,
+          file_id: fileId
         });
 
-        this.analytics.trackLead({
-          item: payload.item,
-          placement: payload.placement,
-          file_id: payload.file_id
-        });
-
-        this.analytics.trackDownload({
-          item: payload.item,
-          placement: payload.placement,
-          file_id: payload.file_id,
+        track("file_download", {
+          item,
+          file_id: fileId,
           link_url: redirectUrl
         });
 
-                this.setSubmittingUI(false);
-        this.closeModal();
-
-        try {
-          this.form?.reset();
-        } catch (_) {}
-
-        this.pending = null;
-
-        try {
-          window.open(redirectUrl, "_self");
-        } catch (_) {
-          window.location.href = redirectUrl;
-        }
-            } catch (err) {
-        console.error("[PUB_FRONT] lead submit failed", {
-          error: err,
-          message: String(err?.message || ""),
-          payload: payload
+        closeModal();
+        window.location.href = redirectUrl;
+      } catch (error) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Continuar e baixar";
+        submitBtn.style.opacity = "1";
+        hint.textContent = String(error && error.message ? error.message : "Falha ao liberar o download.");
+        track("exception", {
+          description: String(error && error.message ? error.message : "lead_download_error"),
+          fatal: false
         });
-
-        this.analytics.track("lead_submit_error", {
-          item: payload.item,
-          placement: payload.placement,
-          file_id: payload.file_id
-        });
-
-        this.setSubmittingUI(
-          false,
-          String(err?.message || "Falha ao liberar o download. Tente novamente.")
-        );
       }
-    }
-  }
-
-  class SupportCapture {
-    constructor(dom, urlTools, analytics, api, sessionStore) {
-      this.dom = dom;
-      this.urlTools = urlTools;
-      this.analytics = analytics;
-      this.api = api;
-      this.sessionStore = sessionStore;
-
-      this.modal = this.dom.byId("support-modal");
-      this.form = this.dom.byId("support-form");
-      this.btnClose = this.dom.byId("support-close");
-      this.btnOpenButtons = [
-        this.dom.byId("open-support-modal"),
-        this.dom.byId("open-support-modal-install")
-      ].filter(Boolean);
-
-        this.hint = this.dom.byId("support-hint");
-        this.submitBtn = this.dom.byId("support-submit");
-        this.cancelBtn = this.dom.byId("support-cancel");
-        this.statusBox = this.dom.byId("support-status");
-
-        this.nameInput = this.form?.querySelector("input[name='name']") || null;
-        this.emailInput = this.form?.querySelector("input[name='email']") || null;
-        this.itemInput = this.form?.querySelector("[name='item']") || null;
-        this.subjectInput = this.form?.querySelector("input[name='subject']") || null;
-        this.messageInput = this.form?.querySelector("textarea[name='message']") || null;
-
-        this.whatsappInput = this.form?.querySelector("input[name='whatsapp']") || null;
-        this.contactPreferenceInput = this.form?.querySelector("[name='contact_preference']") || null;
-        this.whatsappConsentInput = this.form?.querySelector("input[name='whatsapp_consent']") || null;
-
-        this.noteBox = this.dom.byId("support-note");
-        this.messageTip = this.dom.byId("support-message-tip");
-        this.guidanceBox = this.dom.byId("support-guidance");
-        this.prefillNote = this.dom.byId("support-prefill-note");
-        this.whatsappTip = this.dom.byId("support-whatsapp-tip");
-        this.whatsappConsentWrap = this.dom.byId("support-whatsapp-consent-wrap");
-
-        this.scriptNameInput = this.form?.querySelector("input[name='script_name']") || null;
-        this.scriptVersionInput = this.form?.querySelector("input[name='script_version']") || null;
-        this.scriptIdInput = this.form?.querySelector("input[name='script_id']") || null;
-        this.indesignVersionInput = this.form?.querySelector("input[name='indesign_version']") || null;
-        this.osNameInput = this.form?.querySelector("input[name='os_name']") || null;
-        this.problemStageInput = this.form?.querySelector("input[name='problem_stage']") || null;
-        this.expectedBehaviorInput = this.form?.querySelector("textarea[name='expected_behavior']") || null;
-
-        this.next1Btn = this.dom.byId("support-next-1");
-        this.next2Btn = this.dom.byId("support-next-2");
-        this.back2Btn = this.dom.byId("support-back-2");
-        this.back3Btn = this.dom.byId("support-back-3");
-
-        this.stepPanels = Array.from(this.form?.querySelectorAll("[data-step-panel]") || []);
-        this.stepIndicators = Array.from(this.form?.querySelectorAll("[data-step-indicator]") || []);
-
-        this.currentStep = 1;
-        this._isSubmitting = false;
-        this._prefilledFromLead = false;
-        this.openContext = {
-          origin: "",
-          itemInterest: false
-        };
-      }
-
-      init() {
-        if (!this.modal || !this.form || !this.btnOpenButtons.length) return;
-
-        this.btnOpenButtons.forEach((btn) => {
-          this.dom.on(btn, "click", (e) => {
-            e.preventDefault();
-            this.analytics.trackCTA("open_support_modal", {
-              placement: btn.getAttribute("data-track") || "support_button"
-            });
-            this.openModal(btn.getAttribute("data-track") || "");
-          });
-        });
-
-        this.dom.on(document, "click", (e) => {
-          const btn = e.target.closest("[data-support-open='item']");
-          if (!btn) return;
-
-          e.preventDefault();
-
-          const item = btn.getAttribute("data-support-item") || "";
-          const subject = btn.getAttribute("data-support-subject") || "";
-          const message = btn.getAttribute("data-support-message") || "";
-          const placement = btn.getAttribute("data-track") || "support_item_interest";
-
-          this.analytics.trackCTA("open_support_modal_item", {
-            placement,
-            item
-          });
-
-          this.openModalWithPrefill({ item, subject, message }, placement);
-        });
-
-        this.dom.on(this.modal, "click", (e) => {
-          if (e.target === this.modal && !this._isSubmitting) this.closeModalOnly();
-        });
-
-        this.dom.on(this.btnClose, "click", () => {
-          if (!this._isSubmitting) this.closeModalOnly();
-        });
-
-        this.dom.on(this.cancelBtn, "click", () => {
-          if (!this._isSubmitting) this.closeModalOnly();
-        });
-
-        this.dom.on(this.form, "submit", (e) => this.onSubmit(e));
-
-        this.dom.on(this.next1Btn, "click", () => {
-          if (this.validateStep(1, { focus: true })) this.goToStep(2);
-        });
-
-        this.dom.on(this.next2Btn, "click", () => {
-          if (this.validateStep(2, { focus: true })) this.goToStep(3);
-        });
-
-        this.dom.on(this.back2Btn, "click", () => this.goToStep(1));
-        this.dom.on(this.back3Btn, "click", () => this.goToStep(2));
-
-        const update = () => {
-          this.syncSupportContext();
-          this.updateSubmitState();
-        };
-
-        [
-          this.nameInput,
-          this.emailInput,
-          this.itemInput,
-          this.subjectInput,
-          this.messageInput,
-          this.whatsappInput,
-          this.contactPreferenceInput,
-          this.whatsappConsentInput,
-          this.scriptNameInput,
-          this.scriptVersionInput,
-          this.scriptIdInput,
-          this.indesignVersionInput,
-          this.osNameInput,
-          this.problemStageInput,
-          this.expectedBehaviorInput
-        ]
-          .filter(Boolean)
-          .forEach((el) => {
-            this.dom.on(el, "input", update);
-            this.dom.on(el, "change", update);
-          });
-
-        this.dom.on(window, "keydown", (e) => {
-          if ((e.key || "").toLowerCase() === "escape" && this.isOpen() && !this._isSubmitting) {
-            this.closeModalOnly();
-          }
-        });
-
-        this.goToStep(1, { silent: true });
-        this.syncSupportContext();
-        this.updateSubmitState();
-      }
-
-      isOpen() {
-        return this.modal && this.modal.style.display === "flex";
-      }
-
-      isTechnicalContext() {
-        const item = String(this.itemInput?.value || "").trim().toUpperCase();
-        return item === "PROBLEMA TECNICO";
-      }
-
-      isUsageContext() {
-        const item = String(this.itemInput?.value || "").trim().toUpperCase();
-        return item === "USO DOS SCRIPTS";
-      }
-
-      isInstallationContext() {
-        const item = String(this.itemInput?.value || "").trim().toUpperCase();
-        return item === "INSTALACAO";
-      }
-
-      isTechHeavyContext() {
-        return this.isTechnicalContext() || this.isUsageContext() || this.isInstallationContext();
-      }
-
-      normalizePhone(value) {
-        const raw = String(value || "").trim();
-        if (!raw) return "";
-        return raw.replace(/[^\d]/g, "");
-      }
-
-      applyLeadPrefill() {
-        const lead = this.sessionStore.getLead();
-        if (!lead) {
-          this._prefilledFromLead = false;
-          if (this.prefillNote) this.prefillNote.hidden = true;
-          return;
-        }
-
-        let changed = false;
-
-        if (this.nameInput && !String(this.nameInput.value || "").trim() && lead.name) {
-          this.nameInput.value = String(lead.name || "").trim();
-          changed = true;
-        }
-
-        if (this.emailInput && !String(this.emailInput.value || "").trim() && lead.email) {
-          this.emailInput.value = String(lead.email || "").trim();
-          changed = true;
-        }
-
-        if (changed) {
-          this._prefilledFromLead = true;
-        }
-
-        if (this.prefillNote) {
-          this.prefillNote.hidden = !this._prefilledFromLead;
-        }
-      }
-
-        openModal(origin = "") {
-  this.openContext = {
-    origin,
-    itemInterest: false
-  };
-
-  this._prefilledFromLead = false;
-
-  document.body.classList.add("modal-open");
-  this.modal.style.display = "flex";
-  this.modal.setAttribute("aria-hidden", "false");
-  this.modal.setAttribute("data-state", "open");
-
-  if (origin === "support_open_install" && this.itemInput && !this.itemInput.value) {
-    this.itemInput.value = "INSTALACAO";
-  }
-
-  this.applyLeadPrefill();
-
-  if (this.hint) this.hint.textContent = "";
-
-  const contractApp = String(window.PUBCRM_CONTRACT?.app || "").trim();
-  const contractVersion = String(window.PUBCRM_CONTRACT?.version || "").trim();
-
-  let statusText = "Sua mensagem será enviada para análise. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.";
-
-  if (contractApp && contractVersion) {
-    statusText = `Sua mensagem será enviada para análise. Integração ativa com ${contractApp} ${contractVersion}. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.`;
-  } else if (contractVersion) {
-    statusText = `Sua mensagem será enviada para análise. Integração ativa com o contrato ${contractVersion}. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.`;
-  }
-
-  this.setStatus("Contato", statusText);
-
-  this.syncSupportContext();
-  this.goToStep(1, { silent: true });
-  this.updateSubmitState();
-
-  try {
-    const focusTarget = this.itemInput || this.nameInput;
-    focusTarget?.focus();
-  } catch (_) {}
-}
-
-      openModalWithPrefill(prefill = {}, origin = "support_item_interest") {
-        this.openModal(origin);
-
-        this.openContext = {
-          origin,
-          itemInterest: true
-        };
-
-        const item = String(prefill.item || "").trim();
-        const subject = String(prefill.subject || "").trim();
-        const message = String(prefill.message || "").trim();
-
-        if (this.itemInput && item) this.itemInput.value = item;
-        if (this.subjectInput && subject) this.subjectInput.value = subject;
-        if (this.messageInput && message && !String(this.messageInput.value || "").trim()) {
-          this.messageInput.value = message;
-        }
-
-        const scriptItems = [
-          "CAPA MASTER",
-          "MIOLO MASTER",
-          "MANCHA MASTER",
-          "VERTICAL MASTER",
-          "BASELINE MASTER"
-        ];
-
-        if (this.scriptNameInput && scriptItems.includes(item) && !String(this.scriptNameInput.value || "").trim()) {
-          this.scriptNameInput.value = item;
-        }
-
-        this.syncSupportContext();
-        this.goToStep(1, { silent: true });
-        this.updateSubmitState();
-
-        try {
-          (this.subjectInput || this.messageInput || this.itemInput)?.focus();
-        } catch (_) {}
-      }
-
-      closeModal() {
-        document.body.classList.remove("modal-open");
-        this.modal.style.display = "none";
-        this.modal.setAttribute("aria-hidden", "true");
-        this.modal.removeAttribute("data-state");
-      }
-
-      closeModalOnly() {
-  this.closeModal();
-  if (this.hint) this.hint.textContent = "";
-  try { this.form?.reset(); } catch (_) {}
-  this._isSubmitting = false;
-  this._prefilledFromLead = false;
-  this.openContext = {
-    origin: "",
-    itemInterest: false
-  };
-  this.setSubmittingUI(false);
-
-  const contractApp = String(window.PUBCRM_CONTRACT?.app || "").trim();
-  const contractVersion = String(window.PUBCRM_CONTRACT?.version || "").trim();
-
-  let statusText = "Sua mensagem será enviada para análise. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.";
-
-  if (contractApp && contractVersion) {
-    statusText = `Sua mensagem será enviada para análise. Integração ativa com ${contractApp} ${contractVersion}. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.`;
-  } else if (contractVersion) {
-    statusText = `Sua mensagem será enviada para análise. Integração ativa com o contrato ${contractVersion}. Se esta solicitação já tiver sido enviada recentemente, o sistema poderá reaproveitar o registro existente.`;
-  }
-
-  this.setStatus("Contato", statusText);
-
-  if (this.prefillNote) this.prefillNote.hidden = true;
-  this.syncSupportContext();
-  this.goToStep(1, { silent: true });
-  this.updateSubmitState();
-}
-
-      setStatus(label, text) {
-        if (!this.statusBox) return;
-
-        const badge = this.statusBox.querySelector(".support-status-badge");
-        const copy = this.statusBox.querySelector(".support-status-text");
-
-        if (badge) badge.textContent = label || "";
-        if (copy) copy.textContent = text || "";
-      }
-
-      setSubmittingUI(isSubmitting, message = "") {
-  this._isSubmitting = !!isSubmitting;
-
-  if (this.submitBtn) {
-    this.submitBtn.disabled = !!isSubmitting;
-    this.submitBtn.textContent = isSubmitting ? "Enviando mensagem..." : "Enviar mensagem";
-    this.submitBtn.style.opacity = isSubmitting ? ".75" : "1";
-    this.submitBtn.style.cursor = isSubmitting ? "not-allowed" : "pointer";
-  }
-
-  if (this.btnClose) this.btnClose.disabled = isSubmitting;
-  if (this.cancelBtn) this.cancelBtn.disabled = isSubmitting;
-  if (this.next1Btn) this.next1Btn.disabled = isSubmitting;
-  if (this.next2Btn) this.next2Btn.disabled = isSubmitting;
-  if (this.back2Btn) this.back2Btn.disabled = isSubmitting;
-  if (this.back3Btn) this.back3Btn.disabled = isSubmitting;
-
-  if (!isSubmitting) {
-    this.updateSubmitState();
-  }
-
-  if (message) {
-    this.setStatus(
-      isSubmitting ? "Enviando" : "Contato",
-      message
-    );
-  }
-}
-
-      goToStep(step, options = {}) {
-        const target = Math.max(1, Math.min(3, Number(step || 1)));
-        this.currentStep = target;
-
-        this.stepPanels.forEach((panel) => {
-          const panelStep = Number(panel.getAttribute("data-step-panel") || "0");
-          const isActive = panelStep === target;
-          panel.hidden = !isActive;
-          panel.classList.toggle("support-step-panel--active", isActive);
-        });
-
-        this.stepIndicators.forEach((indicator) => {
-          const indicatorStep = Number(indicator.getAttribute("data-step-indicator") || "0");
-          indicator.classList.toggle("support-step--active", indicatorStep === target);
-          indicator.classList.toggle("support-step--done", indicatorStep < target);
-        });
-
-        if (!options.silent) {
-          this.analytics.track("support_step_change", {
-            step: target,
-            item: String(this.itemInput?.value || "").trim() || "(not set)"
-          });
-        }
-
-        this.updateSubmitState();
-      }
-
-      focusFirstInvalid(step) {
-        if (step === 1) {
-          if (!String(this.itemInput?.value || "").trim()) return this.itemInput?.focus();
-          if (!String(this.subjectInput?.value || "").trim()) return this.subjectInput?.focus();
-          if (!String(this.messageInput?.value || "").trim()) return this.messageInput?.focus();
-          if (String(this.messageInput?.value || "").trim().length <= 10) return this.messageInput?.focus();
-        }
-
-        if (step === 2) {
-          if (!(String(this.nameInput?.value || "").trim().length > 1)) return this.nameInput?.focus();
-          if (!(this.emailInput?.value && this.emailInput.checkValidity())) return this.emailInput?.focus();
-
-          const prefersWhatsapp = String(this.contactPreferenceInput?.value || "") === "whatsapp";
-          const hasWhatsapp = !!this.normalizePhone(this.whatsappInput?.value || "");
-          const needsConsent = prefersWhatsapp;
-
-          if (prefersWhatsapp && !hasWhatsapp) return this.whatsappInput?.focus();
-          if (needsConsent && !this.whatsappConsentInput?.checked) return this.whatsappConsentInput?.focus();
-        }
-      }
-
-      validateStep(step, options = {}) {
-        const s = Number(step || 1);
-
-        if (s === 1) {
-          const itemOk = String(this.itemInput?.value || "").trim().length > 0;
-          const subjectOk = String(this.subjectInput?.value || "").trim().length > 2;
-          const messageOk = String(this.messageInput?.value || "").trim().length > 10;
-
-          if (!itemOk || !subjectOk || !messageOk) {
-            if (this.hint) this.hint.textContent = "Preencha assunto principal, título e mensagem para continuar.";
-            if (options.focus) this.focusFirstInvalid(1);
-            return false;
-          }
-
-          return true;
-        }
-
-        if (s === 2) {
-          const nameOk = String(this.nameInput?.value || "").trim().length > 1;
-          const emailOk = this.emailInput?.value ? this.emailInput.checkValidity() : false;
-          const whatsapp = this.normalizePhone(this.whatsappInput?.value || "");
-          const prefersWhatsapp = String(this.contactPreferenceInput?.value || "") === "whatsapp";
-          const needsConsent = prefersWhatsapp;
-          const whatsappOk = !prefersWhatsapp || !!whatsapp;
-          const consentOk = !needsConsent || !!this.whatsappConsentInput?.checked;
-
-          if (!nameOk || !emailOk) {
-            if (this.hint) this.hint.textContent = "Preencha nome e e-mail válidos para continuar.";
-            if (options.focus) this.focusFirstInvalid(2);
-            return false;
-          }
-
-          if (!whatsappOk) {
-            if (this.hint) this.hint.textContent = "Se a preferência for WhatsApp, preencha também o número.";
-            if (options.focus) this.focusFirstInvalid(2);
-            return false;
-          }
-
-          if (!consentOk) {
-            if (this.hint) this.hint.textContent = "Para contato por WhatsApp, marque a autorização correspondente.";
-            if (options.focus) this.focusFirstInvalid(2);
-            return false;
-          }
-
-          return true;
-        }
-
-        return true;
-      }
-
-      syncSupportContext() {
-        const isTechnical = this.isTechnicalContext();
-        const isUsage = this.isUsageContext();
-        const isInstallation = this.isInstallationContext();
-        const isTechHeavy = this.isTechHeavyContext();
-        const prefersWhatsapp = String(this.contactPreferenceInput?.value || "") === "whatsapp";
-
-        if (this.guidanceBox) {
-          this.guidanceBox.hidden = !isTechHeavy;
-        }
-
-        if (this.whatsappConsentWrap) {
-          this.whatsappConsentWrap.hidden = !prefersWhatsapp;
-        }
-
-        if (this.noteBox) {
-          if (isTechnical) {
-            this.noteBox.innerHTML =
-              'Você pode usar este espaço para relatar um problema técnico. Se o script já estiver instalado, informe também o nome do script, a versão, o ID na janela <strong>Planos do script</strong>, a versão do InDesign e o sistema operacional.';
-          } else if (isInstallation) {
-            this.noteBox.innerHTML =
-              'Você pode usar este espaço para relatar uma dificuldade de instalação. Se já conseguiu instalar o script, informe também o nome, a versão e o ID exibidos na janela <strong>Planos do script</strong>.';
-          } else if (isUsage) {
-            this.noteBox.innerHTML =
-              'Explique como você tentou usar o script e em que ponto surgiu a dúvida. Se puder, informe também o nome do script, a versão e a versão do Adobe InDesign.';
-          } else {
-            this.noteBox.textContent =
-              'Selecione o assunto principal da sua mensagem. O formulário adapta os campos para facilitar o envio de informações mais úteis em casos de instalação ou problema técnico.';
-          }
-        }
-
-        if (this.messageTip) {
-          if (isTechnical) {
-            this.messageTip.textContent =
-              'Descreva o que aconteceu, em que etapa ocorreu, qual script estava em uso e o que você esperava que acontecesse.';
-          } else if (isInstallation) {
-            this.messageTip.textContent =
-              'Descreva em que etapa da instalação houve dificuldade. Se já instalou, envie também os dados do script.';
-          } else if (isUsage) {
-            this.messageTip.textContent =
-              'Explique o objetivo do uso, o script envolvido e o ponto exato da dúvida.';
-          } else {
-            this.messageTip.textContent =
-              'Você pode enviar dúvidas gerais, comentários sobre a página, sugestões de novos recursos ou questões técnicas.';
-          }
-        }
-
-        if (this.whatsappTip) {
-          if (isTechHeavy) {
-            this.whatsappTip.textContent =
-              'Opcional. Em instalação e suporte técnico, pode facilitar um retorno mais rápido.';
-          } else {
-            this.whatsappTip.textContent =
-              'Opcional. Útil para facilitar retorno sobre instalação ou suporte técnico.';
-          }
-        }
-
-        this.updateSubmitState();
-      }
-
-      updateSubmitState() {
-  if (!this.submitBtn) return;
-  if (this._isSubmitting) return;
-
-  const step1Ok = this.validateStep(1);
-  const step2Ok = this.validateStep(2);
-
-  const isTechnical = this.isTechnicalContext();
-  const isInstallation = this.isInstallationContext();
-
-  const scriptName = String(this.scriptNameInput?.value || "").trim();
-  const scriptVersion = String(this.scriptVersionInput?.value || "").trim();
-  const scriptId = String(this.scriptIdInput?.value || "").trim();
-  const indesignVersion = String(this.indesignVersionInput?.value || "").trim();
-
-  let techHint = "";
-
-  if (isTechnical) {
-    const hasAnyTechnicalData = !!(scriptName || scriptVersion || scriptId || indesignVersion);
-    if (hasAnyTechnicalData) {
-      if (!scriptName) techHint = "Sugestão: informe também o nome do script para facilitar a análise técnica.";
-      else if (!scriptVersion) techHint = "Sugestão: informe também a versão do script para facilitar a análise técnica.";
-      else if (!scriptId) techHint = "Sugestão: informe também o ID do script na janela Planos do script para facilitar a análise técnica.";
-      else if (!indesignVersion) techHint = "Sugestão: informe também a versão do Adobe InDesign para facilitar a análise técnica.";
-    }
-  }
-
-  if (isInstallation) {
-    const hasAnyInstallationTechData = !!(scriptName || scriptVersion || scriptId);
-    if (hasAnyInstallationTechData) {
-      if (!scriptName) techHint = "Sugestão: se já instalou o script, informe também o nome do script.";
-      else if (!scriptVersion) techHint = "Sugestão: se já instalou o script, informe também a versão.";
-      else if (!scriptId) techHint = "Sugestão: se já instalou o script, informe também o ID na janela Planos do script.";
-    }
-  }
-
-  const canSubmit = step1Ok && step2Ok;
-
-  if (this.next1Btn) {
-    this.next1Btn.disabled = !step1Ok;
-    this.next1Btn.style.opacity = step1Ok ? "1" : ".55";
-    this.next1Btn.style.cursor = step1Ok ? "pointer" : "not-allowed";
-  }
-
-  if (this.next2Btn) {
-    this.next2Btn.disabled = !step2Ok;
-    this.next2Btn.style.opacity = step2Ok ? "1" : ".55";
-    this.next2Btn.style.cursor = step2Ok ? "pointer" : "not-allowed";
-  }
-
-  this.submitBtn.disabled = !canSubmit;
-  this.submitBtn.style.opacity = canSubmit ? "1" : ".55";
-  this.submitBtn.style.cursor = canSubmit ? "pointer" : "not-allowed";
-
-  if (this.hint) {
-    if (this.currentStep === 1 && !step1Ok) {
-      this.hint.textContent = "Preencha assunto principal, título e mensagem para continuar.";
-    } else if (this.currentStep === 2 && !step2Ok) {
-      const whatsapp = this.normalizePhone(this.whatsappInput?.value || "");
-      const prefersWhatsapp = String(this.contactPreferenceInput?.value || "") === "whatsapp";
-      if (prefersWhatsapp && !whatsapp) {
-        this.hint.textContent = "Se a preferência for WhatsApp, preencha também o número.";
-      } else {
-        this.hint.textContent = "Preencha nome, e-mail e autorizações necessárias para continuar.";
-      }
-    } else if (techHint) {
-      this.hint.textContent = techHint;
-    } else {
-      this.hint.textContent = "";
-    }
-  }
-}
-
-            buildPayload() {
-        const fd = new FormData(this.form);
-        const pageUrl = location.href;
-        const rawRef = document.referrer || "";
-        const refUrl = /^https?:\/\//i.test(String(rawRef).trim()) ? String(rawRef).trim() : "";
-        const uspSelf = new URLSearchParams(location.search);
-        const uspPage = this.urlTools.getSearchParamsFromUrl(pageUrl);
-        const uspRef = this.urlTools.getSearchParamsFromUrl(refUrl);
-        const getUtm = (k) => uspSelf.get(k) || uspPage.get(k) || uspRef.get(k) || "";
-
-        const whatsapp = this.normalizePhone(fd.get("whatsapp") || "");
-        const contactPreference = String(fd.get("contact_preference") || "email").trim() || "email";
-        const whatsappConsent = !!fd.get("whatsapp_consent");
-
-        return {
-          request_id: this.urlTools.safeId("ticket"),
-          action: "create_ticket",
-
-          name: String(fd.get("name") || "").trim(),
-          email: String(fd.get("email") || "").trim(),
-          whatsapp,
-          contact_preference: contactPreference,
-          whatsapp_consent: whatsappConsent,
-
-          item: String(fd.get("item") || "").trim(),
-          subject: String(fd.get("subject") || "").trim(),
-          message: String(fd.get("message") || "").trim(),
-
-          script_name: String(fd.get("script_name") || "").trim(),
-          script_version: String(fd.get("script_version") || "").trim(),
-          script_id: String(fd.get("script_id") || "").trim(),
-          indesign_version: String(fd.get("indesign_version") || "").trim(),
-          os_name: String(fd.get("os_name") || "").trim(),
-          problem_stage: String(fd.get("problem_stage") || "").trim(),
-          expected_behavior: String(fd.get("expected_behavior") || "").trim(),
-
-          page_url: pageUrl,
-          referrer: refUrl,
-
-          utm_source: getUtm("utm_source"),
-          utm_medium: getUtm("utm_medium"),
-          utm_campaign: getUtm("utm_campaign"),
-          utm_content: getUtm("utm_content"),
-          utm_term: getUtm("utm_term"),
-
-          user_agent: navigator.userAgent
-        };
-      }
-
-  async onSubmit(e) {
-  e.preventDefault();
-  if (this._isSubmitting) return;
-
-  this.syncSupportContext();
-  this.updateSubmitState();
-  if (this.submitBtn?.disabled) return;
-
-  const payload = this.buildPayload();
-
-  this.analytics.trackUserData({
-    email: payload.email,
-    phone: payload.whatsapp,
-    full_name: payload.name,
-    country: "BR"
-  });
-
-  this.analytics.trackSupportTicket({
-    item: payload.item,
-    subject: payload.subject,
-    placement: "support_modal",
-    script_name: payload.script_name || "",
-    script_version: payload.script_version || "",
-    contact_preference: payload.contact_preference || "email",
-    has_whatsapp: payload.whatsapp ? "yes" : "no"
-  });
-
-  this.modal.setAttribute("data-state", "sending");
-  this.setSubmittingUI(true, "Estamos registrando sua mensagem.");
-
-  try {
-    const res = await this.api.postJSON(payload);
-    const data = res?.data || {};
-    const ok = !!(res.httpOk && data.ok);
-
-    console.log("[PUB_FRONT] support payload", payload);
-    console.log("[PUB_FRONT] support response", res);
-
-    if (ok) {
-      const appData = data.data || {};
-      const isDuplicate = !!appData.duplicate;
-
-      this.analytics.track("support_ticket_success", {
-        ticket_id: appData.ticket_id || "",
-        item: payload.item,
-        duplicate: isDuplicate ? "yes" : "no"
-      });
-
-      this._isSubmitting = false;
-      this.setSubmittingUI(false);
-      this.modal.setAttribute("data-state", "success");
-
-      this.setStatus(
-        isDuplicate ? "Reaproveitado" : "Enviado",
-        isDuplicate
-          ? `Sua mensagem já havia sido registrada.${appData.ticket_id ? ` Protocolo: ${appData.ticket_id}.` : ""} Reaproveitamos o atendimento existente.`
-          : `Mensagem enviada com sucesso.${appData.ticket_id ? ` Protocolo: ${appData.ticket_id}.` : ""} Se necessário, o atendimento continuará pelo canal informado.`
-      );
-
-      if (this.hint) {
-        this.hint.textContent = isDuplicate
-          ? "Encontramos um atendimento recente equivalente. Você já pode fechar esta janela."
-          : "Recebemos sua mensagem. Você já pode fechar esta janela.";
-      }
-
-      if (this.submitBtn) {
-        this.submitBtn.disabled = true;
-        this.submitBtn.textContent = isDuplicate ? "Mensagem reaproveitada" : "Mensagem enviada";
-        this.submitBtn.style.opacity = "1";
-      }
-
-      return;
-    }
-
-    const backendMessage = String(data?.error || "Não foi possível enviar agora.").trim();
-    const backendCode = String(data?.code || "").trim();
-    const statusCode = Number(res?.status || 0);
-
-    let finalMessage = backendMessage || "Não foi possível enviar agora.";
-
-    if (backendCode) {
-      finalMessage += ` (${backendCode})`;
-    }
-
-    if (statusCode && !res?.httpOk) {
-      finalMessage += ` [HTTP ${statusCode}]`;
-    }
-
-    this.analytics.track("support_ticket_error", {
-      item: payload.item,
-      status: res.status || 0,
-      code: backendCode || ""
     });
-
-    throw new Error(finalMessage);
-  } catch (err) {
-    console.error("[PUB_FRONT] support submit failed", err, payload);
-
-    this.analytics.track("support_ticket_fetch_error", {
-      item: payload.item
-    });
-
-    this._isSubmitting = false;
-    this.setSubmittingUI(false);
-    this.modal.setAttribute("data-state", "error");
-    this.setStatus(
-      "Erro",
-      String(err?.message || "Não foi possível enviar agora. Revise os dados e tente novamente em instantes.")
-    );
-
-    if (this.hint) {
-      this.hint.textContent = String(
-        err?.message || "Falha no envio no momento. Tente novamente."
-      );
-    }
-
-    this.updateSubmitState();
-  }
-} // fecha o método
-
-} // fecha a classe SupportCapture
-
-function initVideoCarousel({ rootSelector = "#pub-rich" } = {}) {
-      const root = document.querySelector(rootSelector);
-      if (!root) return;
-
-      const carousels = Array.from(root.querySelectorAll(".video-carousel[data-carousel]"));
-      if (!carousels.length) return;
-
-      const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
-
-      for (const c of carousels) {
-        const track = c.querySelector("[data-track]");
-        const prev = c.querySelector("[data-prev]");
-        const next = c.querySelector("[data-next]");
-        const dots = c.querySelector("[data-dots]");
-        const slides = Array.from(c.querySelectorAll("[data-slide]"));
-
-        if (!track || slides.length === 0) continue;
-
-        if (dots) {
-          dots.innerHTML = "";
-          slides.forEach((_, i) => {
-            const b = document.createElement("button");
-            b.type = "button";
-            b.className = "vdot";
-            b.setAttribute("aria-label", `Ir para vídeo ${i + 1}`);
-            b.addEventListener("click", () => scrollToIndex(i, true));
-            dots.appendChild(b);
-          });
-        }
-
-        const getStep = () => {
-          if (!slides.length) return 1;
-          const slideRect = slides[0].getBoundingClientRect();
-          const trackRect = track.getBoundingClientRect();
-          const styles = getComputedStyle(track);
-          const gap = parseFloat(styles.columnGap || styles.gap || 0);
-          return Math.max(1, slideRect.width + gap + (slideRect.left - trackRect.left));
-        };
-
-        const getIndex = () => {
-          const step = getStep();
-          return clamp(Math.round(track.scrollLeft / step), 0, slides.length - 1);
-        };
-
-        const setUI = (i) => {
-          if (prev) prev.disabled = i <= 0;
-          if (next) next.disabled = i >= slides.length - 1;
-          if (dots) {
-            const all = Array.from(dots.querySelectorAll(".vdot"));
-            all.forEach((d, idx) => d.setAttribute("aria-current", idx === i ? "true" : "false"));
-          }
-        };
-
-        const scrollToIndex = (i, smooth) => {
-          const step = getStep();
-          const targetIndex = clamp(i, 0, slides.length - 1);
-          track.scrollTo({ left: targetIndex * step, behavior: smooth ? "smooth" : "auto" });
-
-          try {
-            if (typeof window.gtag === "function" && window.GA_MEASUREMENT_ID) {
-              window.gtag("event", "video_carousel_nav", {
-                send_to: window.GA_MEASUREMENT_ID,
-                index: targetIndex + 1,
-                carousel: c.getAttribute("data-carousel") || "videos"
-              });
-            }
-          } catch (_) {}
-        };
-
-        if (prev) prev.addEventListener("click", () => scrollToIndex(getIndex() - 1, true));
-        if (next) next.addEventListener("click", () => scrollToIndex(getIndex() + 1, true));
-
-        track.addEventListener("keydown", (e) => {
-          const k = (e.key || "").toLowerCase();
-          if (k === "arrowleft") {
-            e.preventDefault();
-            scrollToIndex(getIndex() - 1, true);
-          }
-          if (k === "arrowright") {
-            e.preventDefault();
-            scrollToIndex(getIndex() + 1, true);
-          }
-        });
-
-        let raf = 0;
-        track.addEventListener("scroll", () => {
-          cancelAnimationFrame(raf);
-          raf = requestAnimationFrame(() => setUI(getIndex()));
-        }, { passive: true });
-
-        window.addEventListener("resize", () => setUI(getIndex()), { passive: true });
-
-        setUI(getIndex());
-      }
-    }
-function applyBackendRuntimeToUi(runtime) {
-  const state = runtime && typeof runtime === "object" ? runtime : {};
-  const canDownload = !!state.canDownload;
-  const strictReady = !!state.strictReady;
-  const runtimeMode = String(state.runtime_mode || "").trim();
-  const status = state.status && typeof state.status === "object" ? state.status : {};
-
-  const triggers = Array.from(document.querySelectorAll("[data-file-id][data-item][data-track]"));
-
-  for (const el of triggers) {
-    el.removeAttribute("disabled");
-    el.removeAttribute("aria-disabled");
-    el.style.opacity = "";
-    el.style.cursor = "";
-    el.removeAttribute("title");
-    el.setAttribute("data-runtime-mode", runtimeMode || (canDownload ? "strict" : "blocked"));
-
-    if (!canDownload) {
-      el.setAttribute("disabled", "disabled");
-      el.setAttribute("aria-disabled", "true");
-      el.setAttribute(
-        "title",
-        status.error_message
-          ? `Download temporariamente indisponível: ${status.error_message}`
-          : "Download temporariamente indisponível."
-      );
-      el.style.opacity = ".55";
-      el.style.cursor = "not-allowed";
-      continue;
-    }
-
-    if (!strictReady) {
-      el.setAttribute(
-        "title",
-        status.error_message
-          ? `Modo degradado: o download será tentado mesmo sem confirmação completa do status. Detalhe: ${status.error_message}`
-          : "Modo degradado: o download será tentado mesmo sem confirmação completa do status."
-      );
-    }
-  }
-
-  if (!canDownload) {
-    console.warn("[PUB_FRONT] Download bloqueado por runtime sem contrato utilizável.", {
-      runtime_mode: runtimeMode,
-      canDownload,
-      strictReady,
-      endpoint_present: !!status.endpoint_present,
-      http_ok: !!status.http_ok,
-      status_ok: !!status.status_ok,
-      system_ready: !!status.system_ready,
-      error_code: String(status.error_code || ""),
-      error_message: String(status.error_message || "")
-    });
-    return;
-  }
-
-  if (!strictReady) {
-    console.warn("[PUB_FRONT] Runtime em modo degradado. Contrato utilizável; status não confirmado integralmente.", {
-      runtime_mode: runtimeMode,
-      canDownload,
-      strictReady,
-      endpoint_present: !!status.endpoint_present,
-      http_ok: !!status.http_ok,
-      status_ok: !!status.status_ok,
-      system_ready: !!status.system_ready,
-      error_code: String(status.error_code || ""),
-      error_message: String(status.error_message || "")
-    });
-    return;
-  }
-
-  console.info("[PUB_FRONT] Download liberado para os gatilhos da página.");
-}
-const dom = new Dom();
-const urlTools = new UrlTools();
-const sessionStore = new SessionStore(window.PUB_SESSION_KEY || "PUB_FRONT_SESSION_V2");
-const analytics = new Analytics();
-const api = new PubApi(window.PUB_LEADS_ENDPOINT);
-
-let runtime = {
-  contract: window.PUBCRM_CONTRACT || window.PUBCRM_CONTRACT_FALLBACK || {},
-  status: {
-    endpoint_present: !!window.PUB_LEADS_ENDPOINT,
-    http_ok: false,
-    status_ok: false,
-    system_ready: false,
-    error_code: "RUNTIME_BOOT_ERROR",
-    error_message: "Não foi possível validar o backend na inicialização."
-  },
-  canDownload: false
-};
-
-try {
-  runtime = await api.loadRuntime();
-} catch (error) {
-  console.error("[PUB_FRONT] Runtime bootstrap failed", error);
-}
-
-applyBackendRuntimeToUi(runtime);
-
-new LeadCapture(dom, urlTools, analytics, api, sessionStore).init();
-new SupportCapture(dom, urlTools, analytics, api, sessionStore).init();
-initVideoCarousel();
   </script>
 </body>
 </html>
-
