@@ -217,7 +217,7 @@
   </script>
 
    <script>
-    window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxCAvmuaJG84tXDvBXbdjlE6UmojgGO-tgiEEnzmmQtb6mpf15XuindDKCvvRppvtQ-fw/exec";
+    window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwP_GAda5F4MJYjjGSrSTIVBxymyZzXy9b6IzbIVYR3J0YljDG_-2CMn5Tkzict42RUxg/exec";
     window.PUB_SESSION_KEY = "PUB_FRONT_SESSION_V2";
 
     window.PUBCRM_CONTRACT_FALLBACK = {
@@ -3541,17 +3541,7 @@ class PubApi {
   }
 }
 
-        return {
-          httpOk: response.ok,
-          status: response.status,
-          contentType,
-          redirectUrl,
-          data,
-          rawText: text
-        };
-      }
-    }
-
+       
     class LeadCapture {
   constructor(dom, urlTools, analytics, api, sessionStore) {
     this.dom = dom;
@@ -3987,7 +3977,7 @@ const label = (trigger.textContent || "").trim().slice(0, 200);
           link_url: redirectUrl
         });
 
-        this.setSubmittingUI(false);
+                this.setSubmittingUI(false);
         this.closeModal();
 
         try {
@@ -3996,7 +3986,11 @@ const label = (trigger.textContent || "").trim().slice(0, 200);
 
         this.pending = null;
 
-        window.location.href = redirectUrl;
+        try {
+          window.open(redirectUrl, "_self");
+        } catch (_) {
+          window.location.href = redirectUrl;
+        }
             } catch (err) {
         console.error("[PUB_FRONT] lead submit failed", {
           error: err,
@@ -4922,16 +4916,44 @@ function applyBackendRuntimeToUi(runtime) {
   }
 
   if (!canDownload) {
-    console.warn("[PUB_FRONT] Download bloqueado por backend não pronto.", status);
+    console.warn("[PUB_FRONT] Download bloqueado por backend não pronto.", {
+      canDownload,
+      endpoint_present: !!status.endpoint_present,
+      http_ok: !!status.http_ok,
+      status_ok: !!status.status_ok,
+      system_ready: !!status.system_ready,
+      error_code: String(status.error_code || ""),
+      error_message: String(status.error_message || "")
+    });
+  } else {
+    console.info("[PUB_FRONT] Download liberado para os gatilhos da página.");
   }
 }
-   const dom = new Dom();
+const dom = new Dom();
 const urlTools = new UrlTools();
 const sessionStore = new SessionStore(window.PUB_SESSION_KEY || "PUB_FRONT_SESSION_V2");
 const analytics = new Analytics();
 const api = new PubApi(window.PUB_LEADS_ENDPOINT);
 
-const runtime = await api.loadRuntime();
+let runtime = {
+  contract: window.PUBCRM_CONTRACT || window.PUBCRM_CONTRACT_FALLBACK || {},
+  status: {
+    endpoint_present: !!window.PUB_LEADS_ENDPOINT,
+    http_ok: false,
+    status_ok: false,
+    system_ready: false,
+    error_code: "RUNTIME_BOOT_ERROR",
+    error_message: "Não foi possível validar o backend na inicialização."
+  },
+  canDownload: false
+};
+
+try {
+  runtime = await api.loadRuntime();
+} catch (error) {
+  console.error("[PUB_FRONT] Runtime bootstrap failed", error);
+}
+
 applyBackendRuntimeToUi(runtime);
 
 new LeadCapture(dom, urlTools, analytics, api, sessionStore).init();
@@ -4940,14 +4962,3 @@ initVideoCarousel();
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
