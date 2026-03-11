@@ -1778,7 +1778,7 @@
         </div>
       </section>
 
-      <section class="stripe stripe--soft2" id="pacote" aria-label="Pacote de scripts">
+     <section class="stripe stripe--soft2" id="pacote" aria-label="Pacote de scripts">
   <div class="wrap">
     <div class="panel">
       <div class="head">
@@ -2202,128 +2202,150 @@
       </div>
 
       <form id="lead-form" class="lead-body" novalidate>
-        <input type="hidden" id="lead-item" name="item">
-        <input type="hidden" id="lead-file-id" name="file_id">
+  <input type="hidden" id="lead-mode" name="mode" value="download">
+  <input type="hidden" id="lead-item" name="item">
+  <input type="hidden" id="lead-file-id" name="file_id">
 
-        <div class="lead-field">
-          <label class="lead-label" for="lead-name">Nome</label>
-          <input id="lead-name" class="lead-input" name="name" required autocomplete="name" placeholder="Seu nome">
-        </div>
+  <div class="lead-field">
+    <label class="lead-label" for="lead-name">Nome</label>
+    <input id="lead-name" class="lead-input" name="name" required autocomplete="name" placeholder="Seu nome">
+  </div>
 
-        <div class="lead-field">
-          <label class="lead-label" for="lead-email">E-mail</label>
-          <input id="lead-email" class="lead-input" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="voce@exemplo.com">
-        </div>
+  <div class="lead-field">
+    <label class="lead-label" for="lead-email">E-mail</label>
+    <input id="lead-email" class="lead-input" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="voce@exemplo.com">
+  </div>
 
-        <div class="lead-actions">
-          <button type="submit" id="lead-submit" class="lead-btn lead-btn--primary">Continuar e baixar</button>
-        </div>
+  <div class="lead-actions">
+    <button type="submit" id="lead-submit" class="lead-btn lead-btn--primary">Continuar e baixar</button>
+  </div>
 
-        <div id="lead-hint" class="lead-hint">Preencha nome e e-mail para continuar.</div>
-      </form>
+  <div id="lead-hint" class="lead-hint">Preencha nome e e-mail para continuar.</div>
+</form>
     </div>
   </div>
 
-  <script type="module">
-    const modal = document.getElementById("lead-modal");
-    const form = document.getElementById("lead-form");
-    const closeBtn = document.getElementById("lead-close");
-    const submitBtn = document.getElementById("lead-submit");
-    const hint = document.getElementById("lead-hint");
+ <script type="module">
+  const modal = document.getElementById("lead-modal");
+  const form = document.getElementById("lead-form");
+  const closeBtn = document.getElementById("lead-close");
+  const submitBtn = document.getElementById("lead-submit");
+  const hint = document.getElementById("lead-hint");
 
-    const inputName = document.getElementById("lead-name");
-    const inputEmail = document.getElementById("lead-email");
-    const inputItem = document.getElementById("lead-item");
-    const inputFileId = document.getElementById("lead-file-id");
+  const inputName = document.getElementById("lead-name");
+  const inputEmail = document.getElementById("lead-email");
+  const inputMode = document.getElementById("lead-mode");
+  const inputItem = document.getElementById("lead-item");
+  const inputFileId = document.getElementById("lead-file-id");
 
-    function track(eventName, params = {}) {
-      try {
-        if (typeof window.gtag === "function" && window.GA_MEASUREMENT_ID) {
-          window.gtag("event", eventName, {
-            send_to: window.GA_MEASUREMENT_ID,
-            page_title: document.title,
-            page_location: location.href,
-            ...params
-          });
-        }
-      } catch (_) {}
-    }
+  const modalTitle = document.querySelector(".lead-title");
 
-    function validEmail(value) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
-    }
+  function track(eventName, params = {}) {
+    try {
+      if (typeof window.gtag === "function" && window.GA_MEASUREMENT_ID) {
+        window.gtag("event", eventName, {
+          send_to: window.GA_MEASUREMENT_ID,
+          page_title: document.title,
+          page_location: location.href,
+          ...params
+        });
+      }
+    } catch (_) {}
+  }
 
-    function openModal(item, fileId) {
-      inputItem.value = item || "";
-      inputFileId.value = fileId || "";
-      modal.style.display = "flex";
-      modal.setAttribute("aria-hidden", "false");
-      modal.setAttribute("data-state", "open");
-      document.body.classList.add("modal-open");
-      hint.textContent = "Preencha nome e e-mail para continuar.";
-      setTimeout(() => inputName.focus(), 50);
-    }
+  function validEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
+  }
 
-    function closeModal() {
-      modal.style.display = "none";
-      modal.setAttribute("aria-hidden", "true");
-      modal.removeAttribute("data-state");
-      document.body.classList.remove("modal-open");
-      form.reset();
-      inputItem.value = "";
-      inputFileId.value = "";
-      submitBtn.disabled = false;
+  function openModal({ mode = "download", item = "", fileId = "" } = {}) {
+    inputMode.value = mode;
+    inputItem.value = item;
+    inputFileId.value = fileId;
+
+    if (mode === "ticket") {
+      modalTitle.textContent = "Abrir ticket";
+      submitBtn.textContent = "Enviar ticket";
+      hint.textContent = "Preencha nome e e-mail para abrir o ticket.";
+    } else {
+      modalTitle.textContent = "Preencha para liberar o download";
       submitBtn.textContent = "Continuar e baixar";
-      submitBtn.style.opacity = "1";
+      hint.textContent = "Preencha nome e e-mail para continuar.";
     }
 
-    async function submitLead(payload) {
-      const response = await fetch(window.PUB_LEADS_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8",
-          "Accept": "application/json, text/plain, */*"
-        },
-        body: JSON.stringify(payload),
-        redirect: "follow"
-      });
+    modal.style.display = "flex";
+    modal.setAttribute("aria-hidden", "false");
+    modal.setAttribute("data-state", "open");
+    document.body.classList.add("modal-open");
 
-      const text = await response.text();
-      let data = null;
+    setTimeout(() => inputName.focus(), 50);
+  }
 
-      try {
-        data = JSON.parse(text);
-      } catch (_) {
-        data = null;
-      }
+  function closeModal() {
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", "true");
+    modal.removeAttribute("data-state");
+    document.body.classList.remove("modal-open");
 
-      if (!response.ok) {
-        throw new Error((data && data.error) || "Não foi possível liberar o download.");
-      }
+    form.reset();
+    inputMode.value = "download";
+    inputItem.value = "";
+    inputFileId.value = "";
 
-      if (!data || !data.ok) {
-        throw new Error((data && data.error) || "Não foi possível liberar o download.");
-      }
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Continuar e baixar";
+    submitBtn.style.opacity = "1";
 
-      return data;
+    modalTitle.textContent = "Preencha para liberar o download";
+    hint.textContent = "Preencha nome e e-mail para continuar.";
+  }
+
+  async function submitLead(payload) {
+    const response = await fetch(window.PUB_LEADS_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+        "Accept": "application/json, text/plain, */*"
+      },
+      body: JSON.stringify(payload),
+      redirect: "follow"
+    });
+
+    const text = await response.text();
+    let data = null;
+
+    try {
+      data = JSON.parse(text);
+    } catch (_) {
+      data = null;
     }
 
-    document.addEventListener("click", (event) => {
-      const anchor = event.target.closest('a[href^="#"]');
-      if (anchor) {
-        event.preventDefault();
-        const id = decodeURIComponent((anchor.getAttribute("href") || "").replace(/^#/, ""));
-        const target = document.getElementById(id);
-        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-        return;
-      }
+    if (!response.ok) {
+      throw new Error((data && data.error) || "Não foi possível processar a solicitação.");
+    }
 
-      const btn = event.target.closest(".js-download");
-      if (!btn) return;
+    if (!data || !data.ok) {
+      throw new Error((data && data.error) || "Não foi possível processar a solicitação.");
+    }
 
+    return data;
+  }
+
+  document.addEventListener("click", (event) => {
+    const anchor = event.target.closest('a[href^="#"]');
+    if (anchor) {
       event.preventDefault();
-      const item = String(btn.getAttribute("data-item") || "").trim();
-      const fileId = String(btn.getAttribute("data-file-id") || "").trim();
+      const id = decodeURIComponent((anchor.getAttribute("href") || "").replace(/^#/, ""));
+      const target = document.getElementById(id);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
+    const downloadBtn = event.target.closest(".js-download");
+    if (downloadBtn) {
+      event.preventDefault();
+
+      const item = String(downloadBtn.getAttribute("data-item") || "").trim();
+      const fileId = String(downloadBtn.getAttribute("data-file-id") || "").trim();
 
       if (!item || !fileId) return;
 
@@ -2333,84 +2355,146 @@
         file_id: fileId
       });
 
-      openModal(item, fileId);
-    });
+      openModal({
+        mode: "download",
+        item,
+        fileId
+      });
 
-    closeBtn.addEventListener("click", closeModal);
+      return;
+    }
 
-    modal.addEventListener("click", (event) => {
-      if (event.target === modal) closeModal();
-    });
-
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && modal.getAttribute("data-state") === "open") {
-        closeModal();
-      }
-    });
-
-    form.addEventListener("submit", async (event) => {
+    const ticketBtn = event.target.closest(".js-ticket");
+    if (ticketBtn) {
       event.preventDefault();
 
-      const name = inputName.value.trim();
-      const email = inputEmail.value.trim();
-      const item = inputItem.value.trim();
-      const fileId = inputFileId.value.trim();
+      const item = String(ticketBtn.getAttribute("data-item") || "").trim();
+      if (!item) return;
 
-      if (!name || !validEmail(email) || !item || !fileId) {
-        hint.textContent = "Revise nome, e-mail e item do download.";
-        return;
-      }
+      track("select_content", {
+        content_type: "ticket_cta",
+        item
+      });
 
-      submitBtn.disabled = true;
+      openModal({
+        mode: "ticket",
+        item,
+        fileId: ""
+      });
+    }
+  });
+
+  closeBtn.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) closeModal();
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modal.getAttribute("data-state") === "open") {
+      closeModal();
+    }
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const name = inputName.value.trim();
+    const email = inputEmail.value.trim();
+    const mode = inputMode.value.trim() || "download";
+    const item = inputItem.value.trim();
+    const fileId = inputFileId.value.trim();
+
+    if (!name || !validEmail(email) || !item) {
+      hint.textContent = "Revise nome, e-mail e item.";
+      return;
+    }
+
+    if (mode === "ticket" && !window.PUB_LEADS_ENDPOINT) {
+      hint.textContent = "Endpoint indisponível para registrar ticket.";
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = ".8";
+
+    if (mode === "ticket") {
+      submitBtn.textContent = "Enviando ticket...";
+      hint.textContent = "Estamos registrando seu ticket.";
+    } else {
       submitBtn.textContent = "Liberando download...";
-      submitBtn.style.opacity = ".8";
       hint.textContent = "Estamos processando seu download.";
+    }
 
-      const payload = {
-        action: "capture_lead",
-        name,
-        email,
+    if (mode === "ticket" && !fileId) {
+  track("generate_lead", {
+    currency: "BRL",
+    value: 1,
+    item,
+    lead_type: "ticket_simulado"
+  });
+
+  closeModal();
+  alert(`Ticket simulado com sucesso para: ${item}`);
+  return;
+}
+
+    if (!fileId) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Continuar e baixar";
+      submitBtn.style.opacity = "1";
+      hint.textContent = "Item de download inválido.";
+      return;
+    }
+
+    const payload = {
+      action: "capture_lead",
+      name,
+      email,
+      item,
+      file_id: fileId,
+      page_url: location.href,
+      referrer: document.referrer || "",
+      user_agent: navigator.userAgent
+    };
+
+    try {
+      const data = await submitLead(payload);
+
+      const redirectUrl =
+        data.redirect_url ||
+        (data.data && data.data.redirect_url) ||
+        `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}`;
+
+      track("generate_lead", {
+        currency: "BRL",
+        value: 1,
+        item,
+        file_id: fileId
+      });
+
+      track("file_download", {
         item,
         file_id: fileId,
-        page_url: location.href,
-        referrer: document.referrer || "",
-        user_agent: navigator.userAgent
-      };
+        link_url: redirectUrl
+      });
 
-      try {
-        const data = await submitLead(payload);
-        const redirectUrl =
-          data.redirect_url ||
-          (data.data && data.data.redirect_url) ||
-          `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}`;
+      closeModal();
+      window.location.href = redirectUrl;
+    } catch (error) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Continuar e baixar";
+      submitBtn.style.opacity = "1";
+      hint.textContent = String(error && error.message ? error.message : "Falha ao liberar o download.");
 
-        track("generate_lead", {
-          currency: "BRL",
-          value: 1,
-          item,
-          file_id: fileId
-        });
-
-        track("file_download", {
-          item,
-          file_id: fileId,
-          link_url: redirectUrl
-        });
-
-        closeModal();
-        window.location.href = redirectUrl;
-      } catch (error) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Continuar e baixar";
-        submitBtn.style.opacity = "1";
-        hint.textContent = String(error && error.message ? error.message : "Falha ao liberar o download.");
-        track("exception", {
-          description: String(error && error.message ? error.message : "lead_download_error"),
-          fatal: false
-        });
-      }
-    });
-  </script>
+      track("exception", {
+        description: String(error && error.message ? error.message : "lead_download_error"),
+        fatal: false
+      });
+    }
+  });
+</script>
 </body>
 </html>
+
 
