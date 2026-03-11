@@ -217,7 +217,7 @@
   </script>
 
    <script>
-    window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxCKnrhndhJ_AV4bXiU1VR2ck2e3Hot7rn7Cz8IbcDyyAY1PXwcRZL_zvkR7dpojsav4Q/exec";
+    window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxCAvmuaJG84tXDvBXbdjlE6UmojgGO-tgiEEnzmmQtb6mpf15XuindDKCvvRppvtQ-fw/exec";
     window.PUB_SESSION_KEY = "PUB_FRONT_SESSION_V2";
 
     window.PUBCRM_CONTRACT_FALLBACK = {
@@ -3283,92 +3283,128 @@
       }
     }
 
-        class PubApi {
-      constructor(endpoint) {
-        this.endpoint = endpoint || "";
-      }
-
-      buildContractUrl() {
-        if (!this.endpoint) return "";
-        const separator = this.endpoint.includes("?") ? "&" : "?";
-        return `${this.endpoint}${separator}mode=contract`;
-      }
-
-      normalizeContract(contract) {
-        const fallback = window.PUBCRM_CONTRACT_FALLBACK || {};
-        const input = contract && typeof contract === "object" ? contract : {};
-
-        const downloadsInput = input.downloads && typeof input.downloads === "object"
-          ? input.downloads
-          : {};
-
-        const normalizedDownloads = {};
-        const fileIds = Object.keys(downloadsInput);
-
-        for (const fileId of fileIds) {
-          const entry = downloadsInput[fileId];
-          if (!entry || typeof entry !== "object") continue;
-
-          const item = String(entry.item || "").trim();
-          if (!item) continue;
-
-          normalizedDownloads[String(fileId).trim()] = { item };
-        }
-
-        return {
-          app: String(input.app || fallback.app || "PUB CRM"),
-          version: String(input.version || fallback.version || "1.4"),
-          leadItems: Array.isArray(input.leadItems) ? input.leadItems.slice() : (fallback.leadItems || []).slice(),
-          ticketItems: Array.isArray(input.ticketItems) ? input.ticketItems.slice() : (fallback.ticketItems || []).slice(),
-          leadPlacements: Array.isArray(input.leadPlacements) ? input.leadPlacements.slice() : (fallback.leadPlacements || []).slice(),
-          contactPreferences: Array.isArray(input.contactPreferences) ? input.contactPreferences.slice() : (fallback.contactPreferences || []).slice(),
-          downloads: Object.keys(normalizedDownloads).length ? normalizedDownloads : (fallback.downloads || {}),
-          integration: input.integration && typeof input.integration === "object" ? input.integration : (fallback.integration || {}),
-          now: String(input.now || "")
-        };
-      }
-
-  async loadContract() {
-  const fallback = this.normalizeContract(window.PUBCRM_CONTRACT_FALLBACK || {});
-  const url = this.buildContractUrl();
-
-  if (!url) {
-    console.warn("[PUB_FRONT] Contract fallback: endpoint ausente.");
-    window.PUBCRM_CONTRACT = fallback;
-    return fallback;
+class PubApi {
+  constructor(endpoint) {
+    this.endpoint = endpoint || "";
   }
 
-  const controller = new AbortController();
-  const timeoutMs = 8000;
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  buildContractUrl() {
+    if (!this.endpoint) return "";
+    const separator = this.endpoint.includes("?") ? "&" : "?";
+    return `${this.endpoint}${separator}mode=contract`;
+  }
 
-  try {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Accept": "application/json"
-      },
-      redirect: "follow",
-      signal: controller.signal
-    });
+  buildStatusUrl() {
+    if (!this.endpoint) return "";
+    const separator = this.endpoint.includes("?") ? "&" : "?";
+    return `${this.endpoint}${separator}mode=status`;
+  }
 
-    clearTimeout(timeoutId);
+  normalizeContract(contract) {
+    const fallback = window.PUBCRM_CONTRACT_FALLBACK || {};
+    const input = contract && typeof contract === "object" ? contract : {};
 
-    const text = await response.text();
-    let parsed = null;
+    const downloadsInput = input.downloads && typeof input.downloads === "object"
+      ? input.downloads
+      : {};
 
-    try {
-      parsed = JSON.parse(text);
-    } catch (_) {
-      parsed = null;
+    const normalizedDownloads = {};
+    const fileIds = Object.keys(downloadsInput);
+
+    for (const fileId of fileIds) {
+      const entry = downloadsInput[fileId];
+      if (!entry || typeof entry !== "object") continue;
+
+      const item = String(entry.item || "").trim();
+      if (!item) continue;
+
+      normalizedDownloads[String(fileId).trim()] = { item };
     }
 
-    const payload = parsed && typeof parsed === "object" ? parsed : {};
+    return {
+      app: String(input.app || fallback.app || "PUB CRM"),
+      version: String(input.version || fallback.version || "1.4"),
+      leadItems: Array.isArray(input.leadItems) ? input.leadItems.slice() : (fallback.leadItems || []).slice(),
+      ticketItems: Array.isArray(input.ticketItems) ? input.ticketItems.slice() : (fallback.ticketItems || []).slice(),
+      leadPlacements: Array.isArray(input.leadPlacements) ? input.leadPlacements.slice() : (fallback.leadPlacements || []).slice(),
+      contactPreferences: Array.isArray(input.contactPreferences) ? input.contactPreferences.slice() : (fallback.contactPreferences || []).slice(),
+      downloads: Object.keys(normalizedDownloads).length ? normalizedDownloads : (fallback.downloads || {}),
+      integration: input.integration && typeof input.integration === "object" ? input.integration : (fallback.integration || {}),
+      now: String(input.now || "")
+    };
+  }
+
+  async fetchJson(url, timeoutMs = 8000) {
+    if (!url) {
+      return {
+        ok: false,
+        status: 0,
+        payload: null,
+        error: "URL ausente."
+      };
+    }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json"
+        },
+        redirect: "follow",
+        signal: controller.signal
+      });
+
+      clearTimeout(timeoutId);
+
+      const text = await response.text();
+      let payload = null;
+
+      try {
+        payload = JSON.parse(text);
+      } catch (_) {
+        payload = null;
+      }
+
+      return {
+        ok: response.ok,
+        status: response.status,
+        payload: payload,
+        rawText: text,
+        error: ""
+      };
+    } catch (error) {
+      clearTimeout(timeoutId);
+      return {
+        ok: false,
+        status: 0,
+        payload: null,
+        rawText: "",
+        error: String(error?.message || error || "Falha de rede.")
+      };
+    }
+  }
+
+  async loadContract() {
+    const fallback = this.normalizeContract(window.PUBCRM_CONTRACT_FALLBACK || {});
+    const url = this.buildContractUrl();
+
+    if (!url) {
+      console.warn("[PUB_FRONT] Contract fallback: endpoint ausente.");
+      window.PUBCRM_CONTRACT = fallback;
+      return fallback;
+    }
+
+    const result = await this.fetchJson(url, 8000);
+    const payload = result && result.payload && typeof result.payload === "object" ? result.payload : {};
     const remoteContract = payload && payload.ok && payload.data ? payload.data : null;
 
-    if (!response.ok) {
+    if (!result.ok) {
       console.warn("[PUB_FRONT] Contract fallback: resposta HTTP inválida.", {
-        status: response.status
+        status: result.status,
+        error: result.error || ""
       });
       window.PUBCRM_CONTRACT = fallback;
       return fallback;
@@ -3383,74 +3419,127 @@
     const normalized = this.normalizeContract(remoteContract);
     window.PUBCRM_CONTRACT = normalized;
     return normalized;
-  } catch (error) {
-    clearTimeout(timeoutId);
-    console.warn("[PUB_FRONT] Contract fallback: erro de rede, timeout ou execução.", error);
-    window.PUBCRM_CONTRACT = fallback;
-    return fallback;
+  }
+
+  async loadStatus() {
+    const url = this.buildStatusUrl();
+
+    if (!url) {
+      return {
+        endpoint_present: false,
+        http_ok: false,
+        status_ok: false,
+        system_ready: false,
+        error_code: "ENDPOINT_MISSING",
+        error_message: "Endpoint ausente.",
+        payload: null
+      };
+    }
+
+    const result = await this.fetchJson(url, 8000);
+    const payload = result && result.payload && typeof result.payload === "object" ? result.payload : {};
+    const statusData = payload && payload.ok && payload.data ? payload.data : {};
+    const readiness = statusData && typeof statusData.readiness === "object" ? statusData.readiness : {};
+
+    return {
+      endpoint_present: true,
+      http_ok: !!result.ok,
+      status_ok: !!(payload && payload.ok),
+      system_ready: !!readiness.system_ready,
+      error_code: String(readiness.error_code || ""),
+      error_message: String(readiness.error_message || result.error || ""),
+      payload: payload
+    };
+  }
+
+  async loadRuntime() {
+    const contract = await this.loadContract();
+    const status = await this.loadStatus();
+
+    return {
+      contract,
+      status,
+      canDownload: !!(
+        status &&
+        status.endpoint_present &&
+        status.http_ok &&
+        status.status_ok &&
+        status.system_ready
+      )
+    };
+  }
+
+  extractRedirectUrlFromHtml(text) {
+    const source = String(text || "");
+
+    const patterns = [
+      /location\.replace\((['"])(.*?)\1\)/i,
+      /location\.href\s*=\s*(['"])(.*?)\1/i,
+      /window\.location\.href\s*=\s*(['"])(.*?)\1/i,
+      /window\.location\.replace\((['"])(.*?)\1\)/i
+    ];
+
+    for (const re of patterns) {
+      const match = source.match(re);
+      if (match && match[2]) return match[2];
+    }
+
+    return "";
+  }
+
+  async postJSON(payload) {
+    if (!this.endpoint) throw new Error("Endpoint não configurado.");
+
+    const response = await fetch(this.endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+        "Accept": "application/json, text/plain, */*"
+      },
+      body: JSON.stringify(payload),
+      redirect: "follow"
+    });
+
+    const text = await response.text();
+    const contentType = String(response.headers.get("content-type") || "").toLowerCase();
+
+    let data = null;
+    let redirectUrl = "";
+
+    try {
+      data = JSON.parse(text);
+    } catch (_) {
+      redirectUrl = this.extractRedirectUrlFromHtml(text);
+
+      if (redirectUrl) {
+        data = {
+          ok: true,
+          data: {
+            redirect_url: redirectUrl,
+            transport: "html_redirect"
+          }
+        };
+      } else {
+        data = {
+          ok: false,
+          error: text
+            ? String(text).trim().slice(0, 1000)
+            : "Resposta inválida do servidor.",
+          raw: text
+        };
+      }
+    }
+
+    return {
+      httpOk: response.ok,
+      status: response.status,
+      contentType,
+      redirectUrl,
+      data,
+      rawText: text
+    };
   }
 }
-
-      extractRedirectUrlFromHtml(text) {
-        const source = String(text || "");
-
-        const patterns = [
-          /location\.replace\((['"])(.*?)\1\)/i,
-          /location\.href\s*=\s*(['"])(.*?)\1/i,
-          /window\.location\.href\s*=\s*(['"])(.*?)\1/i,
-          /window\.location\.replace\((['"])(.*?)\1\)/i
-        ];
-
-        for (const re of patterns) {
-          const match = source.match(re);
-          if (match && match[2]) return match[2];
-        }
-
-        return "";
-      }
-
-              async postJSON(payload) {
-        if (!this.endpoint) throw new Error("Endpoint não configurado.");
-
-        const response = await fetch(this.endpoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "text/plain;charset=utf-8",
-            "Accept": "application/json, text/plain, */*"
-          },
-          body: JSON.stringify(payload),
-          redirect: "follow"
-        });
-
-        const text = await response.text();
-        const contentType = String(response.headers.get("content-type") || "").toLowerCase();
-
-        let data = null;
-        let redirectUrl = "";
-
-        try {
-          data = JSON.parse(text);
-        } catch (_) {
-          redirectUrl = this.extractRedirectUrlFromHtml(text);
-
-          if (redirectUrl) {
-            data = {
-              ok: true,
-              data: {
-                redirect_url: redirectUrl,
-                transport: "html_redirect"
-              }
-            };
-          } else {
-            data = {
-              ok: false,
-              error: text
-                ? String(text).trim().slice(0, 1000)
-                : "Resposta inválida do servidor.",
-              raw: text
-            };
-          }
-        }
 
         return {
           httpOk: response.ok,
@@ -3723,14 +3812,19 @@
     }
 
     const trigger = e.target.closest("[data-file-id][data-item][data-track]");
-    if (!trigger) return;
+if (!trigger) return;
 
-    e.preventDefault();
+if (trigger.hasAttribute("disabled") || trigger.getAttribute("aria-disabled") === "true") {
+  e.preventDefault();
+  return;
+}
 
-    const fileId = String(trigger.getAttribute("data-file-id") || "").trim();
-    const item = this.normalizeItem(trigger);
-    const placement = trigger.getAttribute("data-track") || "download";
-    const label = (trigger.textContent || "").trim().slice(0, 200);
+e.preventDefault();
+
+const fileId = String(trigger.getAttribute("data-file-id") || "").trim();
+const item = this.normalizeItem(trigger);
+const placement = trigger.getAttribute("data-track") || "download";
+const label = (trigger.textContent || "").trim().slice(0, 200);
 
     const nearestSection = trigger.closest("section[id]");
     const ctaSection = nearestSection?.id || placement || "";
@@ -4798,21 +4892,55 @@ function initVideoCarousel({ rootSelector = "#pub-rich" } = {}) {
         setUI(getIndex());
       }
     }
+function applyBackendRuntimeToUi(runtime) {
+  const state = runtime && typeof runtime === "object" ? runtime : {};
+  const canDownload = !!state.canDownload;
+  const status = state.status && typeof state.status === "object" ? state.status : {};
 
-        const dom = new Dom();
-    const urlTools = new UrlTools();
-    const sessionStore = new SessionStore(window.PUB_SESSION_KEY || "PUB_FRONT_SESSION_V2");
-    const analytics = new Analytics();
-    const api = new PubApi(window.PUB_LEADS_ENDPOINT);
+  const triggers = Array.from(document.querySelectorAll("[data-file-id][data-item][data-track]"));
 
-    await api.loadContract();
+  for (const el of triggers) {
+    if (canDownload) {
+      el.removeAttribute("disabled");
+      el.removeAttribute("aria-disabled");
+      el.removeAttribute("title");
+      el.style.opacity = "";
+      el.style.cursor = "";
+      continue;
+    }
 
-    new LeadCapture(dom, urlTools, analytics, api, sessionStore).init();
-    new SupportCapture(dom, urlTools, analytics, api, sessionStore).init();
-    initVideoCarousel();
+    el.setAttribute("disabled", "disabled");
+    el.setAttribute("aria-disabled", "true");
+    el.setAttribute(
+      "title",
+      status.error_message
+        ? `Download temporariamente indisponível: ${status.error_message}`
+        : "Download temporariamente indisponível."
+    );
+    el.style.opacity = ".55";
+    el.style.cursor = "not-allowed";
+  }
+
+  if (!canDownload) {
+    console.warn("[PUB_FRONT] Download bloqueado por backend não pronto.", status);
+  }
+}
+   const dom = new Dom();
+const urlTools = new UrlTools();
+const sessionStore = new SessionStore(window.PUB_SESSION_KEY || "PUB_FRONT_SESSION_V2");
+const analytics = new Analytics();
+const api = new PubApi(window.PUB_LEADS_ENDPOINT);
+
+const runtime = await api.loadRuntime();
+applyBackendRuntimeToUi(runtime);
+
+new LeadCapture(dom, urlTools, analytics, api, sessionStore).init();
+new SupportCapture(dom, urlTools, analytics, api, sessionStore).init();
+initVideoCarousel();
   </script>
 </body>
 </html>
+
 
 
 
