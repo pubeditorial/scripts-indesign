@@ -149,10 +149,10 @@
           },
           {
             "@type": "Question",
-            "name": "Como escolher entre baixar o pacote completo ou itens individuais?",
+            "name": "Como escolher entre baixar o pacote completo ou solicitar um item específico?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Para fluxo editorial completo, use o pacote. Para testes pontuais, use os downloads individuais."
+              "text": "Para fluxo editorial completo, use o pacote. Se quiser avaliar um item específico, você pode solicitar atendimento para o script desejado."
             }
           }
         ]
@@ -201,6 +201,7 @@
   <script>
     window.GA_MEASUREMENT_ID = "G-TZS7FSCH0R";
     window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxUy8BsKdnBB7sFKmRMVxAG-QVHKU1Pt6-8GbauH1-SKKqQ14BGsWZUYHCHDFCpqzZEHg/exec";
+    window.PUB_CONTACT_WHATSAPP = "5551996581275";
 
     window.PUB_DOWNLOADS = {
       "PACOTE GRATUITO": "18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE",
@@ -1482,6 +1483,11 @@
       background:#fff;
     }
 
+    textarea.lead-input{
+      min-height:120px;
+      resize:vertical;
+    }
+
     .lead-actions{
       display:flex;
       justify-content:flex-end;
@@ -1535,6 +1541,10 @@
     .lead-btn--secondary{
       background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(241,245,249,.96));
       color:#334155;
+    }
+
+    .is-hidden{
+      display:none !important;
     }
 
     body.modal-open{ overflow:hidden; }
@@ -1778,174 +1788,175 @@
         </div>
       </section>
 
-     <section class="stripe stripe--soft2" id="pacote" aria-label="Pacote de scripts">
-  <div class="wrap">
-    <div class="panel">
-      <div class="head">
-        <span class="tag">O pacote inclui</span>
-        <h2 class="h2">Cinco scripts para Adobe InDesign: CAPA MASTER, MIOLO MASTER, MANCHA MASTER, VERTICAL MASTER e BASELINE MASTER</h2>
-        <div class="muted">Arquivos JSX e guia de uso cobrindo instalação, compatibilidade e boas práticas de conferência.</div>
-      </div>
+      <section class="stripe stripe--soft2" id="pacote" aria-label="Pacote de scripts">
+        <div class="wrap">
+          <div class="panel">
+            <div class="head">
+              <span class="tag">O pacote inclui</span>
+              <h2 class="h2">Cinco scripts para Adobe InDesign: CAPA MASTER, MIOLO MASTER, MANCHA MASTER, VERTICAL MASTER e BASELINE MASTER</h2>
+              <div class="muted">Arquivos JSX e guia de uso cobrindo instalação, compatibilidade e boas práticas de conferência.</div>
+            </div>
 
-      <div class="toollist" aria-label="Lista do pacote">
-        <article class="toolitem">
-          <div class="iconbox" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M4 6.5C4 5.67 4.67 5 5.5 5H11v14H5.5A1.5 1.5 0 0 1 4 17.5z"/>
-              <path d="M20 6.5C20 5.67 19.33 5 18.5 5H13v14h5.5a1.5 1.5 0 0 0 1.5-1.5z"/>
-              <path d="M11 5a3 3 0 0 1 2 0"/>
-            </svg>
-          </div>
-          <div class="toolcontent">
-            <div>
-              <h3 class="name">CAPA MASTER</h3>
-              <p class="desc">Cria gabarito de capa aberta completo, calcula lombada e orelhas, gera dobras, guias de segurança e sangria, e prepara preset PDF CMYK no padrão gráfico.</p>
-              <div class="when">Use ao iniciar a capa para garantir medidas corretas, dobras precisas e guias de segurança desde o começo.</div>
-            </div>
-            <div class="toolactions">
-              <button class="btn btn--micro js-ticket" type="button" data-item="CAPA MASTER">Abrir ticket</button>
-            </div>
-          </div>
-        </article>
+            <div class="toollist" aria-label="Lista do pacote">
+              <article class="toolitem">
+                <div class="iconbox" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 6.5C4 5.67 4.67 5 5.5 5H11v14H5.5A1.5 1.5 0 0 1 4 17.5z"/>
+                    <path d="M20 6.5C20 5.67 19.33 5 18.5 5H13v14h5.5a1.5 1.5 0 0 0 1.5-1.5z"/>
+                    <path d="M11 5a3 3 0 0 1 2 0"/>
+                  </svg>
+                </div>
+                <div class="toolcontent">
+                  <div>
+                    <h3 class="name">CAPA MASTER</h3>
+                    <p class="desc">Cria gabarito de capa aberta completo, calcula lombada e orelhas, gera dobras, guias de segurança e sangria, e prepara preset PDF CMYK no padrão gráfico.</p>
+                    <div class="when">Use ao iniciar a capa para garantir medidas corretas, dobras precisas e guias de segurança desde o começo.</div>
+                  </div>
+                  <div class="toolactions">
+                    <button class="btn btn--micro js-ticket" type="button" data-item="CAPA MASTER">Abrir ticket</button>
+                  </div>
+                </div>
+              </article>
 
-        <article class="toolitem">
-          <div class="iconbox" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <rect x="6" y="4" width="12" height="16" rx="2"/>
-              <path d="M9 8h6M9 12h6M9 16h4"/>
-            </svg>
-          </div>
-          <div class="toolcontent">
-            <div>
-              <h3 class="name">MIOLO MASTER</h3>
-              <p class="desc">Cria novo documento de miolo com preset editorial completo: define formato, margens, sangria e páginas espelhadas, além de preparar preset PDF CMYK conforme padrão gráfico.</p>
-              <div class="when">Ideal para padronizar o miolo desde a primeira página e manter conformidade no fechamento.</div>
-            </div>
-            <div class="toolactions">
-              <button class="btn btn--micro js-ticket" type="button" data-item="MIOLO MASTER">Abrir ticket</button>
-            </div>
-          </div>
-        </article>
+              <article class="toolitem">
+                <div class="iconbox" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="6" y="4" width="12" height="16" rx="2"/>
+                    <path d="M9 8h6M9 12h6M9 16h4"/>
+                  </svg>
+                </div>
+                <div class="toolcontent">
+                  <div>
+                    <h3 class="name">MIOLO MASTER</h3>
+                    <p class="desc">Cria novo documento de miolo com preset editorial completo: define formato, margens, sangria e páginas espelhadas, além de preparar preset PDF CMYK conforme padrão gráfico.</p>
+                    <div class="when">Ideal para padronizar o miolo desde a primeira página e manter conformidade no fechamento.</div>
+                  </div>
+                  <div class="toolactions">
+                    <button class="btn btn--micro js-ticket" type="button" data-item="MIOLO MASTER">Abrir ticket</button>
+                  </div>
+                </div>
+              </article>
 
-        <article class="toolitem">
-          <div class="iconbox" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <rect x="4" y="4" width="16" height="16" rx="2"/>
-              <rect x="8" y="7" width="8" height="10" rx="1.5"/>
-            </svg>
-          </div>
-          <div class="toolcontent">
-            <div>
-              <h3 class="name">MANCHA MASTER</h3>
-              <p class="desc">Ajusta quadros de texto à mancha de uma só vez, com escopo por páginas, mestras e intervalos, e filtros por seleção, encadeamento e estilos de parágrafo.</p>
-              <div class="when">Permite reenquadrar quadros na área útil definida pelas margens, evitando ajustes manuais página por página.</div>
-            </div>
-            <div class="toolactions">
-              <button class="btn btn--micro js-ticket" type="button" data-item="MANCHA MASTER">Abrir ticket</button>
-            </div>
-          </div>
-        </article>
+              <article class="toolitem">
+                <div class="iconbox" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="4" y="4" width="16" height="16" rx="2"/>
+                    <rect x="8" y="7" width="8" height="10" rx="1.5"/>
+                  </svg>
+                </div>
+                <div class="toolcontent">
+                  <div>
+                    <h3 class="name">MANCHA MASTER</h3>
+                    <p class="desc">Ajusta quadros de texto à mancha de uma só vez, com escopo por páginas, mestras e intervalos, e filtros por seleção, encadeamento e estilos de parágrafo.</p>
+                    <div class="when">Permite reenquadrar quadros na área útil definida pelas margens, evitando ajustes manuais página por página.</div>
+                  </div>
+                  <div class="toolactions">
+                    <button class="btn btn--micro js-ticket" type="button" data-item="MANCHA MASTER">Abrir ticket</button>
+                  </div>
+                </div>
+              </article>
 
-        <article class="toolitem">
-          <div class="iconbox" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 4v16"/>
-              <path d="M8 8l4-4 4 4"/>
-              <path d="M8 16l4 4 4-4"/>
-              <rect x="6" y="9" width="12" height="6" rx="1.5"/>
-            </svg>
-          </div>
-          <div class="toolcontent">
-            <div>
-              <h3 class="name">VERTICAL MASTER</h3>
-              <p class="desc">Aplica alinhamento vertical em quadros de texto de uma só vez, topo, centro, base ou justificado, garantindo consistência de página em página ao longo do documento.</p>
-              <div class="when">Reorganiza o alinhamento vertical em todas as páginas com rapidez e precisão.</div>
-            </div>
-            <div class="toolactions">
-              <button class="btn btn--micro js-ticket" type="button" data-item="VERTICAL MASTER">Abrir ticket</button>
-            </div>
-          </div>
-        </article>
+              <article class="toolitem">
+                <div class="iconbox" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 4v16"/>
+                    <path d="M8 8l4-4 4 4"/>
+                    <path d="M8 16l4 4 4-4"/>
+                    <rect x="6" y="9" width="12" height="6" rx="1.5"/>
+                  </svg>
+                </div>
+                <div class="toolcontent">
+                  <div>
+                    <h3 class="name">VERTICAL MASTER</h3>
+                    <p class="desc">Aplica alinhamento vertical em quadros de texto de uma só vez, topo, centro, base ou justificado, garantindo consistência de página em página ao longo do documento.</p>
+                    <div class="when">Reorganiza o alinhamento vertical em todas as páginas com rapidez e precisão.</div>
+                  </div>
+                  <div class="toolactions">
+                    <button class="btn btn--micro js-ticket" type="button" data-item="VERTICAL MASTER">Abrir ticket</button>
+                  </div>
+                </div>
+              </article>
 
-        <article class="toolitem">
-          <div class="iconbox" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M5 7h14M5 12h14M5 17h14"/>
-              <path d="M8 5v14"/>
-            </svg>
-          </div>
-          <div class="toolcontent">
-            <div>
-              <h3 class="name">BASELINE MASTER</h3>
-              <p class="desc">Define e ativa a grade baseline do documento, ajusta início e incremento, e aplica alinhar ou não alinhar em estilos de parágrafo e seleção de uma só vez no miolo.</p>
-              <div class="when">Ideal para implantar ou ajustar a baseline grid e padronizar a aderência dos estilos.</div>
-            </div>
-            <div class="toolactions">
-              <button class="btn btn--micro js-ticket" type="button" data-item="BASELINE MASTER">Abrir ticket</button>
-            </div>
-          </div>
-        </article>
+              <article class="toolitem">
+                <div class="iconbox" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 7h14M5 12h14M5 17h14"/>
+                    <path d="M8 5v14"/>
+                  </svg>
+                </div>
+                <div class="toolcontent">
+                  <div>
+                    <h3 class="name">BASELINE MASTER</h3>
+                    <p class="desc">Define e ativa a grade baseline do documento, ajusta início e incremento, e aplica alinhar ou não alinhar em estilos de parágrafo e seleção de uma só vez no miolo.</p>
+                    <div class="when">Ideal para implantar ou ajustar a baseline grid e padronizar a aderência dos estilos.</div>
+                  </div>
+                  <div class="toolactions">
+                    <button class="btn btn--micro js-ticket" type="button" data-item="BASELINE MASTER">Abrir ticket</button>
+                  </div>
+                </div>
+              </article>
 
-        <article class="toolitem">
-          <div class="iconbox" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 19a7 7 0 1 0 0-14 7 7 0 0 0 0 14z"/>
-              <path d="M12 9v3.5"/>
-              <path d="M12 16h.01"/>
-            </svg>
-          </div>
-          <div class="toolcontent">
-            <div>
-              <h3 class="name">GUIA DE USO</h3>
-              <p class="desc">Instalação no painel Scripts do InDesign, requisitos e compatibilidade, passo a passo de uso e boas práticas de conferência.</p>
-              <div class="when">Recomendado antes de instalar e executar, para entender escopo, filtros e compatibilidade.</div>
+              <article class="toolitem">
+                <div class="iconbox" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 19a7 7 0 1 0 0-14 7 7 0 0 0 0 14z"/>
+                    <path d="M12 9v3.5"/>
+                    <path d="M12 16h.01"/>
+                  </svg>
+                </div>
+                <div class="toolcontent">
+                  <div>
+                    <h3 class="name">GUIA DE USO</h3>
+                    <p class="desc">Instalação no painel Scripts do InDesign, requisitos e compatibilidade, passo a passo de uso e boas práticas de conferência.</p>
+                    <div class="when">Recomendado antes de instalar e executar, para entender escopo, filtros e compatibilidade.</div>
+                  </div>
+                  <div class="toolactions">
+                    <button class="btn btn--micro js-ticket" type="button" data-item="GUIA DE USO">Abrir ticket</button>
+                  </div>
+                </div>
+              </article>
             </div>
-            <div class="toolactions">
-              <button class="btn btn--micro js-ticket" type="button" data-item="GUIA DE USO">Abrir ticket</button>
+
+            <details class="details" aria-label="Atendimento para itens específicos">
+              <summary>
+                Atendimento para itens específicos
+                <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"/>
+                </svg>
+              </summary>
+
+              <div class="mini" style="margin-top:10px;">
+                Se você quiser tratar um script específico, abra um ticket para o item desejado.
+              </div>
+
+              <ul class="pillgrid" role="list" aria-label="Lista de itens para atendimento">
+                <li><button class="pill js-ticket" type="button" data-item="CAPA MASTER">CAPA MASTER</button></li>
+                <li><button class="pill js-ticket" type="button" data-item="MIOLO MASTER">MIOLO MASTER</button></li>
+                <li><button class="pill js-ticket" type="button" data-item="MANCHA MASTER">MANCHA MASTER</button></li>
+                <li><button class="pill js-ticket" type="button" data-item="VERTICAL MASTER">VERTICAL MASTER</button></li>
+                <li><button class="pill js-ticket" type="button" data-item="BASELINE MASTER">BASELINE MASTER</button></li>
+                <li><button class="pill js-ticket" type="button" data-item="GUIA DE USO">GUIA DE USO</button></li>
+              </ul>
+            </details>
+
+            <div class="grid" style="margin-top:var(--s5);">
+              <button class="btn btn--primary js-download"
+                 type="button"
+                 data-item="PACOTE GRATUITO"
+                 data-file-id="18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE">
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                  <path d="M12 3v10"/>
+                  <path d="M8 9l4 4 4-4"/>
+                  <path d="M4 17v3h16v-3"/>
+                </svg>
+                Baixar pacote gratuito
+              </button>
+              <div class="mini">Scripts JSX para painel Scripts do InDesign.</div>
             </div>
           </div>
-        </article>
-      </div>
-
-      <details class="details" aria-label="Downloads individuais">
-        <summary>
-          Downloads individuais
-          <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"/>
-          </svg>
-        </summary>
-
-        <div class="mini" style="margin-top:10px;">
-          Use se você preferir baixar apenas um item. Para o fluxo completo, o recomendado é o pacote.
         </div>
+      </section>
 
-        <ul class="pillgrid" role="list" aria-label="Lista de downloads individuais">
-          <li><button class="pill js-ticket" type="button" data-item="CAPA MASTER">CAPA MASTER</button></li>
-          <li><button class="pill js-ticket" type="button" data-item="MIOLO MASTER">MIOLO MASTER</button></li>
-          <li><button class="pill js-ticket" type="button" data-item="MANCHA MASTER">MANCHA MASTER</button></li>
-          <li><button class="pill js-ticket" type="button" data-item="VERTICAL MASTER">VERTICAL MASTER</button></li>
-          <li><button class="pill js-ticket" type="button" data-item="BASELINE MASTER">BASELINE MASTER</button></li>
-          <li><button class="pill js-ticket" type="button" data-item="GUIA DE USO">GUIA DE USO</button></li>
-        </ul>
-      </details>
-
-      <div class="grid" style="margin-top:var(--s5);">
-        <button class="btn btn--primary js-download"
-           type="button"
-           data-item="PACOTE GRATUITO"
-           data-file-id="18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE">
-          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-            <path d="M12 3v10"/>
-            <path d="M8 9l4 4 4-4"/>
-            <path d="M4 17v3h16v-3"/>
-          </svg>
-          Baixar pacote gratuito
-        </button>
-        <div class="mini">Scripts JSX para painel Scripts do InDesign.</div>
-      </div>
-    </div>
-  </div>
-</section>
       <section class="stripe stripe--soft" id="videos" aria-label="Vídeos">
         <div class="wrap">
           <div class="panel">
@@ -2061,10 +2072,10 @@
               </details>
 
               <details class="details" style="margin-top:0;">
-                <summary>Como escolher entre baixar o pacote completo ou itens individuais?
+                <summary>Como escolher entre baixar o pacote completo ou solicitar um item específico?
                   <svg class="chev" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8l5 5 5-5"/></svg>
                 </summary>
-                <div class="muted" style="margin-top:10px; color:#334155;">Para fluxo editorial completo, use o <strong>pacote</strong>. Para testes pontuais, use os <strong>downloads individuais</strong>.</div>
+                <div class="muted" style="margin-top:10px; color:#334155;">Para fluxo editorial completo, use o <strong>pacote</strong>. Para tratar um caso específico, abra um <strong>ticket</strong> para o item desejado.</div>
               </details>
             </div>
 
@@ -2194,7 +2205,7 @@
     </main>
   </div>
 
-  <div id="lead-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Formulário de download">
+  <div id="lead-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Formulário">
     <div class="lead-dialog" role="document">
       <div class="lead-header">
         <div class="lead-title">Preencha para liberar o download</div>
@@ -2202,299 +2213,333 @@
       </div>
 
       <form id="lead-form" class="lead-body" novalidate>
-  <input type="hidden" id="lead-mode" name="mode" value="download">
-  <input type="hidden" id="lead-item" name="item">
-  <input type="hidden" id="lead-file-id" name="file_id">
+        <input type="hidden" id="lead-mode" name="mode" value="download">
+        <input type="hidden" id="lead-item" name="item">
+        <input type="hidden" id="lead-file-id" name="file_id">
 
-  <div class="lead-field">
-    <label class="lead-label" for="lead-name">Nome</label>
-    <input id="lead-name" class="lead-input" name="name" required autocomplete="name" placeholder="Seu nome">
-  </div>
+        <div class="lead-field">
+          <label class="lead-label" for="lead-name">Nome</label>
+          <input id="lead-name" class="lead-input" name="name" required autocomplete="name" placeholder="Seu nome">
+        </div>
 
-  <div class="lead-field">
-    <label class="lead-label" for="lead-email">E-mail</label>
-    <input id="lead-email" class="lead-input" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="voce@exemplo.com">
-  </div>
+        <div class="lead-field">
+          <label class="lead-label" for="lead-email">E-mail</label>
+          <input id="lead-email" class="lead-input" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="voce@exemplo.com">
+        </div>
 
-  <div class="lead-actions">
-    <button type="submit" id="lead-submit" class="lead-btn lead-btn--primary">Continuar e baixar</button>
-  </div>
+        <div id="lead-message-wrap" class="lead-field is-hidden">
+          <label class="lead-label" for="lead-message">Mensagem</label>
+          <textarea id="lead-message" class="lead-input" name="message" placeholder="Descreva rapidamente o que você precisa para este item."></textarea>
+        </div>
 
-  <div id="lead-hint" class="lead-hint">Preencha nome e e-mail para continuar.</div>
-</form>
+        <div class="lead-actions">
+          <button type="submit" id="lead-submit" class="lead-btn lead-btn--primary">Continuar e baixar</button>
+        </div>
+
+        <div id="lead-hint" class="lead-hint">Preencha nome e e-mail para continuar.</div>
+      </form>
     </div>
   </div>
 
- <script type="module">
-  const modal = document.getElementById("lead-modal");
-  const form = document.getElementById("lead-form");
-  const closeBtn = document.getElementById("lead-close");
-  const submitBtn = document.getElementById("lead-submit");
-  const hint = document.getElementById("lead-hint");
+  <script type="module">
+    const modal = document.getElementById("lead-modal");
+    const form = document.getElementById("lead-form");
+    const closeBtn = document.getElementById("lead-close");
+    const submitBtn = document.getElementById("lead-submit");
+    const hint = document.getElementById("lead-hint");
 
-  const inputName = document.getElementById("lead-name");
-  const inputEmail = document.getElementById("lead-email");
-  const inputMode = document.getElementById("lead-mode");
-  const inputItem = document.getElementById("lead-item");
-  const inputFileId = document.getElementById("lead-file-id");
+    const inputName = document.getElementById("lead-name");
+    const inputEmail = document.getElementById("lead-email");
+    const inputMode = document.getElementById("lead-mode");
+    const inputItem = document.getElementById("lead-item");
+    const inputFileId = document.getElementById("lead-file-id");
+    const inputMessage = document.getElementById("lead-message");
+    const messageWrap = document.getElementById("lead-message-wrap");
 
-  const modalTitle = document.querySelector(".lead-title");
+    const modalTitle = document.querySelector(".lead-title");
 
-  function track(eventName, params = {}) {
-    try {
-      if (typeof window.gtag === "function" && window.GA_MEASUREMENT_ID) {
-        window.gtag("event", eventName, {
-          send_to: window.GA_MEASUREMENT_ID,
-          page_title: document.title,
-          page_location: location.href,
-          ...params
-        });
+    function track(eventName, params = {}) {
+      try {
+        if (typeof window.gtag === "function" && window.GA_MEASUREMENT_ID) {
+          window.gtag("event", eventName, {
+            send_to: window.GA_MEASUREMENT_ID,
+            page_title: document.title,
+            page_location: location.href,
+            ...params
+          });
+        }
+      } catch (_) {}
+    }
+
+    function validEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
+    }
+
+    function buildWhatsappUrl({ name, email, item, message }) {
+      const textLines = [
+        "Olá, PUB Editorial.",
+        "",
+        "Quero abrir um ticket para o item abaixo:",
+        `Item: ${item}`,
+        `Nome: ${name}`,
+        `E-mail: ${email}`
+      ];
+
+      if (message) {
+        textLines.push(`Mensagem: ${message}`);
       }
-    } catch (_) {}
-  }
 
-  function validEmail(value) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
-  }
+      textLines.push("", `Página: ${location.href}`);
 
-  function openModal({ mode = "download", item = "", fileId = "" } = {}) {
-    inputMode.value = mode;
-    inputItem.value = item;
-    inputFileId.value = fileId;
+      const text = textLines.join("\n");
+      return `https://wa.me/${encodeURIComponent(window.PUB_CONTACT_WHATSAPP || "5551996581275")}?text=${encodeURIComponent(text)}`;
+    }
 
-    if (mode === "ticket") {
-      modalTitle.textContent = "Abrir ticket";
-      submitBtn.textContent = "Enviar ticket";
-      hint.textContent = "Preencha nome e e-mail para abrir o ticket.";
-    } else {
-      modalTitle.textContent = "Preencha para liberar o download";
+    function openModal({ mode = "download", item = "", fileId = "" } = {}) {
+      inputMode.value = mode;
+      inputItem.value = item;
+      inputFileId.value = fileId;
+      inputMessage.value = "";
+
+      if (mode === "ticket") {
+        modalTitle.textContent = "Abrir ticket";
+        submitBtn.textContent = "Continuar atendimento";
+        hint.textContent = "Preencha seus dados para continuar o atendimento deste item.";
+        messageWrap.classList.remove("is-hidden");
+        modal.setAttribute("aria-label", "Formulário de ticket");
+      } else {
+        modalTitle.textContent = "Preencha para liberar o download";
+        submitBtn.textContent = "Continuar e baixar";
+        hint.textContent = "Preencha nome e e-mail para continuar.";
+        messageWrap.classList.add("is-hidden");
+        modal.setAttribute("aria-label", "Formulário de download");
+      }
+
+      modal.setAttribute("aria-hidden", "false");
+      modal.setAttribute("data-state", "open");
+      document.body.classList.add("modal-open");
+
+      setTimeout(() => inputName.focus(), 50);
+    }
+
+    function closeModal() {
+      modal.setAttribute("aria-hidden", "true");
+      modal.removeAttribute("data-state");
+      modal.setAttribute("aria-label", "Formulário");
+      document.body.classList.remove("modal-open");
+
+      form.reset();
+      inputMode.value = "download";
+      inputItem.value = "";
+      inputFileId.value = "";
+      inputMessage.value = "";
+
+      messageWrap.classList.add("is-hidden");
+
+      submitBtn.disabled = false;
       submitBtn.textContent = "Continuar e baixar";
+      submitBtn.style.opacity = "1";
+
+      modalTitle.textContent = "Preencha para liberar o download";
       hint.textContent = "Preencha nome e e-mail para continuar.";
     }
 
-    modal.style.display = "flex";
-    modal.setAttribute("aria-hidden", "false");
-    modal.setAttribute("data-state", "open");
-    document.body.classList.add("modal-open");
+    async function submitLead(payload) {
+      const response = await fetch(window.PUB_LEADS_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+          "Accept": "application/json, text/plain, */*"
+        },
+        body: JSON.stringify(payload),
+        redirect: "follow"
+      });
 
-    setTimeout(() => inputName.focus(), 50);
-  }
+      const text = await response.text();
+      let data = null;
 
-  function closeModal() {
-    modal.style.display = "none";
-    modal.setAttribute("aria-hidden", "true");
-    modal.removeAttribute("data-state");
-    document.body.classList.remove("modal-open");
+      try {
+        data = JSON.parse(text);
+      } catch (_) {
+        data = null;
+      }
 
-    form.reset();
-    inputMode.value = "download";
-    inputItem.value = "";
-    inputFileId.value = "";
+      if (!response.ok) {
+        throw new Error((data && data.error) || "Não foi possível processar a solicitação.");
+      }
 
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Continuar e baixar";
-    submitBtn.style.opacity = "1";
+      if (!data || !data.ok) {
+        throw new Error((data && data.error) || "Não foi possível processar a solicitação.");
+      }
 
-    modalTitle.textContent = "Preencha para liberar o download";
-    hint.textContent = "Preencha nome e e-mail para continuar.";
-  }
+      return data;
+    }
 
-  async function submitLead(payload) {
-    const response = await fetch(window.PUB_LEADS_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8",
-        "Accept": "application/json, text/plain, */*"
-      },
-      body: JSON.stringify(payload),
-      redirect: "follow"
+    document.addEventListener("click", (event) => {
+      const anchor = event.target.closest('a[href^="#"]');
+      if (anchor) {
+        event.preventDefault();
+        const id = decodeURIComponent((anchor.getAttribute("href") || "").replace(/^#/, ""));
+        const target = document.getElementById(id);
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+
+      const downloadBtn = event.target.closest(".js-download");
+      if (downloadBtn) {
+        event.preventDefault();
+
+        const item = String(downloadBtn.getAttribute("data-item") || "").trim();
+        const fileId = String(downloadBtn.getAttribute("data-file-id") || "").trim();
+
+        if (!item || !fileId) return;
+
+        track("select_content", {
+          content_type: "download_cta",
+          item,
+          file_id: fileId
+        });
+
+        openModal({
+          mode: "download",
+          item,
+          fileId
+        });
+
+        return;
+      }
+
+      const ticketBtn = event.target.closest(".js-ticket");
+      if (ticketBtn) {
+        event.preventDefault();
+
+        const item = String(ticketBtn.getAttribute("data-item") || "").trim();
+        if (!item) return;
+
+        track("select_content", {
+          content_type: "ticket_cta",
+          item
+        });
+
+        openModal({
+          mode: "ticket",
+          item,
+          fileId: ""
+        });
+      }
     });
 
-    const text = await response.text();
-    let data = null;
+    closeBtn.addEventListener("click", closeModal);
 
-    try {
-      data = JSON.parse(text);
-    } catch (_) {
-      data = null;
-    }
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeModal();
+    });
 
-    if (!response.ok) {
-      throw new Error((data && data.error) || "Não foi possível processar a solicitação.");
-    }
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && modal.getAttribute("data-state") === "open") {
+        closeModal();
+      }
+    });
 
-    if (!data || !data.ok) {
-      throw new Error((data && data.error) || "Não foi possível processar a solicitação.");
-    }
-
-    return data;
-  }
-
-  document.addEventListener("click", (event) => {
-    const anchor = event.target.closest('a[href^="#"]');
-    if (anchor) {
-      event.preventDefault();
-      const id = decodeURIComponent((anchor.getAttribute("href") || "").replace(/^#/, ""));
-      const target = document.getElementById(id);
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-      return;
-    }
-
-    const downloadBtn = event.target.closest(".js-download");
-    if (downloadBtn) {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      const item = String(downloadBtn.getAttribute("data-item") || "").trim();
-      const fileId = String(downloadBtn.getAttribute("data-file-id") || "").trim();
+      const name = inputName.value.trim();
+      const email = inputEmail.value.trim();
+      const mode = inputMode.value.trim() || "download";
+      const item = inputItem.value.trim();
+      const fileId = inputFileId.value.trim();
+      const message = inputMessage.value.trim();
 
-      if (!item || !fileId) return;
+      if (!name || !validEmail(email) || !item) {
+        hint.textContent = "Revise nome, e-mail e item.";
+        return;
+      }
 
-      track("select_content", {
-        content_type: "download_cta",
-        item,
-        file_id: fileId
-      });
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = ".8";
 
-      openModal({
-        mode: "download",
-        item,
-        fileId
-      });
+      if (mode === "ticket") {
+        submitBtn.textContent = "Encaminhando...";
+        hint.textContent = "Estamos preparando seu atendimento.";
 
-      return;
-    }
+        const whatsappUrl = buildWhatsappUrl({ name, email, item, message });
 
-    const ticketBtn = event.target.closest(".js-ticket");
-    if (ticketBtn) {
-      event.preventDefault();
+        track("generate_lead", {
+          currency: "BRL",
+          value: 1,
+          item,
+          lead_type: "ticket"
+        });
 
-      const item = String(ticketBtn.getAttribute("data-item") || "").trim();
-      if (!item) return;
+        track("contact", {
+          method: "whatsapp",
+          item,
+          lead_type: "ticket"
+        });
 
-      track("select_content", {
-        content_type: "ticket_cta",
-        item
-      });
+        closeModal();
+        window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+        return;
+      }
 
-      openModal({
-        mode: "ticket",
-        item,
-        fileId: ""
-      });
-    }
-  });
-
-  closeBtn.addEventListener("click", closeModal);
-
-  modal.addEventListener("click", (event) => {
-    if (event.target === modal) closeModal();
-  });
-
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modal.getAttribute("data-state") === "open") {
-      closeModal();
-    }
-  });
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const name = inputName.value.trim();
-    const email = inputEmail.value.trim();
-    const mode = inputMode.value.trim() || "download";
-    const item = inputItem.value.trim();
-    const fileId = inputFileId.value.trim();
-
-    if (!name || !validEmail(email) || !item) {
-      hint.textContent = "Revise nome, e-mail e item.";
-      return;
-    }
-
-    if (mode === "ticket" && !window.PUB_LEADS_ENDPOINT) {
-      hint.textContent = "Endpoint indisponível para registrar ticket.";
-      return;
-    }
-
-    submitBtn.disabled = true;
-    submitBtn.style.opacity = ".8";
-
-    if (mode === "ticket") {
-      submitBtn.textContent = "Enviando ticket...";
-      hint.textContent = "Estamos registrando seu ticket.";
-    } else {
       submitBtn.textContent = "Liberando download...";
       hint.textContent = "Estamos processando seu download.";
-    }
 
-    if (mode === "ticket" && !fileId) {
-  track("generate_lead", {
-    currency: "BRL",
-    value: 1,
-    item,
-    lead_type: "ticket_simulado"
-  });
+      if (!fileId) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Continuar e baixar";
+        submitBtn.style.opacity = "1";
+        hint.textContent = "Item de download inválido.";
+        return;
+      }
 
-  closeModal();
-  alert(`Ticket simulado com sucesso para: ${item}`);
-  return;
-}
-
-    if (!fileId) {
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Continuar e baixar";
-      submitBtn.style.opacity = "1";
-      hint.textContent = "Item de download inválido.";
-      return;
-    }
-
-    const payload = {
-      action: "capture_lead",
-      name,
-      email,
-      item,
-      file_id: fileId,
-      page_url: location.href,
-      referrer: document.referrer || "",
-      user_agent: navigator.userAgent
-    };
-
-    try {
-      const data = await submitLead(payload);
-
-      const redirectUrl =
-        data.redirect_url ||
-        (data.data && data.data.redirect_url) ||
-        `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}`;
-
-      track("generate_lead", {
-        currency: "BRL",
-        value: 1,
-        item,
-        file_id: fileId
-      });
-
-      track("file_download", {
+      const payload = {
+        action: "capture_lead",
+        name,
+        email,
         item,
         file_id: fileId,
-        link_url: redirectUrl
-      });
+        page_url: location.href,
+        referrer: document.referrer || "",
+        user_agent: navigator.userAgent
+      };
 
-      closeModal();
-      window.location.href = redirectUrl;
-    } catch (error) {
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Continuar e baixar";
-      submitBtn.style.opacity = "1";
-      hint.textContent = String(error && error.message ? error.message : "Falha ao liberar o download.");
+      try {
+        const data = await submitLead(payload);
 
-      track("exception", {
-        description: String(error && error.message ? error.message : "lead_download_error"),
-        fatal: false
-      });
-    }
-  });
-</script>
+        const redirectUrl =
+          data.redirect_url ||
+          (data.data && data.data.redirect_url) ||
+          `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}`;
+
+        track("generate_lead", {
+          currency: "BRL",
+          value: 1,
+          item,
+          file_id: fileId
+        });
+
+        track("file_download", {
+          item,
+          file_id: fileId,
+          link_url: redirectUrl
+        });
+
+        closeModal();
+        window.location.href = redirectUrl;
+      } catch (error) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Continuar e baixar";
+        submitBtn.style.opacity = "1";
+        hint.textContent = String(error && error.message ? error.message : "Falha ao liberar o download.");
+
+        track("exception", {
+          description: String(error && error.message ? error.message : "lead_download_error"),
+          fatal: false
+        });
+      }
+    });
+  </script>
 </body>
 </html>
-
-
