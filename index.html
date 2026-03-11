@@ -3836,10 +3836,13 @@
       this.setSubmittingUI(true, "Estamos liberando o download.");
 
       try {
-        const res = await this.api.postJSON(payload);
+                const res = await this.api.postJSON(payload);
         const data = res?.data || {};
         const ok = !!(res?.httpOk && data?.ok);
         const appData = data?.data || {};
+
+        console.log("[PUB_FRONT] lead payload", payload);
+        console.log("[PUB_FRONT] lead response", res);
 
         if (!ok) {
           const backendMessage = String(data?.error || "Não foi possível liberar o download agora.").trim();
@@ -3900,8 +3903,12 @@
         this.pending = null;
 
         window.location.href = redirectUrl;
-      } catch (err) {
-        console.error("[PUB_FRONT] lead submit failed", err, payload);
+            } catch (err) {
+        console.error("[PUB_FRONT] lead submit failed", {
+          error: err,
+          message: String(err?.message || ""),
+          payload: payload
+        });
 
         this.analytics.track("lead_submit_error", {
           item: payload.item,
@@ -4806,6 +4813,7 @@ function initVideoCarousel({ rootSelector = "#pub-rich" } = {}) {
   </script>
 </body>
 </html>
+
 
 
 
