@@ -209,7 +209,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZS7FSCH0R"></script>
 <script>
   window.GA_MEASUREMENT_ID = "G-TZS7FSCH0R";
-  window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycby1oJgqExHKbjLI1BArZ5i83FwToaGukZQOODniG0gaLhRR7V3_dSDEXoobPOBjtArgwA/exec";
+  window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbz4ZQmetApzo6VXfOiyfKw3H8N94C_QzceFCWp-uKlwHWXRIKJcLMoZwyOKLPAcISq0IA/exec";
   window.PUB_CONTACT_WHATSAPP = "5551996581275";
 
   window.dataLayer = window.dataLayer || [];
@@ -2781,18 +2781,27 @@ form.addEventListener("submit", async (event) => {
     if (!downloadWindow) {
       window.location.href = redirectUrl;
     }
-  } catch (error) {
+    } catch (error) {
     submitBtn.disabled = false;
-    submitBtn.style.opacity = "1";
     submitBtn.textContent = "Continuar e baixar";
-    hint.textContent = String(error && error.message ? error.message : "Falha ao liberar o download.");
+    submitBtn.style.opacity = "1";
+
+    const errorMessage = String(
+      error && error.message
+        ? error.message
+        : "Falha ao liberar o download."
+    );
+
+    hint.textContent =
+      errorMessage === "A solicitação demorou mais do que o esperado. Tente novamente."
+        ? "O servidor demorou mais do que o esperado. Tente novamente em alguns segundos."
+        : errorMessage;
 
     track("exception", {
-      description: String(error && error.message ? error.message : "lead_download_error"),
+      description: errorMessage,
       fatal: false
     });
   }
-});
 </script>
 </body>
 </html>
