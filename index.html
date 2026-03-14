@@ -209,7 +209,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZS7FSCH0R"></script>
 <script>
   window.GA_MEASUREMENT_ID = "G-TZS7FSCH0R";
-  window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxe7pHY8TFaLc9I1X1mIpUDuEYO3mKA2I5zaoh0iu71Yzk1RhsBxBz-T77q7tGCyvEELQ/exec";
+  window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycby1oJgqExHKbjLI1BArZ5i83FwToaGukZQOODniG0gaLhRR7V3_dSDEXoobPOBjtArgwA/exec";
   window.PUB_CONTACT_WHATSAPP = "5551996581275";
 
   window.dataLayer = window.dataLayer || [];
@@ -2414,15 +2414,33 @@ function trapFocus(event) {
 }
 
 async function fetchJsonPost(payload) {
-  const response = await fetch(window.PUB_LEADS_ENDPOINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8",
-      "Accept": "application/json, text/plain, */*"
-    },
-    body: JSON.stringify(payload),
-    redirect: "follow"
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 12000);
+
+  let response;
+
+  try {
+    response = await fetch(window.PUB_LEADS_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+        "Accept": "application/json, text/plain, */*"
+      },
+      body: JSON.stringify(payload),
+      redirect: "follow",
+      signal: controller.signal
+    });
+  } catch (error) {
+    clearTimeout(timeoutId);
+
+    if (error && error.name === "AbortError") {
+      throw new Error("A solicitação demorou mais do que o esperado. Tente novamente.");
+    }
+
+    throw error;
+  }
+
+  clearTimeout(timeoutId);
 
   const text = await response.text();
   let data = null;
@@ -2694,8 +2712,8 @@ form.addEventListener("submit", async (event) => {
       }, 250);
     } catch (error) {
       submitBtn.disabled = false;
-      submitBtn.textContent = "Enviar ticket";
       submitBtn.style.opacity = "1";
+      submitBtn.textContent = "Enviar ticket";
       hint.textContent = String(error && error.message ? error.message : "Falha ao registrar o ticket.");
 
       track("exception", {
@@ -2712,8 +2730,8 @@ form.addEventListener("submit", async (event) => {
 
   if (!fileId) {
     submitBtn.disabled = false;
-    submitBtn.textContent = "Continuar e baixar";
     submitBtn.style.opacity = "1";
+    submitBtn.textContent = "Continuar e baixar";
     hint.textContent = "Item de download inválido.";
     return;
   }
@@ -2741,7 +2759,7 @@ form.addEventListener("submit", async (event) => {
       throw new Error("Não foi possível determinar a URL de download.");
     }
 
-        track("generate_lead", {
+    track("generate_lead", {
       currency: "BRL",
       value: 1,
       item,
@@ -2754,6 +2772,8 @@ form.addEventListener("submit", async (event) => {
       link_url: redirectUrl
     });
 
+    hint.textContent = "Download liberado.";
+
     const downloadWindow = window.open(redirectUrl, "_blank", "noopener");
 
     closeModal();
@@ -2763,8 +2783,8 @@ form.addEventListener("submit", async (event) => {
     }
   } catch (error) {
     submitBtn.disabled = false;
-    submitBtn.textContent = "Continuar e baixar";
     submitBtn.style.opacity = "1";
+    submitBtn.textContent = "Continuar e baixar";
     hint.textContent = String(error && error.message ? error.message : "Falha ao liberar o download.");
 
     track("exception", {
