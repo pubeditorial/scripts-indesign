@@ -212,14 +212,33 @@
     window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyNEZAntDQ9DwHSoLA1w6Qn3ROYzej8x7BPSQnS7TSy5dEWLWZ7SehoakEDDdwp6iaWLg/exec";
     window.PUB_CONTACT_WHATSAPP = "5551996581275";
 
-    window.PUB_DOWNLOADS = {
-      "PACOTE GRATUITO": "18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE",
+    window.PUB_DOWNLOADS_FALLBACK = {
+      "PACOTE PUB EDITORIAL SCRIPTS": "18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE",
       "CAPA MASTER": "1AHKC3hYZCo_qoZ5LnLmNrt1GmAThnomm",
       "MIOLO MASTER": "1CiKz2brCrVzXqwEvRVXZS9MKr9tuyFsL",
       "MANCHA MASTER": "1ny87txfaUhN1mV0lB4WRC3KYWd9giVXJ",
       "VERTICAL MASTER": "1qmLtu_szJ_rgak3x0gHYYtlktQS3BXpi",
       "BASELINE MASTER": "16ttuf7bM8xC5YWkldqXLDdxWYdJ2u9qs",
       "GUIA DE USO": "11iAOd6cnB34jLMJt5FBZOd9ZhWRKzZSc"
+    };
+
+    window.PUB_ALLOWED_TICKET_ITEMS_FALLBACK = [
+      "PACOTE PUB EDITORIAL SCRIPTS",
+      "CAPA MASTER",
+      "MIOLO MASTER",
+      "MANCHA MASTER",
+      "VERTICAL MASTER",
+      "BASELINE MASTER",
+      "GUIA DE USO"
+    ];
+
+    window.PUB_CONTRACT_CACHE = {
+      loaded: false,
+      source: "fallback",
+      itemToFileId: {},
+      fileIdToItem: {},
+      ticketItems: [],
+      contractRaw: null
     };
 
     window.dataLayer = window.dataLayer || [];
@@ -1641,7 +1660,7 @@
                 <div class="cta-actions" aria-label="Ações">
                   <button class="btn btn--primary w-full js-download"
                      type="button"
-                     data-item="PACOTE GRATUITO"
+                     data-item="PACOTE PUB EDITORIAL SCRIPTS"
                      data-file-id="18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE">
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
                       <path d="M12 3v10"/>
@@ -1730,7 +1749,7 @@
             <div class="grid" style="margin-top:var(--s5);">
               <button class="btn btn--primary js-download"
                  type="button"
-                 data-item="PACOTE GRATUITO"
+                 data-item="PACOTE PUB EDITORIAL SCRIPTS"
                  data-file-id="18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE">
                 <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
                   <path d="M12 3v10"/>
@@ -1957,7 +1976,7 @@
             <div class="grid" style="margin-top:var(--s5);">
               <button class="btn btn--primary js-download"
                  type="button"
-                 data-item="PACOTE GRATUITO"
+                 data-item="PACOTE PUB EDITORIAL SCRIPTS"
                  data-file-id="18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE">
                 <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
                   <path d="M12 3v10"/>
@@ -1971,8 +1990,7 @@
           </div>
         </div>
       </section>
-
-      <!-- =========================================
+            <!-- =========================================
            VÍDEOS | DEMONSTRAÇÕES E TUTORIAIS
            ========================================= -->
       <section class="stripe stripe--soft" id="videos" aria-label="Vídeos">
@@ -2144,7 +2162,7 @@
                 <div class="card-foot">
                   <button class="btn btn--primary w-full js-download"
                     type="button"
-                    data-item="PACOTE GRATUITO"
+                    data-item="PACOTE PUB EDITORIAL SCRIPTS"
                     data-file-id="18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE">
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
                       <path d="M12 3v10"/>
@@ -2221,7 +2239,7 @@
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="#publico">Instalação</a></li>
                 <li><span class="footsep" aria-hidden="true"></span></li>
-                <li><button type="button" class="js-download" data-item="PACOTE GRATUITO" data-file-id="18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE">Download</button></li>
+                <li><button type="button" class="js-download" data-item="PACOTE PUB EDITORIAL SCRIPTS" data-file-id="18OVi6Vxb1VDQlbq1mlkFz2n5Oxy76vFE">Download</button></li>
                 <li><a href="https://instagram.com/pubeditorial" target="_blank" rel="noopener noreferrer">Instagram</a></li>
                 <li><a href="https://wa.me/5551996581275" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
               </ul>
@@ -2243,44 +2261,49 @@
       </div>
 
       <form id="lead-form" class="lead-body" novalidate>
-        <input type="hidden" id="lead-mode" name="mode" value="download">
-        <input type="hidden" id="lead-item" name="item">
-        <input type="hidden" id="lead-file-id" name="file_id">
-        <input type="hidden" id="lead-ticket-id" name="ticket_id">
+  <input type="hidden" id="lead-mode" name="mode" value="download">
+  <input type="hidden" id="lead-item" name="item">
+  <input type="hidden" id="lead-file-id" name="file_id">
+  <input type="hidden" id="lead-ticket-id" name="ticket_id">
 
-        <div class="lead-field">
-          <label class="lead-label" for="lead-name">Nome</label>
-          <input id="lead-name" class="lead-input" name="name" required autocomplete="name" placeholder="Seu nome">
-        </div>
+  <div style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;" aria-hidden="true">
+    <label for="lead-company">Empresa</label>
+    <input id="lead-company" name="company" type="text" tabindex="-1" autocomplete="off">
+  </div>
 
-        <div class="lead-field">
-          <label class="lead-label" for="lead-email">E-mail</label>
-          <input id="lead-email" class="lead-input" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="voce@exemplo.com">
-        </div>
+  <div class="lead-field">
+    <label class="lead-label" for="lead-name">Nome</label>
+    <input id="lead-name" class="lead-input" name="name" required autocomplete="name" placeholder="Seu nome">
+  </div>
 
-        <div id="lead-whatsapp-wrap" class="lead-field is-hidden">
-          <label class="lead-label" for="lead-whatsapp">WhatsApp</label>
-          <input
-            id="lead-whatsapp"
-            class="lead-input"
-            name="whatsapp"
-            type="tel"
-            inputmode="tel"
-            autocomplete="tel"
-            placeholder="(51) 99999-9999">
-        </div>
+  <div class="lead-field">
+    <label class="lead-label" for="lead-email">E-mail</label>
+    <input id="lead-email" class="lead-input" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="voce@exemplo.com">
+  </div>
 
-        <div id="lead-message-wrap" class="lead-field is-hidden">
-          <label class="lead-label" for="lead-message">Mensagem</label>
-          <textarea id="lead-message" class="lead-input" name="message" placeholder="Descreva rapidamente o que você precisa para este item."></textarea>
-        </div>
+  <div id="lead-whatsapp-wrap" class="lead-field is-hidden">
+    <label class="lead-label" for="lead-whatsapp">WhatsApp</label>
+    <input
+      id="lead-whatsapp"
+      class="lead-input"
+      name="whatsapp"
+      type="tel"
+      inputmode="tel"
+      autocomplete="tel"
+      placeholder="(51) 99999-9999">
+  </div>
 
-        <div class="lead-actions">
-          <button type="submit" id="lead-submit" class="lead-btn lead-btn--primary">Continuar e baixar</button>
-        </div>
+  <div id="lead-message-wrap" class="lead-field is-hidden">
+    <label class="lead-label" for="lead-message">Mensagem</label>
+    <textarea id="lead-message" class="lead-input" name="message" placeholder="Descreva rapidamente o que você precisa para este item."></textarea>
+  </div>
 
-        <div id="lead-hint" class="lead-hint">Preencha nome e e-mail para continuar.</div>
-      </form>
+  <div class="lead-actions">
+    <button type="submit" id="lead-submit" class="lead-btn lead-btn--primary">Continuar e baixar</button>
+  </div>
+
+  <div id="lead-hint" class="lead-hint">Preencha nome e e-mail para continuar.</div>
+</form>
     </div>
   </div>
 
@@ -2289,25 +2312,26 @@
        ========================================= -->
   <script type="module">
     const modal = document.getElementById("lead-modal");
-    const form = document.getElementById("lead-form");
-    const closeBtn = document.getElementById("lead-close");
-    const submitBtn = document.getElementById("lead-submit");
-    const hint = document.getElementById("lead-hint");
+const form = document.getElementById("lead-form");
+const closeBtn = document.getElementById("lead-close");
+const submitBtn = document.getElementById("lead-submit");
+const hint = document.getElementById("lead-hint");
 
-    const inputName = document.getElementById("lead-name");
-    const inputEmail = document.getElementById("lead-email");
-    const inputWhatsapp = document.getElementById("lead-whatsapp");
-    const inputMode = document.getElementById("lead-mode");
-    const inputItem = document.getElementById("lead-item");
-    const inputFileId = document.getElementById("lead-file-id");
-    const inputTicketId = document.getElementById("lead-ticket-id");
-    const inputMessage = document.getElementById("lead-message");
+const inputName = document.getElementById("lead-name");
+const inputEmail = document.getElementById("lead-email");
+const inputWhatsapp = document.getElementById("lead-whatsapp");
+const inputMode = document.getElementById("lead-mode");
+const inputItem = document.getElementById("lead-item");
+const inputFileId = document.getElementById("lead-file-id");
+const inputTicketId = document.getElementById("lead-ticket-id");
+const inputMessage = document.getElementById("lead-message");
 
-    const whatsappWrap = document.getElementById("lead-whatsapp-wrap");
-    const messageWrap = document.getElementById("lead-message-wrap");
-    const modalTitle = document.querySelector(".lead-title");
+const whatsappWrap = document.getElementById("lead-whatsapp-wrap");
+const messageWrap = document.getElementById("lead-message-wrap");
+const modalTitle = document.querySelector(".lead-title");
 
-    let lastTrigger = null;
+let lastTrigger = null;
+let contractInitPending = true;
 
     function track(eventName, params = {}) {
       try {
@@ -2384,6 +2408,21 @@
       return `TCK-${itemCode}-${yyyy}${mm}${dd}-${hh}${mi}${ss}-${random}`;
     }
 
+    function canonicalItem(value) {
+      const raw = String(value || "").trim();
+      if (!raw) return "";
+
+      const clean = raw
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toUpperCase()
+        .replace(/\s+/g, " ")
+        .trim();
+
+      if (clean === "PACOTE GRATUITO") return "PACOTE PUB EDITORIAL SCRIPTS";
+      return clean;
+    }
+
     function getFocusableElements() {
       return Array.from(
         modal.querySelectorAll(
@@ -2418,39 +2457,321 @@
       }
     }
 
-    function openModal({ mode = "download", item = "", fileId = "", trigger = null } = {}) {
-      lastTrigger = trigger || document.activeElement;
+   async function fetchJsonPost(payload) {
+  const response = await fetch(window.PUB_LEADS_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8",
+      "Accept": "application/json, text/plain, */*"
+    },
+    body: JSON.stringify(payload),
+    redirect: "follow"
+  });
 
-      inputMode.value = mode;
-      inputItem.value = item;
-      inputFileId.value = fileId;
-      inputTicketId.value = "";
-      inputMessage.value = "";
-      inputWhatsapp.value = "";
+  const text = await response.text();
+  let data = null;
 
-      if (mode === "ticket") {
-        const ticketId = buildTicketId(item);
-        inputTicketId.value = ticketId;
+  try {
+    data = JSON.parse(text);
+  } catch (_) {
+    data = null;
+  }
 
-        modalTitle.textContent = "Abrir ticket";
-        submitBtn.textContent = "Enviar ticket";
-        hint.textContent = `Preencha seus dados para registrar o ticket deste item.\nWhatsApp opcional para retorno mais rápido.\nID: ${ticketId}`;
-        whatsappWrap.classList.remove("is-hidden");
-        messageWrap.classList.remove("is-hidden");
-      } else {
-        modalTitle.textContent = "Preencha para liberar o download";
-        submitBtn.textContent = "Continuar e baixar";
-        hint.textContent = "Preencha nome e e-mail para continuar.";
-        whatsappWrap.classList.add("is-hidden");
-        messageWrap.classList.add("is-hidden");
-      }
+  if (!response.ok) {
+    throw new Error((data && (data.error || data.message)) || "Não foi possível processar a solicitação.");
+  }
 
-      modal.setAttribute("aria-hidden", "false");
-      modal.setAttribute("data-state", "open");
-      document.body.classList.add("modal-open");
+  if (!text || !text.trim()) {
+    throw new Error("O servidor respondeu sem conteúdo.");
+  }
 
-      setTimeout(() => inputName.focus(), 50);
+  if (!data) {
+    throw new Error("O servidor respondeu em formato inválido.");
+  }
+
+  return data;
+}
+
+async function fetchContractPublicMode() {
+  if (!window.PUB_LEADS_ENDPOINT) {
+    throw new Error("Endpoint público não configurado.");
+  }
+
+  const url = new URL(window.PUB_LEADS_ENDPOINT);
+  url.searchParams.set("mode", "contract");
+  url.searchParams.set("_ts", String(Date.now()));
+
+  const response = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      "Accept": "application/json, text/plain, */*",
+      "Cache-Control": "no-cache"
+    },
+    cache: "no-store",
+    redirect: "follow"
+  });
+
+  const text = await response.text();
+  let data = null;
+
+  try {
+    data = JSON.parse(text);
+  } catch (_) {
+    data = null;
+  }
+
+  if (!response.ok) {
+    throw new Error((data && (data.error || data.message)) || "Não foi possível carregar o contrato público.");
+  }
+
+  if (!text || !text.trim()) {
+    throw new Error("O contrato público respondeu sem conteúdo.");
+  }
+
+  if (!data) {
+    throw new Error("O contrato público respondeu em formato inválido.");
+  }
+
+  return data;
+}
+  async function loadContractData() {
+  if (window.PUB_CONTRACT_CACHE.loaded) {
+    return window.PUB_CONTRACT_CACHE;
+  }
+
+  const fallbackItemToFileId = {};
+  const fallbackFileIdToItem = {};
+
+  Object.keys(window.PUB_DOWNLOADS_FALLBACK || {}).forEach((key) => {
+    const normalizedItem = canonicalItem(key);
+    const fileId = String(window.PUB_DOWNLOADS_FALLBACK[key] || "").trim();
+
+    if (!normalizedItem || !fileId) return;
+
+    fallbackItemToFileId[normalizedItem] = fileId;
+    fallbackFileIdToItem[fileId] = normalizedItem;
+  });
+
+  window.PUB_CONTRACT_CACHE.itemToFileId = fallbackItemToFileId;
+  window.PUB_CONTRACT_CACHE.fileIdToItem = fallbackFileIdToItem;
+  window.PUB_CONTRACT_CACHE.ticketItems = (window.PUB_ALLOWED_TICKET_ITEMS_FALLBACK || [])
+    .map(canonicalItem)
+    .filter(Boolean);
+
+  try {
+    const data = await fetchContractPublicMode();
+
+    let contractData = null;
+
+    if (data && data.contract && data.contract.data) {
+      contractData = data.contract.data;
+    } else if (data && data.contract && data.contract.payload) {
+      contractData = data.contract.payload;
+    } else if (data && data.contract) {
+      contractData = data.contract;
+    } else if (data && data.data) {
+      contractData = data.data;
+    } else if (data && data.payload) {
+      contractData = data.payload;
+    } else {
+      contractData = data || null;
     }
+
+    const itemToFileId = {};
+    const fileIdToItem = {};
+
+    if (
+      contractData &&
+      contractData.downloads &&
+      typeof contractData.downloads === "object" &&
+      !Array.isArray(contractData.downloads)
+    ) {
+      Object.keys(contractData.downloads).forEach((fileId) => {
+        const row = contractData.downloads[fileId] || {};
+        const item = canonicalItem(row.item || "");
+        const safeFileId = String(fileId || "").trim();
+
+        if (!item || !safeFileId) return;
+
+        itemToFileId[item] = safeFileId;
+        fileIdToItem[safeFileId] = item;
+      });
+    }
+
+    if (
+      Object.keys(itemToFileId).length === 0 &&
+      contractData &&
+      contractData.downloads_by_item &&
+      typeof contractData.downloads_by_item === "object" &&
+      !Array.isArray(contractData.downloads_by_item)
+    ) {
+      Object.keys(contractData.downloads_by_item).forEach((itemKey) => {
+        const row = contractData.downloads_by_item[itemKey] || {};
+        const item = canonicalItem(itemKey || row.item || "");
+        const safeFileId = String(row.file_id || "").trim();
+
+        if (!item || !safeFileId) return;
+
+        itemToFileId[item] = safeFileId;
+        fileIdToItem[safeFileId] = item;
+      });
+    }
+
+    if (Object.keys(itemToFileId).length > 0) {
+      window.PUB_CONTRACT_CACHE.itemToFileId = itemToFileId;
+      window.PUB_CONTRACT_CACHE.fileIdToItem = fileIdToItem;
+      window.PUB_CONTRACT_CACHE.source = "contract";
+    } else {
+      window.PUB_CONTRACT_CACHE.source = "fallback";
+    }
+
+    if (Array.isArray(contractData && contractData.ticketItems) && contractData.ticketItems.length) {
+      window.PUB_CONTRACT_CACHE.ticketItems = contractData.ticketItems
+        .map(canonicalItem)
+        .filter(Boolean);
+    }
+
+    window.PUB_CONTRACT_CACHE.contractRaw = contractData || null;
+  } catch (_) {
+    window.PUB_CONTRACT_CACHE.source = "fallback";
+  }
+
+  window.PUB_CONTRACT_CACHE.loaded = true;
+  return window.PUB_CONTRACT_CACHE;
+}
+    function getCanonicalItemByFileId(fileId) {
+  const safeFileId = String(fileId || "").trim();
+  if (!safeFileId) return "";
+
+  const source = String(window.PUB_CONTRACT_CACHE && window.PUB_CONTRACT_CACHE.source || "fallback");
+  const reverseMap = window.PUB_CONTRACT_CACHE.fileIdToItem || {};
+
+  if (source === "contract") {
+    return reverseMap[safeFileId] ? String(reverseMap[safeFileId]).trim() : "";
+  }
+
+  if (reverseMap[safeFileId]) return reverseMap[safeFileId];
+
+  const fallbackMap = window.PUB_DOWNLOADS_FALLBACK || {};
+  const keys = Object.keys(fallbackMap);
+
+  for (let i = 0; i < keys.length; i++) {
+    if (String(fallbackMap[keys[i]]).trim() === safeFileId) {
+      return canonicalItem(keys[i]);
+    }
+  }
+
+  return "";
+}
+
+    function isAllowedTicketItem(item) {
+  const normalizedItem = canonicalItem(item);
+  if (!normalizedItem) return false;
+
+  const source = String(window.PUB_CONTRACT_CACHE && window.PUB_CONTRACT_CACHE.source || "fallback");
+  const allowed = window.PUB_CONTRACT_CACHE.ticketItems || [];
+
+  if (source === "contract") {
+    return allowed.includes(normalizedItem);
+  }
+
+  return (window.PUB_ALLOWED_TICKET_ITEMS_FALLBACK || [])
+    .map(canonicalItem)
+    .includes(normalizedItem);
+}
+
+  function syncButtonsWithContract() {
+  document.querySelectorAll(".js-download").forEach((button) => {
+    const rawItem = String(button.getAttribute("data-item") || "").trim();
+    const item = canonicalItem(rawItem);
+    const currentFileId = String(button.getAttribute("data-file-id") || "").trim();
+    const expectedFileId = getFileIdForItem(item);
+
+    if (item && item !== rawItem) {
+      button.setAttribute("data-item", item);
+    }
+
+    if (expectedFileId && expectedFileId !== currentFileId) {
+      button.setAttribute("data-file-id", expectedFileId);
+    }
+
+    if (!expectedFileId) {
+      button.setAttribute("data-file-id", "");
+      button.disabled = true;
+      button.title = "Download indisponível para este item no momento.";
+      button.style.opacity = "0.65";
+      button.style.cursor = "not-allowed";
+      return;
+    }
+
+    button.disabled = false;
+    button.title = "";
+    button.style.opacity = "";
+    button.style.cursor = "";
+  });
+
+  document.querySelectorAll(".js-ticket").forEach((button) => {
+    const rawItem = String(button.getAttribute("data-item") || "").trim();
+    const item = canonicalItem(rawItem);
+    const allowed = isAllowedTicketItem(item);
+
+    if (item && item !== rawItem) {
+      button.setAttribute("data-item", item);
+    }
+
+    if (!allowed) {
+      button.disabled = true;
+      button.title = "Item indisponível para ticket neste momento.";
+      button.style.opacity = "0.65";
+      button.style.cursor = "not-allowed";
+      return;
+    }
+
+    button.disabled = false;
+    button.title = "";
+    button.style.opacity = "";
+    button.style.cursor = "";
+  });
+}
+
+     function openModal({ mode = "download", item = "", fileId = "", trigger = null } = {}) {
+  lastTrigger = trigger || document.activeElement;
+
+  const normalizedItem = canonicalItem(item);
+  const normalizedFileId = String(fileId || "").trim();
+  const contractFileId = getFileIdForItem(normalizedItem);
+  const finalFileId = mode === "download" ? (contractFileId || normalizedFileId) : "";
+
+  inputMode.value = mode;
+  inputItem.value = normalizedItem;
+  inputFileId.value = finalFileId;
+  inputTicketId.value = "";
+  inputMessage.value = "";
+  inputWhatsapp.value = "";
+
+  if (mode === "ticket") {
+    const ticketId = buildTicketId(normalizedItem);
+    inputTicketId.value = ticketId;
+
+    modalTitle.textContent = "Abrir ticket";
+    submitBtn.textContent = "Enviar ticket";
+    hint.textContent = `Preencha seus dados para registrar o ticket deste item.\nWhatsApp opcional para retorno mais rápido.\nID: ${ticketId}`;
+    whatsappWrap.classList.remove("is-hidden");
+    messageWrap.classList.remove("is-hidden");
+  } else {
+    modalTitle.textContent = "Preencha para liberar o download";
+    submitBtn.textContent = "Continuar e baixar";
+    hint.textContent = "Preencha nome e e-mail para continuar.";
+    whatsappWrap.classList.add("is-hidden");
+    messageWrap.classList.add("is-hidden");
+  }
+
+  modal.setAttribute("aria-hidden", "false");
+  modal.setAttribute("data-state", "open");
+  document.body.classList.add("modal-open");
+
+  setTimeout(() => inputName.focus(), 50);
+}
 
     function closeModal() {
       modal.setAttribute("aria-hidden", "true");
@@ -2487,35 +2808,10 @@
         throw new Error("Endpoint de captura não configurado.");
       }
 
-      const response = await fetch(window.PUB_LEADS_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8",
-          "Accept": "application/json, text/plain, */*"
-        },
-        body: JSON.stringify(payload),
-        redirect: "follow"
-      });
+      const data = await fetchJsonPost(payload);
 
-      const text = await response.text();
-      let data = null;
-
-      try {
-        data = JSON.parse(text);
-      } catch (_) {
-        data = null;
-      }
-
-      if (!response.ok) {
-        throw new Error((data && data.error) || "Não foi possível processar a solicitação.");
-      }
-
-      if (!text || !text.trim()) {
-        throw new Error("O servidor respondeu sem conteúdo.");
-      }
-
-      if (!data || !data.ok) {
-        throw new Error((data && data.error) || "Não foi possível processar a solicitação.");
+      if (data.ok === false) {
+        throw new Error(data.error || data.message || "Não foi possível processar a solicitação.");
       }
 
       return data;
@@ -2526,60 +2822,73 @@
     });
 
     document.addEventListener("click", (event) => {
-      const anchor = event.target.closest('a[href^="#"]');
-      if (anchor) {
-        event.preventDefault();
-        const id = decodeURIComponent((anchor.getAttribute("href") || "").replace(/^#/, ""));
-        const target = document.getElementById(id);
-        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-        return;
-      }
+  const anchor = event.target.closest('a[href^="#"]');
+  if (anchor) {
+    event.preventDefault();
+    const id = decodeURIComponent((anchor.getAttribute("href") || "").replace(/^#/, ""));
+    const target = document.getElementById(id);
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
 
-      const downloadBtn = event.target.closest(".js-download");
-      if (downloadBtn) {
-        event.preventDefault();
+  const downloadBtn = event.target.closest(".js-download");
+  if (downloadBtn) {
+    event.preventDefault();
 
-        const item = String(downloadBtn.getAttribute("data-item") || "").trim();
-        const fileId = String(downloadBtn.getAttribute("data-file-id") || "").trim();
+    if (contractInitPending) {
+      hint.textContent = "Estamos sincronizando a disponibilidade. Tente novamente em instantes.";
+      return;
+    }
 
-        if (!item || !fileId) return;
+    const item = canonicalItem(downloadBtn.getAttribute("data-item") || "");
+    const fileId = getFileIdForItem(item) || String(downloadBtn.getAttribute("data-file-id") || "").trim();
 
-        track("select_content", {
-          content_type: "download_cta",
-          item,
-          file_id: fileId
-        });
+    if (!item || !fileId) {
+      hint.textContent = "Download indisponível para este item.";
+      return;
+    }
 
-        openModal({
-          mode: "download",
-          item,
-          fileId,
-          trigger: downloadBtn
-        });
-
-        return;
-      }
-
-      const ticketBtn = event.target.closest(".js-ticket");
-      if (ticketBtn) {
-        event.preventDefault();
-
-        const item = String(ticketBtn.getAttribute("data-item") || "").trim();
-        if (!item) return;
-
-        track("select_content", {
-          content_type: "ticket_cta",
-          item
-        });
-
-        openModal({
-          mode: "ticket",
-          item,
-          fileId: "",
-          trigger: ticketBtn
-        });
-      }
+    track("select_content", {
+      content_type: "download_cta",
+      item,
+      file_id: fileId
     });
+
+    openModal({
+      mode: "download",
+      item,
+      fileId,
+      trigger: downloadBtn
+    });
+
+    return;
+  }
+
+  const ticketBtn = event.target.closest(".js-ticket");
+  if (ticketBtn) {
+    event.preventDefault();
+
+    if (contractInitPending) {
+      hint.textContent = "Estamos sincronizando a disponibilidade. Tente novamente em instantes.";
+      return;
+    }
+
+    const item = canonicalItem(ticketBtn.getAttribute("data-item") || "");
+    if (!item || !isAllowedTicketItem(item)) return;
+
+    track("select_content", {
+      content_type: "ticket_cta",
+      item
+    });
+
+    openModal({
+      mode: "ticket",
+      item,
+      fileId: "",
+      trigger: ticketBtn
+    });
+  }
+});
 
     closeBtn.addEventListener("click", closeModal);
 
@@ -2608,8 +2917,10 @@
       const whatsapp = inputWhatsapp.value.trim();
       const whatsappNormalized = normalizePhone(whatsapp);
       const mode = inputMode.value.trim() || "download";
-      const item = inputItem.value.trim();
-      const fileId = inputFileId.value.trim();
+      const item = canonicalItem(inputItem.value.trim());
+      const fileId = mode === "download"
+        ? (getFileIdForItem(item) || String(inputFileId.value || "").trim())
+        : "";
       const ticketId = inputTicketId.value.trim();
       const message = inputMessage.value.trim();
 
@@ -2624,6 +2935,14 @@
       if (mode === "ticket") {
         submitBtn.textContent = "Enviando ticket...";
         hint.textContent = "Estamos registrando seu ticket.";
+
+        if (!isAllowedTicketItem(item)) {
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "1";
+          submitBtn.textContent = "Enviar ticket";
+          hint.textContent = "Este item não está disponível para ticket.";
+          return;
+        }
 
         if (whatsapp && !isValidPhoneBR(whatsapp)) {
           submitBtn.disabled = false;
@@ -2707,6 +3026,15 @@
         return;
       }
 
+      const expectedItemForFile = getCanonicalItemByFileId(fileId);
+      if (expectedItemForFile && expectedItemForFile !== item) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Continuar e baixar";
+        submitBtn.style.opacity = "1";
+        hint.textContent = "Arquivo incompatível com o item selecionado.";
+        return;
+      }
+
       const payload = {
         action: "capture_lead",
         name,
@@ -2757,13 +3085,17 @@
         });
       }
     });
+
+   (async function initPubFrontContract() {
+  try {
+    await loadContractData();
+    syncButtonsWithContract();
+  } catch (_) {
+    syncButtonsWithContract();
+  } finally {
+    contractInitPending = false;
+  }
+})();
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
