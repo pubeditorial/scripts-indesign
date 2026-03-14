@@ -209,7 +209,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZS7FSCH0R"></script>
 <script>
   window.GA_MEASUREMENT_ID = "G-TZS7FSCH0R";
-  window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbzVDbeeV1QLLTFq5EIBwLFacQtqtELIa6D1dlGqfJQx-aUmv3Lfezna5Z8A7PnUqLMOLg/exec";
+  window.PUB_LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbzUccf54D3Q_GJCgLzKDBM6pLftkvpdg8dLvL_ZqnY1eY-DRRbgGYxu9FgfUUsQ8EZbKA/exec";
   window.PUB_CONTACT_WHATSAPP = "5551996581275";
 
   window.dataLayer = window.dataLayer || [];
@@ -2741,7 +2741,7 @@ form.addEventListener("submit", async (event) => {
       throw new Error("Não foi possível determinar a URL de download.");
     }
 
-    track("generate_lead", {
+        track("generate_lead", {
       currency: "BRL",
       value: 1,
       item,
@@ -2754,8 +2754,13 @@ form.addEventListener("submit", async (event) => {
       link_url: redirectUrl
     });
 
+    const downloadWindow = window.open(redirectUrl, "_blank", "noopener");
+
     closeModal();
-    window.location.href = redirectUrl;
+
+    if (!downloadWindow) {
+      window.location.href = redirectUrl;
+    }
   } catch (error) {
     submitBtn.disabled = false;
     submitBtn.textContent = "Continuar e baixar";
