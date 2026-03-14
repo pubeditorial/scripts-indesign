@@ -2281,396 +2281,491 @@
   <!-- =========================================
        JAVASCRIPT | INTERAÇÃO, MODAL, TRACKING E SUBMISSÃO
        ========================================= -->
- <script type="module">
-const modal = document.getElementById("lead-modal");
-const form = document.getElementById("lead-form");
-const closeBtn = document.getElementById("lead-close");
-const submitBtn = document.getElementById("lead-submit");
-const hint = document.getElementById("lead-hint");
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const modal = document.getElementById("lead-modal");
+  const form = document.getElementById("lead-form");
+  const closeBtn = document.getElementById("lead-close");
+  const submitBtn = document.getElementById("lead-submit");
+  const hint = document.getElementById("lead-hint");
 
-const inputName = document.getElementById("lead-name");
-const inputEmail = document.getElementById("lead-email");
-const inputWhatsapp = document.getElementById("lead-whatsapp");
-const inputMode = document.getElementById("lead-mode");
-const inputItem = document.getElementById("lead-item");
-const inputFileId = document.getElementById("lead-file-id");
-const inputTicketId = document.getElementById("lead-ticket-id");
-const inputMessage = document.getElementById("lead-message");
+  const inputName = document.getElementById("lead-name");
+  const inputEmail = document.getElementById("lead-email");
+  const inputWhatsapp = document.getElementById("lead-whatsapp");
+  const inputMode = document.getElementById("lead-mode");
+  const inputItem = document.getElementById("lead-item");
+  const inputFileId = document.getElementById("lead-file-id");
+  const inputTicketId = document.getElementById("lead-ticket-id");
+  const inputMessage = document.getElementById("lead-message");
 
-const whatsappWrap = document.getElementById("lead-whatsapp-wrap");
-const messageWrap = document.getElementById("lead-message-wrap");
-const modalTitle = document.querySelector(".lead-title");
+  const whatsappWrap = document.getElementById("lead-whatsapp-wrap");
+  const messageWrap = document.getElementById("lead-message-wrap");
+  const modalTitle = document.getElementById("lead-title");
 
-let lastTrigger = null;
+  const downloadButtons = Array.prototype.slice.call(document.querySelectorAll(".js-download"));
+  const ticketButtons = Array.prototype.slice.call(document.querySelectorAll(".js-ticket"));
+  const hashLinks = Array.prototype.slice.call(document.querySelectorAll('a[href^="#"]'));
 
-function track(eventName, params = {}) {
-  try {
-    if (typeof window.gtag === "function" && window.GA_MEASUREMENT_ID) {
-      window.gtag("event", eventName, {
-        send_to: window.GA_MEASUREMENT_ID,
-        page_title: document.title,
-        page_location: location.href,
-        ...params
-      });
-    }
-  } catch (_) {}
-}
+  let lastTrigger = null;
 
-function validEmail(value) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
-}
-
-function normalizePhone(value) {
-  return String(value || "").replace(/\D+/g, "");
-}
-
-function formatPhoneBR(value) {
-  const digits = normalizePhone(value);
-  if (!digits) return "";
-
-  if (digits.length === 11) return digits.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
-  if (digits.length === 10) return digits.replace(/^(\d{2})(\d{4})(\d{4})$/, "($1) $2-$3");
-  if (digits.length === 13 && digits.startsWith("55")) return digits.replace(/^55(\d{2})(\d{5})(\d{4})$/, "+55 ($1) $2-$3");
-  if (digits.length === 12 && digits.startsWith("55")) return digits.replace(/^55(\d{2})(\d{4})(\d{4})$/, "+55 ($1) $2-$3");
-
-  return value;
-}
-
-function isValidPhoneBR(value) {
-  const digits = normalizePhone(value);
-  return [10, 11, 12, 13].includes(digits.length);
-}
-
-function canonicalItem(value) {
-  const raw = String(value || "").trim();
-  if (!raw) return "";
-
-  const clean = raw
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toUpperCase()
-    .replace(/\s+/g, " ")
-    .trim();
-
-  if (clean === "PACOTE GRATUITO") return "PACOTE PUB EDITORIAL SCRIPTS";
-  return clean;
-}
-
-function slugifyTicketItem(value) {
-  return String(value || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^\w\s-]/g, "")
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .toUpperCase();
-}
-
-function buildTicketId(item) {
-  const now = new Date();
-  const yyyy = String(now.getFullYear());
-  const mm = String(now.getMonth() + 1).padStart(2, "0");
-  const dd = String(now.getDate()).padStart(2, "0");
-  const hh = String(now.getHours()).padStart(2, "0");
-  const mi = String(now.getMinutes()).padStart(2, "0");
-  const ss = String(now.getSeconds()).padStart(2, "0");
-  const itemCode = slugifyTicketItem(item || "ITEM");
-  const random = Math.random().toString(36).slice(2, 6).toUpperCase();
-
-  return `TCK-${itemCode}-${yyyy}${mm}${dd}-${hh}${mi}${ss}-${random}`;
-}
-
-function getFocusableElements() {
-  return Array.from(
-    modal.querySelectorAll(
-      'button:not([disabled]), [href], input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-    )
-  ).filter((element) => !element.hasAttribute("hidden") && !element.classList.contains("is-hidden"));
-}
-
-function trapFocus(event) {
-  if (event.key !== "Tab" || modal.getAttribute("data-state") !== "open") return;
-
-  const focusable = getFocusableElements();
-  if (!focusable.length) return;
-
-  const first = focusable[0];
-  const last = focusable[focusable.length - 1];
-  const active = document.activeElement;
-
-  if (event.shiftKey) {
-    if (active === first || !modal.contains(active)) {
-      event.preventDefault();
-      last.focus();
-    }
+  if (
+    !modal ||
+    !form ||
+    !closeBtn ||
+    !submitBtn ||
+    !hint ||
+    !inputName ||
+    !inputEmail ||
+    !inputWhatsapp ||
+    !inputMode ||
+    !inputItem ||
+    !inputFileId ||
+    !inputTicketId ||
+    !inputMessage ||
+    !whatsappWrap ||
+    !messageWrap ||
+    !modalTitle
+  ) {
+    console.error("PUB modal: elementos obrigatórios não encontrados.");
     return;
   }
 
-  if (active === last) {
-    event.preventDefault();
-    first.focus();
+  function track(eventName, params) {
+    try {
+      if (typeof window.gtag === "function" && window.GA_MEASUREMENT_ID) {
+        window.gtag("event", eventName, Object.assign({
+          send_to: window.GA_MEASUREMENT_ID,
+          page_title: document.title,
+          page_location: location.href
+        }, params || {}));
+      }
+    } catch (_) {}
   }
-}
 
-async function fetchJsonPost(payload) {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 12000);
+  function validEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
+  }
 
-  let response;
+  function normalizePhone(value) {
+    return String(value || "").replace(/\D+/g, "");
+  }
 
-  try {
-    response = await fetch(window.PUB_LEADS_ENDPOINT, {
+  function formatPhoneBR(value) {
+    const digits = normalizePhone(value);
+    if (!digits) return "";
+
+    if (digits.length === 11) return digits.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+    if (digits.length === 10) return digits.replace(/^(\d{2})(\d{4})(\d{4})$/, "($1) $2-$3");
+    if (digits.length === 13 && digits.indexOf("55") === 0) return digits.replace(/^55(\d{2})(\d{5})(\d{4})$/, "+55 ($1) $2-$3");
+    if (digits.length === 12 && digits.indexOf("55") === 0) return digits.replace(/^55(\d{2})(\d{4})(\d{4})$/, "+55 ($1) $2-$3");
+
+    return String(value || "");
+  }
+
+  function isValidPhoneBR(value) {
+    const digits = normalizePhone(value);
+    return [10, 11, 12, 13].indexOf(digits.length) >= 0;
+  }
+
+  function canonicalItem(value) {
+    const raw = String(value || "").trim();
+    if (!raw) return "";
+
+    const clean = raw
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toUpperCase()
+      .replace(/\s+/g, " ")
+      .trim();
+
+    if (clean === "PACOTE GRATUITO") return "PACOTE PUB EDITORIAL SCRIPTS";
+    return clean;
+  }
+
+  function slugifyTicketItem(value) {
+    return String(value || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^\w\s-]/g, "")
+      .trim()
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .toUpperCase();
+  }
+
+  function buildTicketId(item) {
+    const now = new Date();
+    const yyyy = String(now.getFullYear());
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
+    const dd = String(now.getDate()).padStart(2, "0");
+    const hh = String(now.getHours()).padStart(2, "0");
+    const mi = String(now.getMinutes()).padStart(2, "0");
+    const ss = String(now.getSeconds()).padStart(2, "0");
+    const itemCode = slugifyTicketItem(item || "ITEM");
+    const random = Math.random().toString(36).slice(2, 6).toUpperCase();
+
+    return "TCK-" + itemCode + "-" + yyyy + mm + dd + "-" + hh + mi + ss + "-" + random;
+  }
+
+  function getFocusableElements() {
+    return Array.from(
+      modal.querySelectorAll(
+        'button:not([disabled]), [href], input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter(function (element) {
+      return !element.hasAttribute("hidden") && !element.classList.contains("is-hidden");
+    });
+  }
+
+  function trapFocus(event) {
+    if (event.key !== "Tab" || modal.getAttribute("data-state") !== "open") return;
+
+    const focusable = getFocusableElements();
+    if (!focusable.length) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    const active = document.activeElement;
+
+    if (event.shiftKey) {
+      if (active === first || !modal.contains(active)) {
+        event.preventDefault();
+        last.focus();
+      }
+      return;
+    }
+
+    if (active === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  async function fetchJsonPost(payload) {
+    if (!window.PUB_LEADS_ENDPOINT) {
+      throw new Error("Endpoint de captura não configurado.");
+    }
+
+    const response = await fetch(window.PUB_LEADS_ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "text/plain;charset=utf-8",
         "Accept": "application/json, text/plain, */*"
       },
       body: JSON.stringify(payload),
-      redirect: "follow",
-      signal: controller.signal
+      redirect: "follow"
     });
-  } catch (error) {
-    clearTimeout(timeoutId);
 
-    if (error && error.name === "AbortError") {
-      throw new Error("A solicitação demorou mais do que o esperado. Tente novamente.");
+    const text = await response.text();
+    let data = null;
+
+    try {
+      data = JSON.parse(text);
+    } catch (_) {
+      data = null;
     }
 
-    throw error;
+    if (!response.ok) {
+      throw new Error((data && (data.error || data.message)) || "Não foi possível processar a solicitação.");
+    }
+
+    if (!text || !text.trim()) {
+      throw new Error("O servidor respondeu sem conteúdo.");
+    }
+
+    if (!data) {
+      throw new Error("O servidor respondeu em formato inválido.");
+    }
+
+    return data;
   }
 
-  clearTimeout(timeoutId);
+  function openModal(options) {
+    const config = options || {};
+    const mode = config.mode || "download";
+    const item = config.item || "";
+    const fileId = config.fileId || "";
+    const trigger = config.trigger || null;
 
-  const text = await response.text();
-  let data = null;
+    lastTrigger = trigger || document.activeElement;
 
-  try {
-    data = JSON.parse(text);
-  } catch (_) {
-    data = null;
+    const normalizedItem = canonicalItem(item);
+    const normalizedFileId = String(fileId || "").trim();
+
+    inputMode.value = mode;
+    inputItem.value = normalizedItem;
+    inputFileId.value = normalizedFileId;
+    inputTicketId.value = "";
+    inputMessage.value = "";
+    inputWhatsapp.value = "";
+
+    if (mode === "ticket") {
+      const ticketId = buildTicketId(normalizedItem);
+      inputTicketId.value = ticketId;
+
+      modalTitle.textContent = "Abrir ticket";
+      submitBtn.textContent = "Enviar ticket";
+      hint.textContent = "Preencha seus dados para registrar o ticket deste item.\nWhatsApp opcional para retorno mais rápido.\nID: " + ticketId;
+      whatsappWrap.classList.remove("is-hidden");
+      messageWrap.classList.remove("is-hidden");
+    } else {
+      modalTitle.textContent = "Preencha para liberar o download";
+      submitBtn.textContent = "Continuar e baixar";
+      hint.textContent = "Preencha nome e e-mail para continuar.";
+      whatsappWrap.classList.add("is-hidden");
+      messageWrap.classList.add("is-hidden");
+    }
+
+    modal.setAttribute("aria-hidden", "false");
+    modal.setAttribute("data-state", "open");
+    document.body.classList.add("modal-open");
+
+    window.setTimeout(function () {
+      inputName.focus();
+    }, 50);
   }
 
-  if (!response.ok) {
-    throw new Error((data && (data.error || data.message)) || "Não foi possível processar a solicitação.");
-  }
+  function closeModal() {
+    modal.setAttribute("aria-hidden", "true");
+    modal.removeAttribute("data-state");
+    document.body.classList.remove("modal-open");
 
-  if (!text || !text.trim()) {
-    throw new Error("O servidor respondeu sem conteúdo.");
-  }
+    form.reset();
+    inputMode.value = "download";
+    inputItem.value = "";
+    inputFileId.value = "";
+    inputTicketId.value = "";
+    inputMessage.value = "";
+    inputWhatsapp.value = "";
 
-  if (!data) {
-    throw new Error("O servidor respondeu em formato inválido.");
-  }
-
-  return data;
-}
-
-function openModal({ mode = "download", item = "", fileId = "", trigger = null } = {}) {
-  lastTrigger = trigger || document.activeElement;
-
-  const normalizedItem = canonicalItem(item);
-  const normalizedFileId = String(fileId || "").trim();
-
-  inputMode.value = mode;
-  inputItem.value = normalizedItem;
-  inputFileId.value = normalizedFileId;
-  inputTicketId.value = "";
-  inputMessage.value = "";
-  inputWhatsapp.value = "";
-
-  if (mode === "ticket") {
-    const ticketId = buildTicketId(normalizedItem);
-    inputTicketId.value = ticketId;
-
-    modalTitle.textContent = "Abrir ticket";
-    submitBtn.textContent = "Enviar ticket";
-    hint.textContent = `Preencha seus dados para registrar o ticket deste item.\nWhatsApp opcional para retorno mais rápido.\nID: ${ticketId}`;
-    whatsappWrap.classList.remove("is-hidden");
-    messageWrap.classList.remove("is-hidden");
-  } else {
-    modalTitle.textContent = "Preencha para liberar o download";
-    submitBtn.textContent = "Continuar e baixar";
-    hint.textContent = "Preencha nome e e-mail para continuar.";
     whatsappWrap.classList.add("is-hidden");
     messageWrap.classList.add("is-hidden");
-  }
 
-  modal.setAttribute("aria-hidden", "false");
-  modal.setAttribute("data-state", "open");
-  document.body.classList.add("modal-open");
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Continuar e baixar";
+    submitBtn.style.opacity = "1";
 
-  setTimeout(() => inputName.focus(), 50);
-}
+    modalTitle.textContent = "Preencha para liberar o download";
+    hint.textContent = "Preencha nome e e-mail para continuar.";
 
-function closeModal() {
-  modal.setAttribute("aria-hidden", "true");
-  modal.removeAttribute("data-state");
-  document.body.classList.remove("modal-open");
-
-  form.reset();
-  inputMode.value = "download";
-  inputItem.value = "";
-  inputFileId.value = "";
-  inputTicketId.value = "";
-  inputMessage.value = "";
-  inputWhatsapp.value = "";
-
-  whatsappWrap.classList.add("is-hidden");
-  messageWrap.classList.add("is-hidden");
-
-  submitBtn.disabled = false;
-  submitBtn.textContent = "Continuar e baixar";
-  submitBtn.style.opacity = "1";
-
-  modalTitle.textContent = "Preencha para liberar o download";
-  hint.textContent = "Preencha nome e e-mail para continuar.";
-
-  if (lastTrigger && typeof lastTrigger.focus === "function") {
-    lastTrigger.focus();
-  }
-
-  lastTrigger = null;
-}
-
-async function submitLead(payload) {
-  if (!window.PUB_LEADS_ENDPOINT) {
-    throw new Error("Endpoint de captura não configurado.");
-  }
-
-  const data = await fetchJsonPost(payload);
-
-  if (data.ok === false) {
-    throw new Error(data.error || data.message || "Não foi possível processar a solicitação.");
-  }
-
-  return data;
-}
-
-inputWhatsapp.addEventListener("blur", () => {
-  inputWhatsapp.value = formatPhoneBR(inputWhatsapp.value);
-});
-
-document.addEventListener("click", (event) => {
-  const anchor = event.target.closest('a[href^="#"]');
-  if (anchor) {
-    event.preventDefault();
-    const id = decodeURIComponent((anchor.getAttribute("href") || "").replace(/^#/, ""));
-    const target = document.getElementById(id);
-    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-    return;
-  }
-
-  const downloadBtn = event.target.closest(".js-download");
-  if (downloadBtn) {
-    event.preventDefault();
-
-    const item = canonicalItem(downloadBtn.getAttribute("data-item") || "");
-    const fileId = String(downloadBtn.getAttribute("data-file-id") || "").trim();
-
-    if (!item || !fileId) {
-      hint.textContent = "Download indisponível para este item.";
-      return;
+    if (lastTrigger && typeof lastTrigger.focus === "function") {
+      lastTrigger.focus();
     }
 
-    track("select_content", {
-      content_type: "download_cta",
-      item,
-      file_id: fileId
-    });
-
-    openModal({
-      mode: "download",
-      item,
-      fileId,
-      trigger: downloadBtn
-    });
-
-    return;
+    lastTrigger = null;
   }
 
-  const ticketBtn = event.target.closest(".js-ticket");
-  if (ticketBtn) {
-    event.preventDefault();
+  async function submitLead(payload) {
+    const data = await fetchJsonPost(payload);
 
-    const item = canonicalItem(ticketBtn.getAttribute("data-item") || "");
-    if (!item) return;
+    if (data && data.ok === false) {
+      throw new Error(data.error || data.message || "Não foi possível processar a solicitação.");
+    }
 
-    track("select_content", {
-      content_type: "ticket_cta",
-      item
-    });
-
-    openModal({
-      mode: "ticket",
-      item,
-      fileId: "",
-      trigger: ticketBtn
-    });
+    return data;
   }
-});
 
-closeBtn.addEventListener("click", closeModal);
+  inputWhatsapp.addEventListener("blur", function () {
+    inputWhatsapp.value = formatPhoneBR(inputWhatsapp.value);
+  });
 
-modal.addEventListener("click", (event) => {
-  if (event.target === modal) closeModal();
-});
+  hashLinks.forEach(function (anchor) {
+    anchor.addEventListener("click", function (event) {
+      const href = anchor.getAttribute("href") || "";
+      const id = decodeURIComponent(href.replace(/^#/, ""));
+      const target = document.getElementById(id);
 
-window.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && modal.getAttribute("data-state") === "open") {
+      if (!target) return;
+
+      event.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  downloadButtons.forEach(function (downloadBtn) {
+    downloadBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      const item = canonicalItem(downloadBtn.getAttribute("data-item") || "");
+      const fileId = String(downloadBtn.getAttribute("data-file-id") || "").trim();
+
+      if (!item || !fileId) {
+        hint.textContent = "Download indisponível para este item.";
+        return;
+      }
+
+      track("select_content", {
+        content_type: "download_cta",
+        item: item,
+        file_id: fileId
+      });
+
+      openModal({
+        mode: "download",
+        item: item,
+        fileId: fileId,
+        trigger: downloadBtn
+      });
+    });
+  });
+
+  ticketButtons.forEach(function (ticketBtn) {
+    ticketBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      const item = canonicalItem(ticketBtn.getAttribute("data-item") || "");
+      if (!item) return;
+
+      track("select_content", {
+        content_type: "ticket_cta",
+        item: item
+      });
+
+      openModal({
+        mode: "ticket",
+        item: item,
+        fileId: "",
+        trigger: ticketBtn
+      });
+    });
+  });
+
+  closeBtn.addEventListener("click", function () {
     closeModal();
-    return;
-  }
+  });
 
-  trapFocus(event);
-});
+  modal.addEventListener("click", function (event) {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  if (submitBtn.disabled) return;
-
-  const name = inputName.value.trim();
-  const email = inputEmail.value.trim();
-  const whatsapp = inputWhatsapp.value.trim();
-  const whatsappNormalized = normalizePhone(whatsapp);
-  const mode = inputMode.value.trim() || "download";
-  const item = canonicalItem(inputItem.value.trim());
-  const fileId = String(inputFileId.value || "").trim();
-  const ticketId = inputTicketId.value.trim();
-  const message = inputMessage.value.trim();
-
-  if (!name || !validEmail(email) || !item) {
-    hint.textContent = "Revise nome, e-mail e item.";
-    return;
-  }
-
-  submitBtn.disabled = true;
-  submitBtn.style.opacity = ".8";
-
-  if (mode === "ticket") {
-    submitBtn.textContent = "Enviando ticket...";
-    hint.textContent = "Estamos registrando seu ticket.";
-
-    if (whatsapp && !isValidPhoneBR(whatsapp)) {
-      submitBtn.disabled = false;
-      submitBtn.style.opacity = "1";
-      submitBtn.textContent = "Enviar ticket";
-      hint.textContent = "Revise o número de WhatsApp.";
+  window.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && modal.getAttribute("data-state") === "open") {
+      closeModal();
       return;
     }
 
-    const finalTicketId = ticketId || buildTicketId(item);
-    inputTicketId.value = finalTicketId;
+    trapFocus(event);
+  });
+
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    if (submitBtn.disabled) return;
+
+    const name = inputName.value.trim();
+    const email = inputEmail.value.trim();
+    const whatsapp = inputWhatsapp.value.trim();
+    const whatsappNormalized = normalizePhone(whatsapp);
+    const mode = inputMode.value.trim() || "download";
+    const item = canonicalItem(inputItem.value.trim());
+    const fileId = String(inputFileId.value || "").trim();
+    const ticketId = inputTicketId.value.trim();
+    const message = inputMessage.value.trim();
+
+    if (!name || !validEmail(email) || !item) {
+      hint.textContent = "Revise nome, e-mail e item.";
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = ".8";
+
+    if (mode === "ticket") {
+      submitBtn.textContent = "Enviando ticket...";
+      hint.textContent = "Estamos registrando seu ticket.";
+
+      if (whatsapp && !isValidPhoneBR(whatsapp)) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = "1";
+        submitBtn.textContent = "Enviar ticket";
+        hint.textContent = "Revise o número de WhatsApp.";
+        return;
+      }
+
+      const finalTicketId = ticketId || buildTicketId(item);
+      inputTicketId.value = finalTicketId;
+
+      const payload = {
+        action: "capture_ticket",
+        ticket_id: finalTicketId,
+        name: name,
+        email: email,
+        whatsapp: whatsappNormalized,
+        item: item,
+        message: message,
+        page_url: location.href,
+        referrer: document.referrer || "",
+        user_agent: navigator.userAgent
+      };
+
+      try {
+        const data = await submitLead(payload);
+
+        const returnedTicketId =
+          (data.data && data.data.external_ticket_id) ||
+          data.external_ticket_id ||
+          (data.data && data.data.ticket_id) ||
+          data.ticket_id ||
+          finalTicketId;
+
+        track("generate_lead", {
+          currency: "BRL",
+          value: 1,
+          item: item,
+          ticket_id: returnedTicketId,
+          lead_type: "ticket"
+        });
+
+        track("contact", {
+          method: "backend",
+          item: item,
+          ticket_id: returnedTicketId,
+          lead_type: "ticket"
+        });
+
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = "1";
+        submitBtn.textContent = "Enviar ticket";
+        hint.textContent = "Ticket registrado com sucesso.\nProtocolo: " + returnedTicketId;
+
+        window.setTimeout(function () {
+          closeModal();
+          alert("Ticket registrado com sucesso.\nProtocolo: " + returnedTicketId);
+        }, 250);
+      } catch (error) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Enviar ticket";
+        submitBtn.style.opacity = "1";
+        hint.textContent = String(error && error.message ? error.message : "Falha ao registrar o ticket.");
+
+        track("exception", {
+          description: String(error && error.message ? error.message : "capture_ticket_error"),
+          fatal: false
+        });
+      }
+
+      return;
+    }
+
+    submitBtn.textContent = "Liberando download...";
+    hint.textContent = "Estamos processando seu download.";
+
+    if (!fileId) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Continuar e baixar";
+      submitBtn.style.opacity = "1";
+      hint.textContent = "Item de download inválido.";
+      return;
+    }
 
     const payload = {
-      action: "capture_ticket",
-      ticket_id: finalTicketId,
-      name,
-      email,
-      whatsapp: whatsappNormalized,
-      item,
-      message,
+      action: "capture_lead",
+      name: name,
+      email: email,
+      item: item,
+      file_id: fileId,
       page_url: location.href,
       referrer: document.referrer || "",
       user_agent: navigator.userAgent
@@ -2679,129 +2774,50 @@ form.addEventListener("submit", async (event) => {
     try {
       const data = await submitLead(payload);
 
-      const returnedTicketId =
-        (data.data && data.data.external_ticket_id) ||
-        data.external_ticket_id ||
-        (data.data && data.data.ticket_id) ||
-        data.ticket_id ||
-        finalTicketId;
+      const redirectUrl =
+        (data.data && data.data.redirect_url) ||
+        data.redirect_url ||
+        ("https://drive.google.com/uc?export=download&id=" + encodeURIComponent(fileId));
+
+      if (!redirectUrl) {
+        throw new Error("Não foi possível determinar a URL de download.");
+      }
 
       track("generate_lead", {
         currency: "BRL",
         value: 1,
-        item,
-        ticket_id: returnedTicketId,
-        lead_type: "ticket"
+        item: item,
+        file_id: fileId
       });
 
-      track("contact", {
-        method: "backend",
-        item,
-        ticket_id: returnedTicketId,
-        lead_type: "ticket"
+      track("file_download", {
+        item: item,
+        file_id: fileId,
+        link_url: redirectUrl
       });
 
-      submitBtn.disabled = false;
-      submitBtn.style.opacity = "1";
-      submitBtn.textContent = "Enviar ticket";
-      hint.textContent = `Ticket registrado com sucesso.\nProtocolo: ${returnedTicketId}`;
+      const downloadWindow = window.open(redirectUrl, "_blank", "noopener");
 
-      setTimeout(() => {
-        closeModal();
-        alert(`Ticket registrado com sucesso.\nProtocolo: ${returnedTicketId}`);
-      }, 250);
+      closeModal();
+
+      if (!downloadWindow) {
+        window.location.href = redirectUrl;
+      }
     } catch (error) {
       submitBtn.disabled = false;
+      submitBtn.textContent = "Continuar e baixar";
       submitBtn.style.opacity = "1";
-      submitBtn.textContent = "Enviar ticket";
-      hint.textContent = String(error && error.message ? error.message : "Falha ao registrar o ticket.");
+      hint.textContent = String(error && error.message ? error.message : "Falha ao liberar o download.");
 
       track("exception", {
-        description: String(error && error.message ? error.message : "capture_ticket_error"),
+        description: String(error && error.message ? error.message : "lead_download_error"),
         fatal: false
       });
     }
+  });
 
-    return;
-  }
-
-  submitBtn.textContent = "Liberando download...";
-  hint.textContent = "Estamos processando seu download.";
-
-  if (!fileId) {
-    submitBtn.disabled = false;
-    submitBtn.style.opacity = "1";
-    submitBtn.textContent = "Continuar e baixar";
-    hint.textContent = "Item de download inválido.";
-    return;
-  }
-
-  const payload = {
-    action: "capture_lead",
-    name,
-    email,
-    item,
-    file_id: fileId,
-    page_url: location.href,
-    referrer: document.referrer || "",
-    user_agent: navigator.userAgent
-  };
-
-  try {
-    const data = await submitLead(payload);
-
-    const redirectUrl =
-      (data.data && data.data.redirect_url) ||
-      data.redirect_url ||
-      `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}`;
-
-    if (!redirectUrl) {
-      throw new Error("Não foi possível determinar a URL de download.");
-    }
-
-    track("generate_lead", {
-      currency: "BRL",
-      value: 1,
-      item,
-      file_id: fileId
-    });
-
-    track("file_download", {
-      item,
-      file_id: fileId,
-      link_url: redirectUrl
-    });
-
-    hint.textContent = "Download liberado.";
-
-    const downloadWindow = window.open(redirectUrl, "_blank", "noopener");
-
-    closeModal();
-
-    if (!downloadWindow) {
-      window.location.href = redirectUrl;
-    }
-    } catch (error) {
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Continuar e baixar";
-    submitBtn.style.opacity = "1";
-
-    const errorMessage = String(
-      error && error.message
-        ? error.message
-        : "Falha ao liberar o download."
-    );
-
-    hint.textContent =
-      errorMessage === "A solicitação demorou mais do que o esperado. Tente novamente."
-        ? "O servidor demorou mais do que o esperado. Tente novamente em alguns segundos."
-        : errorMessage;
-
-    track("exception", {
-      description: errorMessage,
-      fatal: false
-    });
-  }
+  console.log("PUB modal: inicialização concluída.");
+});
 </script>
 </body>
 </html>
